@@ -1,0 +1,1 @@
+Worked on creating issues, deploying heroku, and planning with the group.
