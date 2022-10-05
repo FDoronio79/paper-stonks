@@ -48,3 +48,5 @@ Additionally, I created 4 issues in Gitlab. Currently, we have a total of 10 iss
 ## October 4, 2022
 
 I researched authentication and login set up for FastAPI. Decided to continue this next week.
+
+CHECKING PIPELINE; DID NOT WORK; Second attempt
