@@ -260,6 +260,7 @@
       "price": number,
       "type": string,
       "quantity": number,
+      "time_of_purchase": string
     }
     ```
 
@@ -274,6 +275,7 @@
       "price": number,
       "type": string,
       "quantity": number,
+      "time_of_purchase": string
     }
     ```
 
@@ -306,6 +308,7 @@
         "price": number,
         "type": string,
         "quantity": number,
+        "time_of_purchase": string
         },
         {
         "message": string,
@@ -314,6 +317,7 @@
         "price": number,
         "type": string,
         "quantity": number,
+        "time_of_purchase": string
         },
         ...
     ]
