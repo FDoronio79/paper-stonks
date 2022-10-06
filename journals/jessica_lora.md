@@ -44,9 +44,12 @@ I was out for most of the day. Upon returning, my team had set up the Docker fil
 
 Additionally, I created 4 issues in Gitlab. Currently, we have a total of 10 issues, 2 per person. I anticipate more issues being added as the project continues.
 
-
-## October 4, 2022
-
 I researched authentication and login set up for FastAPI. Decided to continue this next week.
 
-CHECKING PIPELINE; DID NOT WORK; Second attempt
+
+## October 5, 2022
+
+* Reviewed database concepts and APIs
+
+We did individual research and studying on databases and APIs. We are stilling trying to figure out the database file structure as well. Plans to reconvene tomororw to build the database tables and APIs.
+
