@@ -2,10 +2,11 @@
 
 -   Created issues/features.
 -   deployed on heroku.
-<<<<<<< HEAD
 
 10/4
 
 -   api endpoints
-=======
->>>>>>> main
+
+10/6
+
+-   backend for signup/login/logout
