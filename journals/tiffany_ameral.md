@@ -33,3 +33,4 @@
     -Started individual git branches
     -Researched APIs to use in the project, will present them to the group tomorrow
     -*The day was mostly spent as a collaborative effort*
+
