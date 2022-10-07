@@ -27,16 +27,9 @@ class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
-<<<<<<< HEAD
 class AccountQueries():
     def get(self, email: str) -> AccountOutWithPassword:
         pass
-=======
-# class AccountQueries():
-
-#     def get(self, email: str) -> AccountOutWithPassword:
-#         pass
->>>>>>> 66e5375fec586e5ae4152f8868d30a7cab6d60d1
 
 #     def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
 #         props = info.dict()
