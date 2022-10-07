@@ -58,7 +58,7 @@ services:
         ports:
             - "8090:8000"
         volumes:
-            - ./accounts_service:/app
+            - ./trading_service:/app
         environment:
             DATABASE_URL: postgresql://trading:password@postgres/trading
             WAIT_HOSTS: postgres:5432
