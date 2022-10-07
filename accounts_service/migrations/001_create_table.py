@@ -9,7 +9,7 @@ steps = [
             email VARCHAR(1000) NOT NULL,
             hashed_pass VARCHAR(1000) NOT NULL,
             buying_power MONEY NOT NULL
-        )
+        );
         """,
         # "Down" SQL statement
         """
