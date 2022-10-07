@@ -4,7 +4,6 @@ from typing import Optional, List, Union
 from queries.pool import pool
 
 
-
 class DuplicateAccountError(ValueError):
     pass
 
@@ -28,8 +27,29 @@ class AccountOutWithPassword(AccountOut):
 
 
 class AccountQueries():
-    def get(self, email: str) -> AccountOutWithPassword:
-        pass
+    def get(self, username: str) -> Optional[AccountOutWithPassword]:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT id, email, full_name, username, hashed_pass
+                    FROM accounts
+                    WHERE username = %s;
+                    """,
+                    [username]
+                )
+                account = result.fetchone()
+                if account == None:
+                    return None
+                else:
+                    return AccountOutWithPassword(
+                        id=account[0],
+                        email=account[1],
+                        full_name=account[2],
+                        username=account[3],
+                        hashed_pass=account[4]
+                    )
+
 
 #     def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
 #         props = info.dict()
@@ -92,11 +112,10 @@ class AccountQueries():
                 #         hashed_pass=account[3]
                 #     )
                 #     result.append(account)
-                
 
     def create(self, account: AccountIn, hashed_pass) -> AccountOutWithPassword:
         with pool.connection() as conn:
-#                 # get a cursor (something to run SQL with)
+            #                 # get a cursor (something to run SQL with)
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -114,7 +133,7 @@ class AccountQueries():
                         "$0.00",
                     ]
                 )
-                id =result.fetchone()[0]
-                #return new data
+                id = result.fetchone()[0]
+                # return new data
                 old_data = account.dict()
                 return AccountOutWithPassword(id=id, hashed_password=hashed_pass, **old_data)
