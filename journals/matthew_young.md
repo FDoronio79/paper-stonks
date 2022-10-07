@@ -18,3 +18,7 @@
 
 -   deployed app on heroku
 -   created some issues for features
+
+#### 10/4/22
+
+-   finished documenting api endpoint design

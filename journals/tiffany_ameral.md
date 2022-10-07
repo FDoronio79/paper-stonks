@@ -34,3 +34,8 @@
     -Researched APIs to use in the project, will present them to the group tomorrow
     -*The day was mostly spent as a collaborative effort*
 
+#### 10/5/22
+    -Discovered that I did not set my upstream tracking properly, fixed it this morning
+    -Did research on how to implement FastAPI on our project
+        -Same with MongoDB
+    -Discovered a pipline failure, have yet to find a resolution 
