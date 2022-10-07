@@ -4,7 +4,6 @@ from typing import Optional, List, Union
 from queries.pool import pool
 
 
-
 class DuplicateAccountError(ValueError):
     pass
 
@@ -27,16 +26,10 @@ class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
-<<<<<<< HEAD
-class AccountQueries():
-    def get(self, email: str) -> AccountOutWithPassword:
-        pass
-=======
 # class AccountQueries():
 
 #     def get(self, email: str) -> AccountOutWithPassword:
 #         pass
->>>>>>> 66e5375fec586e5ae4152f8868d30a7cab6d60d1
 
 #     def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
 #         props = info.dict()
@@ -70,7 +63,7 @@ class AccountQueries():
 class AccountQueries():
     def create(self, account: AccountIn, hashed_pass) -> AccountOutWithPassword:
         with pool.connection() as conn:
-#                 # get a cursor (something to run SQL with)
+            #                 # get a cursor (something to run SQL with)
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -88,7 +81,9 @@ class AccountQueries():
                         "$0.00",
                     ]
                 )
-                id =result.fetchone()[0]
-                #return new data
+                print("RESULT", result)
+                id = result.fetchone()[0]
+                # return new data
                 old_data = account.dict()
-                return AccountOutWithPassword(id=id, **old_data)
+                print(old_data)
+                return AccountOutWithPassword(id=id, hashed_password=hashed_pass, **old_data)
