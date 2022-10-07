@@ -22,12 +22,12 @@ class MyAuthenticator(Authenticator):
         # Return the accounts. That's it.
         return accounts
 
-    def get_hashed_password(self, account: Account):
+    def get_hashed_password(self, account: AccountIn):
         # Return the encrypted password value from your
         # account object
         return account.hashed_password
 
-    def get_account_data_for_cookie(self, account: Account):
+    def get_account_data_for_cookie(self, account: AccountIn):
         # Return the username and the data for the cookie.
         # You must return TWO values from this method.
         return account.username, AccountOut(**account.dict())

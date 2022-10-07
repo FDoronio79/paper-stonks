@@ -7,7 +7,7 @@ from fastapi import (
     Request,
 )
 from jwtdown_fastapi.authentication import Token
-from .auth import authenticator
+from authenticator import authenticator
 
 from pydantic import BaseModel
 
@@ -18,17 +18,22 @@ from queries.accounts import (
     DuplicateAccountError,
 )
 
+
 class AccountForm(BaseModel):
     username: str
     password: str
 
+
 class AccountToken(Token):
     account: AccountOut
+
 
 class HttpError(BaseModel):
     detail: str
 
+
 router = APIRouter()
+
 
 @router.get("/api/protected", response_model=bool)
 async def get_protected(
@@ -68,6 +73,3 @@ async def create_account(
     form = AccountForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
-
-
-

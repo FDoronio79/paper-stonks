@@ -1,6 +1,5 @@
 from urllib.robotparser import RobotFileParser
 from pydantic import BaseModel
-from .client import Queries
 from typing import Optional, List, Union
 from queries.pool import pool
 
@@ -25,8 +24,7 @@ class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
-class AccountQueries(Queries):
-
+class AccountQueries():
     def get(self, email: str) -> AccountOutWithPassword:
         pass
 
