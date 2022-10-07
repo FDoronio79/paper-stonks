@@ -62,6 +62,30 @@ class AccountOutWithPassword(AccountOut):
 #             return DuplicateAccountError()
 
 class AccountQueries():
+
+    def get(self, username: str) -> AccountOutWithPassword:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT id, email, full_name, username, hashed_pass
+                    FROM accounts
+                    WHERE username = (%s)
+                    RETURNING id, email, full_name, username, hashed_pass;
+                    """,
+                    [username]
+                )
+                return AccountOutWithPassword(**result)
+                # for account in db:
+                #     account = AccountOutWithPassword(
+                #         email=account[0],
+                #         full_name=account[1],
+                #         username=account[2],
+                #         hashed_pass=account[3]
+                #     )
+                #     result.append(account)
+                
+
     def create(self, account: AccountIn, hashed_pass) -> AccountOutWithPassword:
         with pool.connection() as conn:
 #                 # get a cursor (something to run SQL with)
@@ -85,4 +109,4 @@ class AccountQueries():
                 id =result.fetchone()[0]
                 #return new data
                 old_data = account.dict()
-                return AccountOutWithPassword(id=id, **old_data)
+                return AccountOutWithPassword(id=id, hashed_password=hashed_pass, **old_data)
