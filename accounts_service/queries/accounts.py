@@ -63,19 +63,28 @@ class AccountOutWithPassword(AccountOut):
 
 class AccountQueries():
 
-    def get(self, username: str) -> AccountOutWithPassword:
+    def get(self, username: str) -> Optional[AccountOutWithPassword]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
                     SELECT id, email, full_name, username, hashed_pass
                     FROM accounts
-                    WHERE username = (%s)
-                    RETURNING id, email, full_name, username, hashed_pass;
+                    WHERE username = %s;
                     """,
                     [username]
                 )
-                return AccountOutWithPassword(**result)
+                account = result.fetchone()
+                if account == None:
+                    return None
+                else:
+                    return AccountOutWithPassword(
+                        id=account[0],
+                        email=account[1],
+                        full_name=account[2],
+                        username=account[3],
+                        hashed_pass=account[4]
+                    )
                 # for account in db:
                 #     account = AccountOutWithPassword(
                 #         email=account[0],
