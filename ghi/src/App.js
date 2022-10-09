@@ -32,7 +32,7 @@ function App() {
     <div>
       {/* <ErrorNotification error={error} />
       <Construct info={launch_info} /> */}
-      <MainPage />
+      {/* <MainPage /> */}
     </div>
   );
 }
