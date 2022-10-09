@@ -26,37 +26,6 @@ class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
-
-
-#     def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
-#         props = info.dict()
-#         props["password"] = hashed_password
-#         props["roles"] = RobotFileParser
-#         try:
-#             with pool.connection() as conn:
-#                 # get a cursor (something to run SQL with)
-#                 with conn.cursor() as db:
-#                     # run our INSERT statement
-#                     result = db.execute(
-#                         """
-#                         INSERT INTO accounts
-#                             (email, username, hashed_pass, buying_power)
-#                         VALUES
-#                             (%s, %s, %s, %s)
-#                         RETURNING id;
-#                         """,
-#                         [
-
-#                         ]
-#                     )
-#                     id = result.fetchone()[0]
-#                     # return new data
-#                     return self.vacation_in_to_out(id, vacation)
-#             # insert into database
-#         except Exception as e:
-#             print(e)
-#             return DuplicateAccountError()
-
 class AccountQueries():
 
     def get(self, username: str) -> Optional[AccountOutWithPassword]:
