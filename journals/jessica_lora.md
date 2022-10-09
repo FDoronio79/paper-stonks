@@ -49,7 +49,34 @@ I researched authentication and login set up for FastAPI. Decided to continue th
 
 ## October 5, 2022
 
+Today:
+
 * Reviewed database concepts and APIs
 
 We did individual research and studying on databases and APIs. We are stilling trying to figure out the database file structure as well. Plans to reconvene tomororw to build the database tables and APIs.
+
+
+## October 6, 2022
+
+Today:
+
+* I started building database tables and FastAPIs for: Positions, and Transaction;
+
+Following the FastAPI videos, I started to write code for the Transaction FastAPIs. This is a work in progess and will need to be added and tested in Paper Stonks.
+
+
+## October 7-8, 2022
+
+Today:
+
+* I worked on the FastAPI for Transaction.
+
+
+## October 9, 2022
+
+Today:
+
+* I need to test the FastAPI for Transaction.
+* 
+
 
