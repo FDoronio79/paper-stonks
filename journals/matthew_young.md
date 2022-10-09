@@ -22,3 +22,11 @@
 #### 10/4/22
 
 -   finished documenting api endpoint design
+
+#### 10/6/22
+
+-   began work on implementing authentication in FastAPI
+
+#### 10/7/22
+
+-   fixed a bug and completed functionality of account signup, and login/logout

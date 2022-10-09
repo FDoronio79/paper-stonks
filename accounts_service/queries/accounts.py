@@ -40,6 +40,7 @@ class AccountQueries():
                     [username]
                 )
                 account = result.fetchone()
+                print("ACCOUNT: ", account)
                 if account == None:
                     return None
                 else:
@@ -48,16 +49,8 @@ class AccountQueries():
                         email=account[1],
                         full_name=account[2],
                         username=account[3],
-                        hashed_pass=account[4]
+                        hashed_password=account[4]
                     )
-                # for account in db:
-                #     account = AccountOutWithPassword(
-                #         email=account[0],
-                #         full_name=account[1],
-                #         username=account[2],
-                #         hashed_pass=account[3]
-                #     )
-                #     result.append(account)
 
     def create(self, account: AccountIn, hashed_pass) -> AccountOutWithPassword:
         with pool.connection() as conn:
@@ -80,6 +73,7 @@ class AccountQueries():
                     ]
                 )
                 id = result.fetchone()[0]
+                print("id", id)
                 # return new data
                 old_data = account.dict()
                 return AccountOutWithPassword(id=id, hashed_password=hashed_pass, **old_data)
