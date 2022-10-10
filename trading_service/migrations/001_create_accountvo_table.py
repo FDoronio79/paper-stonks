@@ -14,8 +14,4 @@ steps = [
         """
     ]
 
-<<<<<<< HEAD
 ]
-=======
-]
->>>>>>> 24940ad (added accountvo table)
