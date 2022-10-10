@@ -171,6 +171,7 @@ class SignupForm extends React.Component {
         event.preventDefault();
         const data = {...this.state};
         console.log("data:", data);
+         //create development and deployment variables for url
 
         const registrationUrl = "http://localhost:8080/api/accounts";
         console.log(registrationUrl);
