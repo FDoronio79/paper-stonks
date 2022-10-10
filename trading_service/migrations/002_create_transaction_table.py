@@ -14,9 +14,9 @@ steps = [
         """,
         # "Down" SQL statement; Drop table
         """
-        DROP TABLE Transaction;
+        DROP TABLE transactions;
         """
-    ],
+    ]
 ]
 
 # python -m migrations up (will build the table)
