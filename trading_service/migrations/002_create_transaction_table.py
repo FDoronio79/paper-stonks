@@ -4,7 +4,7 @@ steps = [
         """
         CREATE TABLE transactions (
             id SERIAL PRIMARY KEY NOT NULL,
-            username VARCHAT(100) REFERENCES accounts(username) NOT NULL,
+            username VARCHAR(100) REFERENCES accounts(username) NOT NULL,
             symbol VARCHAR(100) NOT NULL,
             type_of VARCHAR(100) NOT NULL,
             time_of_purchase TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -14,9 +14,9 @@ steps = [
         """,
         # "Down" SQL statement; Drop table
         """
-        DROP TABLE Transaction;
+        DROP TABLE transactions;
         """
-    ],
+    ]
 ]
 
 # python -m migrations up (will build the table)
