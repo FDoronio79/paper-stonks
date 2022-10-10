@@ -30,11 +30,7 @@
 
 // function Index() {
 //   return (
-<<<<<<< HEAD
 //     <React.Fragment> 
-=======
-//     <React.Fragment>
->>>>>>> e255746edd32a46b0d0f515f16bd2753888d33f7
 //       <AppAppBar />
 //       <ProductHero />
 //       <ProductValues />
