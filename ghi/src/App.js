@@ -3,6 +3,10 @@ import Construct from './Construct.js'
 import ErrorNotification from './ErrorNotification';
 import './App.css';
 import MainPage from './MainPage';
+import Login from './Login';
+import Signup from './Signup';
+
+
 
 function App() {
   const [launch_info, setLaunchInfo] = useState([]);
@@ -29,11 +33,16 @@ function App() {
 
 
   return (
+    <>
+    {/* <Searchbar /> */}
     <div>
       {/* <ErrorNotification error={error} />
       <Construct info={launch_info} /> */}
-      <MainPage />
+      {/* <MainPage /> */}
+      {/* <Login /> */}
+      <Signup />
     </div>
+    </>
   );
 }
 
