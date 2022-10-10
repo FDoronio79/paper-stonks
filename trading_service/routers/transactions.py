@@ -11,7 +11,6 @@ def create_transaction(transaction: TransactionIn,
     response: Response,
     repo: TransactionRepository = Depends()
 ):
-    response.status_code = 400
     return repo.create(transaction)
 
 

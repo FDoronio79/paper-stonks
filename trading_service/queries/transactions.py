@@ -10,7 +10,7 @@ class Error(BaseModel):
 class TransactionIn(BaseModel):
     username: str
     symbol: str
-    price: int
+    price: str
     type_of: str
     quantity: int
     time_of_purchase: datetime
@@ -21,7 +21,7 @@ class TransactionOut(BaseModel):
     id: int
     username: str
     symbol: str
-    price: int
+    price: str
     type_of: str
     quantity: int
     time_of_purchase: datetime
@@ -38,14 +38,24 @@ class TransactionRepository:
                     #Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, username, symbol, type, time_of_purchase, quantity, price
+                        SELECT id, username, symbol, type_of, time_of_purchase, quantity, price
                         FROM transactions
-                        WHERE id = %s
+                        WHERE id = %s ;
                         """,
                         [transaction_id]
                     )
-                    record = result.fetchone()
-                    return self.record_to_transaction_out(record)
+                    record = result.fetchone() 
+                    transaction = TransactionOut(
+                            id=record[0],
+                            username=record[1],
+                            symbol=record[2],
+                            type_of=record[3],
+                            time_of_purchase=record[4],
+                            quantity=record[5],
+                            price=record[6],
+                        )
+                    # return self.record_to_transaction_out(record)
+                    return transaction
         except Exception as e:
             print(e)
             return {"message": "Could no get that transaction"}
@@ -62,21 +72,22 @@ class TransactionRepository:
                     #Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, username, symbol, type, time_of_purchase, quantity, price
+                        SELECT id, username, symbol, type_of, time_of_purchase, quantity, price
                         FROM transactions
                         ORDER BY time_of_purchase;
                         """
                     )
                     result = [] #can rewrite at list comprehension
                     for record in db:
+                        print(record)
                         transaction = TransactionOut(
                             id=record[0],
                             username=record[1],
                             symbol=record[2],
-                            price=record[3],
-                            type_of=record[4],
+                            type_of=record[3],
+                            time_of_purchase=record[4],
                             quantity=record[5],
-                            time_of_purchase=record[6],
+                            price=record[6],
                         )
                         result.append(transaction)
                     return result
@@ -97,7 +108,7 @@ class TransactionRepository:
                     result = db.execute(
                         """
                         INSERT INTO transactions
-                            (username, symbol, type, time_of_purchase, quantity, price)
+                            (username, symbol, type_of, time_of_purchase, quantity, price)
                         VALUES
                             (%s, %s, %s, %s, %s, %s)
                         RETURNING id;

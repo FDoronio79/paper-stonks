@@ -11,8 +11,9 @@ services:
         volumes:
             - postgres-data:/var/lib/postgresql/data
         environment:
-            - POSTGRES_MULTIPLE_DATABASES=accounts,trading
-            - POSTGRES_PASSWORD=test-databases
+            POSTGRES_MULTIPLE_DATABASES: accounts,trading
+            POSTGRES_USER: jessica
+            POSTGRES_PASSWORD: test-databases
         ports:
             - 15432:5432
     fastapi:
