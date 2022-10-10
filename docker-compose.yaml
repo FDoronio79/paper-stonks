@@ -62,6 +62,8 @@ services:
         environment:
             DATABASE_URL: postgresql://trading:password@postgres/trading
             WAIT_HOSTS: postgres:5432
+            WAIT_BEFORE: 5
+            WAIT_TIMEOUT: 60
     pg-admin:
         image: dpage/pgadmin4
         volumes:
