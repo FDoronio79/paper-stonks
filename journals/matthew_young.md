@@ -30,3 +30,9 @@
 #### 10/7/22
 
 -   fixed a bug and completed functionality of account signup, and login/logout
+
+#### 10/10/22
+
+-   created AccountsVO table in Trading microservice
+
+#### 10/11/22
