@@ -140,30 +140,29 @@ class SignupForm extends React.Component {
 
     handleChangeEmail(event) {
         const value = event.target.value;
-        this.setState({email: value});
+        this.setState({ email: value });
     }
 
     handleChangeUsername(event) {
         const value = event.target.value;
-        this.setState({username: value});
+        this.setState({ username: value });
     }
 
     handleChangePassword(event) {
         const value = event.target.value;
-        this.setState({password: value});
+        this.setState({ password: value });
     }
 
     handleChangeFullName(event) {
         const value = event.target.value;
-        this.setState({full_name: value});
+        this.setState({ full_name: value });
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        const data = {...this.state};
+        const data = { ...this.state };
         console.log("data:", data);
-         //create development and deployment variables for url
-
+        //create development and deployment variables for url
         const registrationUrl = "http://localhost:8080/api/accounts";
         console.log(registrationUrl);
         const fetchConfig = {
@@ -180,11 +179,29 @@ class SignupForm extends React.Component {
             console.log("new account:", newAccount);
             this.setState({
                 email: "",
-                username: "",
                 password: "",
                 full_name: "",
             })
+            const registrationVOUrl = "http://localhost:8090/api/accountsvo";
+            console.log(registrationVOUrl);
+            const fetchConfigvo = {
+                method: "post",
+                body: JSON.stringify({"username": data.username}),
+                headers: {
+                    "Content-type": "application/json",
+                },
+            };
+            console.log("fetchCOnfigvo", fetchConfigvo);
+            const responsevo = await fetch(registrationVOUrl, fetchConfigvo);
+            console.log("response console.log", responsevo)
+            if (responsevo.ok) {
+                const newAccountVO = await responsevo.json();
+                console.log("new accountvo:", newAccountVO);
+                this.setState({
+                    username: "",
+                })
         }
+            }
     }
 
     render() {
