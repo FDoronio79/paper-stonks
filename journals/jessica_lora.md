@@ -65,18 +65,28 @@ Today:
 Following the FastAPI videos, I started to write code for the Transaction FastAPIs. This is a work in progess and will need to be added and tested in Paper Stonks.
 
 
-## October 7-8, 2022
+## October 7-9, 2022
 
 Today:
 
 * I worked on the FastAPI for Transaction.
 
+It took a few days and I worked through a few errors, but finally, I got transaction FastAPI to work!!!! There are still a few revisions that will need to be made but currently its all working.
 
-## October 9, 2022
+
+## October 10, 2022
 
 Today:
 
-* I need to test the FastAPI for Transaction.
-* 
+* I reconvened with my group and we discussed our progress.
+
+We all got stuck when trying to make two tables in the same database. It turns out the issue was having commas in places where they were not needed. sql/postgres is picky about where you can have commas, as it will think the comma signifies something else is to come; 
+
+
+## October 11, 2022
+
+Today:
+
+* I walked two of my teammates through the steps of building a FastAPI for positions. I think its important that we all get a chance to work with making FastAPIs. Again, changes will need to be made to the Positins table, as I made many fields VARCHARS for simplicity. I will need to discuss with teammates which ones should be ForeignKeys to Transactions table. 
 
 
