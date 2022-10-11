@@ -4,7 +4,7 @@ import ErrorNotification from './ErrorNotification';
 import './App.css';
 import MainPage from './MainPage';
 import Login from './components/Login';
-import Signup from './components/Signup';
+import SignupForm from './components/Signup';
 
 
 
@@ -40,7 +40,7 @@ function App() {
       <Construct info={launch_info} /> */}
       {/* <MainPage /> */}
       <Login />
-      {/* <Signup /> */}
+      {/* <SignupForm /> */}
     </div>
     </>
   );

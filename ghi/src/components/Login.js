@@ -26,18 +26,20 @@ class LoginForm extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state};
-        console.log("data:", data);
+        // console.log("data:", data);
          //create development and deployment variables for url
 
         const registrationUrl = "http://localhost:8080/token";
         console.log(registrationUrl);
-        const form = document.getElementById('form');
-        const formData = new FormData(form);
+        const formData = new FormData();
+        formData.append('username', data.username);
+        formData.append('password', data.password);
+        console.log(formData);
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(formData),
             headers: {
-                "Content-type": "application/x-www-form-urlencoded",
+                "Content-type": 'application/x-www-form-urlencoded',
             },
         };
         const response = await fetch(registrationUrl, fetchConfig);
