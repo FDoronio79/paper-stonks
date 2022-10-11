@@ -3,8 +3,8 @@ import Construct from './Construct.js'
 import ErrorNotification from './ErrorNotification';
 import './App.css';
 import MainPage from './MainPage';
-import Login from './Login';
-import Signup from './Signup';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 
 
@@ -39,8 +39,8 @@ function App() {
       {/* <ErrorNotification error={error} />
       <Construct info={launch_info} /> */}
       {/* <MainPage /> */}
-      {/* <Login /> */}
-      <Signup />
+      <Login />
+      {/* <Signup /> */}
     </div>
     </>
   );
