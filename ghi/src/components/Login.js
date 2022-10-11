@@ -26,9 +26,9 @@ class LoginForm extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state};
-        // console.log("data:", data);
+        console.log("data:", data);
          //create development and deployment variables for url
-
+        // let url = `${process.env.REACT_APP_API_HOST}/token`
         const registrationUrl = "http://localhost:8080/token";
         console.log(registrationUrl);
         const formData = new FormData();
@@ -37,7 +37,9 @@ class LoginForm extends React.Component {
         console.log(formData);
         const fetchConfig = {
             method: "post",
-            body: JSON.stringify(formData),
+            body: JSON.stringify(
+                `grant_type=&username=${data.username}&password=${data.password}&scope=&client_id=&client_secret=`
+            ),
             headers: {
                 "Content-type": 'application/x-www-form-urlencoded',
             },
