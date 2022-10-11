@@ -14,7 +14,7 @@ steps = [
         """,
         # "Down" SQL statement; Drop table
         """
-        DROP TABLE Transaction;
+        DROP TABLE transactions;
         """
     ]
 ]
