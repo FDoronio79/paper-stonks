@@ -1,3 +1,4 @@
+from unicodedata import numeric
 from pydantic import BaseModel
 from datetime import datetime
 from queries.pool import pool
@@ -10,9 +11,9 @@ class Error(BaseModel):
 class TransactionIn(BaseModel):
     username: str
     symbol: str
-    price: str
+    price: float
     type_of: str
-    quantity: int
+    quantity: float
     time_of_purchase: datetime
 
 
@@ -21,9 +22,9 @@ class TransactionOut(BaseModel):
     id: int
     username: str
     symbol: str
-    price: str
+    price: float
     type_of: str
-    quantity: int
+    quantity: float
     time_of_purchase: datetime
 
 
