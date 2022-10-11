@@ -158,15 +158,6 @@ class SignupForm extends React.Component {
         this.setState({full_name: value});
     }
 
-    // async componentDidMount() {
-    //     const url = "http://localhost:8080/api/technicians/";
-    //     const response = await fetch(url);
-    //     if (response.ok) {
-    //         const data = await response.json();
-    //         this.setState({ technicians: data.technicians});
-    //     }
-    // }
-
     async handleSubmit(event) {
         event.preventDefault();
         const data = {...this.state};
@@ -201,12 +192,12 @@ class SignupForm extends React.Component {
             <div className="my-5 containerw">
                 <div className="offset-3 col-6">
                     <div className="shadow p-4 mt-4">
-                        <h2 className="text-center">Create Appointment</h2>
+                        <h2 className="text-center">Signup</h2>
                         <form onSubmit={this.handleSubmit} id="create-appointment-form">
                             <div className="form-floating mb-3">
                                 <label htmlFor="Email">Email: </label>
                                 <input onChange={this.handleChangeEmail} value={this.state.email} placeholder="Email" required type="text" name="email" id="email" className="form-control" />
-                                
+
                             </div>
                             <div className="form-floating mb-3">
                                 <label htmlFor="username">Username: </label>
@@ -230,3 +221,132 @@ class SignupForm extends React.Component {
 }
 
 export default SignupForm;
+
+// import React, { useContext, useState } from "react";
+
+// import { UserContext } from "../context/UserContext";
+// import ErrorMessage from "./ErrorMessege";
+
+// const Signup = () => {
+//     const [email, setEmail] = useState("");
+//     const [username, setUserName] = useState("");
+//     const [password, setPassword] = useState("");
+//     const [confirmationPassword, setConfirmationPassword] = useState("");
+//     const [full_name, setFullName] = useState("");
+//     const [errorMessage, setErrorMessage] = useState("");
+//     const [, setToken] = useContext(UserContext);
+
+//     const submitRegistration = async () => {
+//         const requestOptions = {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({
+//                 email: email,
+//                 username: username,
+//                 password: password,
+//                 full_name:
+//                     full_name
+//             }),
+//         };
+
+//         const response = await fetch("http://localhost:8080/api/accounts", requestOptions);
+//         const data = await response.json();
+
+//         if (!response.ok) {
+//             setErrorMessage(data.detail);
+//         } else {
+//             setToken(data.access_token);
+//         }
+//     };
+
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         if (password === confirmationPassword && password.length > 5) {
+//             submitRegistration();
+//         } else {
+//             setErrorMessage(
+//                 "Ensure that the passwords match and greater than 5 characters"
+//             );
+//         }
+//     };
+
+//     return (
+//         <div className="column">
+//             <form className="box" onSubmit={handleSubmit}>
+//                 <h1 className="title has-text-centered">Register</h1>
+//                 <div className="field">
+//                     <label className="label">Email Address</label>
+//                     <div className="control">
+//                         <input
+//                             type="email"
+//                             placeholder="Enter email"
+//                             value={email}
+//                             onChange={(e) => setEmail(e.target.value)}
+//                             className="input"
+//                             required
+//                         />
+//                     </div>
+//                 </div>
+//                 <div className="field">
+//                     <label className="label">Username</label>
+//                     <div className="control">
+//                         <input
+//                             type="text"
+//                             placeholder="Enter Username"
+//                             value={username}
+//                             onChange={(e) => setUserName(e.target.value)}
+//                             className="input"
+//                             required
+//                         />
+//                     </div>
+//                 </div>
+//                 <div className="field">
+//                     <label className="label">Password</label>
+//                     <div className="control">
+//                         <input
+//                             type="password"
+//                             placeholder="Enter password"
+//                             value={password}
+//                             onChange={(e) => setPassword(e.target.value)}
+//                             className="input"
+//                             required
+//                         />
+//                     </div>
+//                 </div>
+//                 <div className="field">
+//                     <label className="label">Confirm Password</label>
+//                     <div className="control">
+//                         <input
+//                             type="password"
+//                             placeholder="Enter password"
+//                             value={confirmationPassword}
+//                             onChange={(e) => setConfirmationPassword(e.target.value)}
+//                             className="input"
+//                             required
+//                         />
+//                     </div>
+//                 </div>
+//                 <div className="field">
+//                     <label className="label">Full Name</label>
+//                     <div className="control">
+//                         <input
+//                             type="text"
+//                             placeholder="Enter Full Name"
+//                             value={full_name}
+//                             onChange={(e) => setFullName(e.target.value)}
+//                             className="input"
+//                             required
+//                         />
+//                     </div>
+//                 </div>
+//                 <ErrorMessage message={errorMessage} />
+//                 <br />
+//                 <button className="button is-primary" type="submit">
+//                     Sign Up
+//                 </button>
+//             </form>
+//         </div>
+//     );
+// };
+
+// export default Signup;
