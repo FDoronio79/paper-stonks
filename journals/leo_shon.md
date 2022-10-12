@@ -18,3 +18,9 @@
 10/10
 
 -   added accountsvo table to the database and then made migrations
+
+10/11
+
+-   added accountsvo table
+-   added accountsvo endpoint
+-   got the accountsvo to be created in the frontend when accounts gets made
