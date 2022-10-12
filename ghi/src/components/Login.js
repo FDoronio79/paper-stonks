@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -45,7 +44,7 @@ class LoginForm extends React.Component {
         console.log("response console.log", response)
         if (response.ok) {
             const newAccount = await response.json();
-            console.log("new account:", newAccount);
+            console.log("newAccount:", newAccount);
             this.setState({
                 username: "",
                 password: "",
