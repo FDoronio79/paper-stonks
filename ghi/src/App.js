@@ -7,6 +7,8 @@ import Login from './components/Login';
 import SignupForm from './components/Signup';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Nav from './Nav'
+import Header from "./components/Header";
+import { UserContext } from "./context/UserContext";
 
 
 function App() {
