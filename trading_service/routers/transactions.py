@@ -6,6 +6,7 @@ from queries.transactions import TransactionIn, TransactionRepository, Transacti
 router = APIRouter()
 
 
+
 @router.post("/transactions", response_model=Union[TransactionOut, Error])
 def create_transaction(transaction: TransactionIn, 
     response: Response,
@@ -27,3 +28,14 @@ def get_one_transaction(
     repo: TransactionRepository = Depends(),
 ) -> TransactionOut:
     return repo.get_one(transaction_id)
+
+
+
+# case where you buy and have no position
+# case where you're selling but not all
+# case where you're selling all, delete
+
+
+
+
+
