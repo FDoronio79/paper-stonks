@@ -118,7 +118,7 @@ class PositionRepository:
                 return {"message": "Could not get all positions"}
         
 
-    def delete(self, position_id: int) -> bool:
+    def delete(self, position_symbol: str) -> bool:
         try:
             #connect the database
             with pool.connection() as conn:    #will create connection
@@ -128,9 +128,9 @@ class PositionRepository:
                     db.execute(
                         """
                         DELETE FROM positions
-                        WHERE id = %s
+                        WHERE symbol = %s
                         """,
-                        [position_id]
+                        [position_symbol]
                     )
                     return True
         except Exception as e:
