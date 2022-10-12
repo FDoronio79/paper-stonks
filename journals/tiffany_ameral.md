@@ -54,6 +54,7 @@
     -
 
 #### 10/5/22
-    -Pair programming with jessica, working on the table for out positoins 
+    -Pair programming with jessica, working on the table for our positoins 
+    -
     
 
