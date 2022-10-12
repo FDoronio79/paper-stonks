@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { UserContext  } from "../context/UserContext";
-import { useContext, setStatus } from 'react'
+import { UserContext } from "../context/UserContext";
 
 
 
@@ -9,11 +8,10 @@ const Dashboard = () => {
     const [token] = useContext(UserContext);
     useEffect(() => {
         const loggedInUser = localStorage.getItem("authenticated");
-    
+
     }, []);
-    function logout() {
-        pass
-        }
+    const logout = () => {
+        fetch(`http://localhost:8080/token`)
     }
     if (!token) {
         console.log("BRUHHH")
@@ -21,10 +19,10 @@ const Dashboard = () => {
     } else {
         return (
             <>
-            <button onClick={logout}> Logout </button>
-            <div>
-                <p>Welcome to your Dashboard</p>
-            </div>
+                <button onClick={logout}> Logout </button>
+                <div>
+                    <p>Welcome to your Dashboard</p>
+                </div>
             </>
         );
     }
