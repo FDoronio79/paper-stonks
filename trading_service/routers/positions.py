@@ -34,12 +34,12 @@ def get_all(
     return repo.get_all()
 
 
-@router.delete("/positions/{position_id}", response_model=bool)
+@router.delete("/positions/{position_symbol}", response_model=bool)
 def delete_position(
-    position_id: int,
+    position_symbol: str,
     repo: PositionRepository = Depends(),
 ) -> bool:
-    return repo.delete(position_id)
+    return repo.delete(position_symbol)
 
 
 
