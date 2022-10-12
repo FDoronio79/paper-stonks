@@ -27,39 +27,39 @@ class PositionsOut(BaseModel):
 
 
 class PositionRepository:
+    def get_one(self, position_id: int) -> Optional[PositionsOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id, username, symbol, name, quantity, type_of
+                        FROM positions
+                        WHERE id = %s;
+                        """,
+                        [position_id]
+                    )
+                    record = result.fetchone()
+                    position = PositionsOut(
+                        id=record[0],
+                        username=record[1],
+                        symbol=record[2],
+                        name=record[3],
+                        quantity=record[4],
+                        type_of=record[5],
+                    )
+                return position
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get that position"}
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     def create(self, position: PositionsIn) -> PositionsOut:
         try:
-            #connect the database
-            with pool.connection() as conn:    #will create connection
-                #get a cursor (something to run SQL with)
+            # connect the database
+            with pool.connection() as conn:  # will create connection
+                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    #Run our INSERT statement
+                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO positions
@@ -77,7 +77,7 @@ class PositionRepository:
                         ]
                     )
                     id = result.fetchone()[0]
-                    #Return new data
+                    # Return new data
                     old_data = position.dict()
                     return PositionsOut(id=id, **old_data)
         except Exception as e:
@@ -85,57 +85,56 @@ class PositionRepository:
             return {"message": "Could not create position"}
 
 
-
     def get_all(self) -> Union[Error, List[PositionsOut]]:
-        try:
-            #connect the database
-            with pool.connection() as conn:    #will create connection
-                #get a cursor (something to run SQL with)
-                with conn.cursor() as db:
-                    #Run our SELECT statement
-                    result = db.execute(
-                        """
-                        SELECT id, username, symbol, name, quantity, type_of
-                        FROM positions
-                        ORDER BY id;
-                        """
-                    )
-                    result = [] #can rewrite at list comprehension
-                    for record in db:
-                        print(record)
-                        position = PositionsOut(
-                            id=record[0],
-                            username=record[1],
-                            symbol=record[2],
-                            name=record[3],
-                            quantity=record[4],
-                            type_of=record[5],
+            try:
+                #connect the database
+                with pool.connection() as conn:    #will create connection
+                    #get a cursor (something to run SQL with)
+                    with conn.cursor() as db:
+                        #Run our SELECT statement
+                        result = db.execute(
+                            """
+                            SELECT id, username, symbol, name, quantity, type_of
+                            FROM positions
+                            ORDER BY id;
+                            """
                         )
-                        result.append(position)
-                    return result
+                        result = [] #can rewrite at list comprehension
+                        for record in db:
+                            print(record)
+                            position = PositionsOut(
+                                id=record[0],
+                                username=record[1],
+                                symbol=record[2],
+                                name=record[3],
+                                quantity=record[4],
+                                type_of=record[5],
+                            )
+                            result.append(position)
+                        return result
 
-        except Exception as e:
-            print(e)
-            return {"message": "Could not get all positions"}
-    
+            except Exception as e:
+                print(e)
+                return {"message": "Could not get all positions"}
+        
 
-    def delete(self, position_id: int) -> bool:
-        try:
-            #connect the database
-            with pool.connection() as conn:    #will create connection
-                #get a cursor (something to run SQL with)
-                with conn.cursor() as db:
-                    #Run our SELECT statement
-                    db.execute(
-                        """
-                        DELETE FROM positions
-                        WHERE id = %s
-                        """,
-                        [position_id]
-                    )
-                    return True
-        except Exception as e:
-            print(e)
-            return False
+        def delete(self, position_id: int) -> bool:
+            try:
+                #connect the database
+                with pool.connection() as conn:    #will create connection
+                    #get a cursor (something to run SQL with)
+                    with conn.cursor() as db:
+                        #Run our SELECT statement
+                        db.execute(
+                            """
+                            DELETE FROM positions
+                            WHERE id = %s
+                            """,
+                            [position_id]
+                        )
+                        return True
+            except Exception as e:
+                print(e)
+                return False
 
-            
+                

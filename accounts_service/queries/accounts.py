@@ -22,11 +22,56 @@ class AccountOut(BaseModel):
     full_name: str
 
 
+class AccountOutWithBP(AccountOut):
+    buying_power: str
+
+
+class BuyingPowerOut(BaseModel):
+    username: str
+    buying_power: str
+
+
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
 class AccountQueries():
+    def get_buying_power(username: str) -> Optional[BuyingPowerOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT buying_power FROM accounts
+                        WHERE username = %s
+                        """,
+                        [username]
+                    )
+                    record = result.fetchone()
+                    return BuyingPowerOut(username=username, buying_power=record[0])
+        except Exception as e:
+            print(e)
+            return {"message": "Could not update buying power"}
+
+    def change_buying_power(buying_power: float, username: str) -> Optional[BuyingPowerOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE accounts
+                        SET buying_power = %s
+                        WHERE username = %s
+                        """,
+                        [
+                            buying_power,
+                            username
+                        ]
+                    )
+                    return BuyingPowerOut(username=username, buying_power=buying_power)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not update buying power"}
 
     def get(self, username: str) -> Optional[AccountOutWithPassword]:
         with pool.connection() as conn:
