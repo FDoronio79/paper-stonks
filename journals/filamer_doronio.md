@@ -33,3 +33,7 @@
 - Finishing up Login front-end having some issues with an error 422
   - I believe this issue is due to not passing in the token of the account when logging in
 
+#### 10/11/22
+- Added accountvo to Signup frontend to create a trading_service accountvo account  with the same username as the account_service account.
+- Working on Logout on the front end
+- Drafting Mainpage 

@@ -21,7 +21,7 @@
 
 #### 10/4/22
 
--   finished documenting api endpoint design
+-   finished documenting api endpoint design in docs/api_endpoints.md
 
 #### 10/6/22
 
@@ -29,10 +29,21 @@
 
 #### 10/7/22
 
--   fixed a bug and completed functionality of account signup, and login/logout
+-   fixed a bug and completed functionality for authentication
+-   Finished endpoint for create account: POST @ /api/accounts
+-   finished endpoint for login and logout: POST, DELETE @ /token
 
 #### 10/10/22
 
--   created AccountsVO table in Trading microservice
+-   created AccountsVO table in Trading microservice via SQL statements in a migration
 
 #### 10/11/22
+
+##### Trading microservice
+
+-   Made an endpoint for creating an AccountVO in the trading microservice. This was needed to be able to enable a one-to-many relationship between accounts, and their respective transactions and positions.
+
+##### Accounts Microservice
+
+-   Made an endpoint that returns the current logged in user's details such as buying power, username, full name and email
+-   Made an endpoint that allows a logged in user to update their buying power balance
