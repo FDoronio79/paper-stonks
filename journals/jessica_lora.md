@@ -87,6 +87,8 @@ We all got stuck when trying to make two tables in the same database. It turns o
 
 Today:
 
-* I walked two of my teammates through the steps of building a FastAPI for positions. I think its important that we all get a chance to work with making FastAPIs. Again, changes will need to be made to the Positins table, as I made many fields VARCHARS for simplicity. I will need to discuss with teammates which ones should be ForeignKeys to Transactions table. 
+* I worked on the FastAPI for Positions.
+
+I worked with Tiffany to complete the FasAPIs for Positions. I did the GET all, POST create, and DELETE. We figured out the ForeignKey fields for Positions and Transactions.
 
 
