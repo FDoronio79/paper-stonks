@@ -39,3 +39,21 @@
     -Did research on how to implement FastAPI on our project
         -Same with MongoDB
     -Discovered a pipline failure, have yet to find a resolution 
+
+#### 10/6/22
+
+#### 10/7/22
+    -Met with team to discuss goals
+    -Collaborated on back end planning 
+    -Made small progress on front end
+        -spent time researching how to impliment MaterialUI elements
+
+#### 10/10/22
+    -Spent more time working on front end reearch
+    -Collaborated on getting tables working for transactions and accounts 
+    -
+
+#### 10/5/22
+    -Pair programming with jessica, working on the table for out positoins 
+    
+
