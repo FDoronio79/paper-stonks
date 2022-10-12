@@ -1,0 +1,121 @@
+from pydantic import BaseModel
+from queries.pool import pool
+from typing import List, Union, Optional
+
+
+class Error(BaseModel):
+    message: str
+
+
+
+class PositionIn(BaseModel):
+    username: str
+    symbol: str
+    name: str
+    quantity: float
+    type_of: str
+
+
+
+
+class PositionOut(BaseModel):
+    id: int
+    username: str
+    symbol: str
+    name: str
+    quantity: float
+    type_of: str
+
+
+
+
+
+class PositionRepository:
+
+
+    def create(self, position: PositionIn) -> PositionOut:
+        try:
+            #connect the database
+            with pool.connection() as conn:    #will create connection
+                #get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    #Run our INSERT statement
+                    result = db.execute(
+                        """
+                        INSERT INTO positions
+                            (username, symbol, name, quantity, type_of)
+                        VALUES
+                            (%s, %s, %s, %s, %s)
+                        RETURNING id;
+                        """,
+                        [
+                            position.username,
+                            position.symbol,
+                            position.name,
+                            position.quantity,
+                            position.type_of
+                        ]
+                    )
+                    id = result.fetchone()[0]
+                    #Return new data
+                    old_data = position.dict()
+                    return PositionOut(id=id, **old_data)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not create position"}
+
+
+
+    def get_all(self) -> Union[Error, List[PositionOut]]:
+        try:
+            #connect the database
+            with pool.connection() as conn:    #will create connection
+                #get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    #Run our SELECT statement
+                    result = db.execute(
+                        """
+                        SELECT id, username, symbol, name, quantity, type_of
+                        FROM positions
+                        ORDER BY id;
+                        """
+                    )
+                    result = [] #can rewrite at list comprehension
+                    for record in db:
+                        print(record)
+                        position = PositionOut(
+                            id=record[0],
+                            username=record[1],
+                            symbol=record[2],
+                            name=record[3],
+                            quantity=record[4],
+                            type_of=record[5],
+                        )
+                        result.append(position)
+                    return result
+
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get all positions"}
+    
+
+    def delete(self, position_id: int) -> bool:
+        try:
+            #connect the database
+            with pool.connection() as conn:    #will create connection
+                #get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    #Run our SELECT statement
+                    db.execute(
+                        """
+                        DELETE FROM positions
+                        WHERE id = %s
+                        """,
+                        [position_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+            
+            
