@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, Response
 from typing import Union, List, Optional
-from queries.positions import PositionIn, PositionOut, Error, PositionRepository
+from queries.positions import PositionsIn, PositionsOut, Error, PositionRepository
 
 
 router = APIRouter()
 
 
 
-@router.post("/positions", response_model=Union[PositionOut, Error])
-def create_position(position: PositionIn, 
+@router.post("/positions", response_model=Union[PositionsOut, Error])
+def create_position(position: PositionsIn, 
     response: Response,
     repo: PositionRepository = Depends()
 ):
@@ -16,7 +16,18 @@ def create_position(position: PositionIn,
 
 
 
-@router.get("/positions", response_model=Union[Error, List[PositionOut]])
+
+
+
+
+
+
+
+
+
+
+
+@router.get("/positions", response_model=Union[Error, List[PositionsOut]])
 def get_all(
     repo: PositionRepository = Depends(),
 ):

@@ -1,3 +1,5 @@
+from turtle import position
+from unicodedata import name
 from pydantic import BaseModel
 from queries.pool import pool
 from typing import List, Union, Optional
@@ -7,8 +9,7 @@ class Error(BaseModel):
     message: str
 
 
-
-class PositionIn(BaseModel):
+class PositionsIn(BaseModel):
     username: str
     symbol: str
     name: str
@@ -16,9 +17,7 @@ class PositionIn(BaseModel):
     type_of: str
 
 
-
-
-class PositionOut(BaseModel):
+class PositionsOut(BaseModel):
     id: int
     username: str
     symbol: str
@@ -27,13 +26,34 @@ class PositionOut(BaseModel):
     type_of: str
 
 
-
-
-
 class PositionRepository:
 
 
-    def create(self, position: PositionIn) -> PositionOut:
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    def create(self, position: PositionsIn) -> PositionsOut:
         try:
             #connect the database
             with pool.connection() as conn:    #will create connection
@@ -59,14 +79,14 @@ class PositionRepository:
                     id = result.fetchone()[0]
                     #Return new data
                     old_data = position.dict()
-                    return PositionOut(id=id, **old_data)
+                    return PositionsOut(id=id, **old_data)
         except Exception as e:
             print(e)
             return {"message": "Could not create position"}
 
 
 
-    def get_all(self) -> Union[Error, List[PositionOut]]:
+    def get_all(self) -> Union[Error, List[PositionsOut]]:
         try:
             #connect the database
             with pool.connection() as conn:    #will create connection
@@ -83,7 +103,7 @@ class PositionRepository:
                     result = [] #can rewrite at list comprehension
                     for record in db:
                         print(record)
-                        position = PositionOut(
+                        position = PositionsOut(
                             id=record[0],
                             username=record[1],
                             symbol=record[2],
@@ -117,5 +137,5 @@ class PositionRepository:
         except Exception as e:
             print(e)
             return False
-            
+
             
