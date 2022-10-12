@@ -57,12 +57,8 @@ class LoginForm extends React.Component {
     }
 
     render() {
-        // let messageClasses = "alert alert-success d-none mb-0";
-        // let formClasses = "";
         if (this.state.hasSignedUp) {
-            // messageClasses = "alert alert-success mb-0";
-            // formClasses = "d-none";
-            return <Navigate to="/" replace={true} />;
+            return <Navigate to="/dashboard" replace={true} />;
         }
 
         return (

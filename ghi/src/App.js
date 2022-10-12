@@ -7,6 +7,7 @@ import MainPage from "./MainPage";
 import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
+import Dashboard from "./components/Dashboard";
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
 
@@ -34,20 +35,21 @@ function App() {
     // }, [])
 
     return (
+      <>
+        <MainPage />
         <BrowserRouter>
             <Nav />
             <div className="container">
                 <Routes>
                     {/* <ErrorNotification error={error} />
       <Construct info={launch_info} /> */}
-                    {/* <MainPage /> */}
-                    {/* <Route path="/" element={<MainPage />} /> */}
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/signup" element={<SignupForm />} />
-                    {/* <Route path="/" element={<MainPage />} /> */}
                 </Routes>
             </div>
         </BrowserRouter>
+      </>
     );
 }
 
