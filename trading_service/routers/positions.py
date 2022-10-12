@@ -22,3 +22,23 @@ def get_one_position(
     repo: PositionRepository = Depends(),
 ) -> PositionsOut:
     return repo.get_one(position_id)
+
+
+
+
+
+@router.get("/positions", response_model=Union[Error, List[PositionsOut]])
+def get_all(
+    repo: PositionRepository = Depends(),
+):
+    return repo.get_all()
+
+
+@router.delete("/positions/{position_id}", response_model=bool)
+def delete_position(
+    position_id: int,
+    repo: PositionRepository = Depends(),
+) -> bool:
+    return repo.delete(position_id)
+
+
