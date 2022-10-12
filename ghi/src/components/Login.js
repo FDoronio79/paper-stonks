@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -15,26 +16,22 @@ class LoginForm extends React.Component {
 
     handleChangeUsername(event) {
         const value = event.target.value;
-        this.setState({username: value});
+        this.setState({ username: value });
     }
 
     handleChangePassword(event) {
         const value = event.target.value;
-        this.setState({password: value});
+        this.setState({ password: value });
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        const data = {...this.state};
+        const data = { ...this.state };
         console.log("data:", data);
-         //create development and deployment variables for url
+        //create development and deployment variables for url
         // let url = `${process.env.REACT_APP_API_HOST}/token`
         const registrationUrl = "http://localhost:8080/token";
         console.log(registrationUrl);
-        const formData = new FormData();
-        formData.append('username', data.username);
-        formData.append('password', data.password);
-        console.log(formData);
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(
@@ -71,7 +68,7 @@ class LoginForm extends React.Component {
                                 <label htmlFor="password">Password: </label>
                                 <input onChange={this.handleChangePassword} value={this.state.password} placeholder="Password" required type="password" name="password" id="password" className="form-control" />
                             </div>
-                            <button className="btn btn-primary">Login</button>
+                                <button className="btn btn-primary">Login</button>
                         </form>
                     </div>
                 </div>
