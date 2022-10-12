@@ -118,23 +118,23 @@ class PositionRepository:
                 return {"message": "Could not get all positions"}
         
 
-        def delete(self, position_id: int) -> bool:
-            try:
-                #connect the database
-                with pool.connection() as conn:    #will create connection
-                    #get a cursor (something to run SQL with)
-                    with conn.cursor() as db:
-                        #Run our SELECT statement
-                        db.execute(
-                            """
-                            DELETE FROM positions
-                            WHERE id = %s
-                            """,
-                            [position_id]
-                        )
-                        return True
-            except Exception as e:
-                print(e)
-                return False
+    def delete(self, position_id: int) -> bool:
+        try:
+            #connect the database
+            with pool.connection() as conn:    #will create connection
+                #get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    #Run our SELECT statement
+                    db.execute(
+                        """
+                        DELETE FROM positions
+                        WHERE id = %s
+                        """,
+                        [position_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
 
                 
