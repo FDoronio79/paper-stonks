@@ -35,21 +35,21 @@ function App() {
     // }, [])
 
     return (
-      <>
-        <MainPage />
-        <BrowserRouter>
-            <Nav />
-            <div className="container">
-                <Routes>
-                    {/* <ErrorNotification error={error} />
+        <>
+            <MainPage />
+            <BrowserRouter>
+                <Nav />
+                <div className="container">
+                    <Routes>
+                        {/* <ErrorNotification error={error} />
       <Construct info={launch_info} /> */}
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/signup" element={<SignupForm />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
-      </>
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/signup" element={<SignupForm />} />
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </>
     );
 }
 
