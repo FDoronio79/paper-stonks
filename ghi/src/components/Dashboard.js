@@ -6,7 +6,8 @@ import { UserContext } from "../context/UserContext";
 
 const Dashboard = () => {
     const [fastapi_token, setToken] = useContext(UserContext);
-
+    // const [hasSignedUp, ]
+    
     const logout = () => {
         fetch(`http://localhost:8080/token`, {
             method: "DELETE"
@@ -16,7 +17,7 @@ const Dashboard = () => {
         console.log(fastapi_token)
     }
     if (!fastapi_token) {
-        console.log("BRUHHH")
+        console.log("ooops")
         return <Navigate replace to="/login" />;
     } else {
         return (
