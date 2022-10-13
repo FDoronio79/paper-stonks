@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+// import Dashboard from "./Dashboard";
+// import { UserContext } from "../context/UserContext";
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -8,18 +9,23 @@ class LoginForm extends React.Component {
         this.state = {
             username: "",
             password: "",
-            UserContext: null,
+            hasSignedIn: false,
         };
 
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // this.handleHasSignedIn = this.handleHasSignedIn.bind(this);
     }
 
     handleChangeUsername(event) {
         const value = event.target.value;
         this.setState({ username: value });
     }
+
+    // handleHasSignedIn() {
+    //     this.setState({ hasSignedIn: false });
+    // }
 
     handleChangePassword(event) {
         const value = event.target.value;
@@ -57,12 +63,13 @@ class LoginForm extends React.Component {
             this.setState({
                 username: "",
                 password: "",
+                hasSignedIn: true,
             });
         }
     }
 
     render() {
-        if (this.state.hasSignedUp) {
+        if (this.state.hasSignedIn) {
             return <Navigate to="/dashboard" replace={true} />;
         }
 
@@ -101,7 +108,11 @@ class LoginForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
-                            <button className="btn btn-primary">Login</button>
+                            <div>
+                                <button className="btn btn-primary">
+                                    Login
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
