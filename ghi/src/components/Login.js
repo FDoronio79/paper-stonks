@@ -29,13 +29,15 @@ const Login = () => {
             setErrorMessage(data.detail);
         } else {
             setToken(data.access_token);
+            navigate("/dashboard")
         }
     };
-
+    console.log("token", fastapi_token)
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
         console.log("logged in!");
+        
     };
 
     if (!fastapi_token) {
@@ -94,8 +96,6 @@ const Login = () => {
                 </div>
             </div>
         );
-    } else {
-        return navigate("/dashboard");
     }
 };
 
