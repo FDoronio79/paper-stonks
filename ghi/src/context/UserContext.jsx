@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-    const [token, setToken] = useState(localStorage.getItem("AccountsToken"));
+    const [fastapi_token, setToken] = useState(localStorage.getItem("AccountsToken"));
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -11,7 +11,7 @@ export const UserProvider = (props) => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: "Bearer " + token,
+                    Authorization: "Bearer " + fastapi_token,
                 },
             };
 
@@ -20,13 +20,13 @@ export const UserProvider = (props) => {
             if (!response.ok) {
                 setToken(null);
             }
-            localStorage.setItem("AccountsToken", token);
+            localStorage.setItem("AccountsToken", fastapi_token);
         };
         fetchUser();
-    }, [token]);
+    }, [fastapi_token]);
 
     return (
-        <UserContext.Provider value={[token, setToken]}>
+        <UserContext.Provider value={[fastapi_token, setToken]}>
             {props.children}
         </UserContext.Provider>
     );
