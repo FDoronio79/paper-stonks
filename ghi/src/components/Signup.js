@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from "react-router-dom";
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -78,12 +79,16 @@ class SignupForm extends React.Component {
                 console.log("new accountvo:", newAccountVO);
                 this.setState({
                     username: "",
+                    hasSignedUp: true,
                 })
         }
             }
     }
 
     render() {
+        if (this.state.hasSignedUp) {
+            return <Navigate to="/dashboard" replace={true} />;
+        }
         return (
             <div className="my-5 containerw">
                 <div className="offset-3 col-6">

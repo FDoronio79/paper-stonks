@@ -24,3 +24,9 @@
 -   added accountsvo table
 -   added accountsvo endpoint
 -   got the accountsvo to be created in the frontend when accounts gets made
+
+10/12
+
+-   added redirect to login function to go to dashboard
+-   added logout function
+-   styled the main page
