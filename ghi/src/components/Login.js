@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -7,7 +8,7 @@ class LoginForm extends React.Component {
         this.state = {
             username: "",
             password: "",
-            hasSignedUp: false,
+            UserContext: null,
         };
 
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -23,6 +24,11 @@ class LoginForm extends React.Component {
     handleChangePassword(event) {
         const value = event.target.value;
         this.setState({ password: value });
+    }
+
+    handleChangeUserContext(event) {
+        const value = event.target.value;
+        this.setState({ UserContext: value });
     }
 
     async handleSubmit(event) {
@@ -51,7 +57,6 @@ class LoginForm extends React.Component {
             this.setState({
                 username: "",
                 password: "",
-                hasSignedUp: true,
             });
         }
     }

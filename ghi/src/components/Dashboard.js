@@ -1,19 +1,21 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState} from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 
 
 const Dashboard = () => {
-    const [token] = useContext(UserContext);
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("authenticated");
+    const [fastapi_token, setToken] = useContext(UserContext);
 
-    }, []);
     const logout = () => {
-        fetch(`http://localhost:8080/token`)
+        fetch(`http://localhost:8080/token`, {
+            method: "DELETE"
+        })
+        setToken(null);
+        console.log("DELETED!")
+        console.log(fastapi_token)
     }
-    if (!token) {
+    if (!fastapi_token) {
         console.log("BRUHHH")
         return <Navigate replace to="/login" />;
     } else {
