@@ -20,7 +20,10 @@ const Dashboard = () => {
     } else {
         return (
             <>
-                <button onClick={logout}> Logout </button>
+                <button className="btn btn-primary" onClick={logout}>
+                    {" "}
+                    Logout{" "}
+                </button>
                 <div>
                     <p>Welcome to your Dashboard</p>
                 </div>

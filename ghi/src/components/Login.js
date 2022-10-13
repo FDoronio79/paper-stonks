@@ -40,41 +40,58 @@ const Login = () => {
 
     if (!fastapi_token) {
         return (
-            <div className="column">
-                <form className="box" onSubmit={handleSubmit}>
-                    <h1 className="title has-text-centered">Login</h1>
-                    <div className="field">
-                        <label className="label">Username</label>
-                        <div className="control">
-                            <input
-                                type="text"
-                                placeholder="Enter username"
-                                value={email}
-                                onChange={(e) => setUserName(e.target.value)}
-                                className="input"
-                                required
-                            />
-                        </div>
+            <div className="my-5 containerw">
+                <div className="offset-3 col-6">
+                    <div className="shadow p-4 mt-4">
+                        <h2 className="text-center">Login</h2>
+                        <form className="box" onSubmit={handleSubmit}>
+                            <div className="form-floating mb-3">
+                                <div className="field">
+                                    <label className="label">Username</label>
+                                    <div className="control">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter username"
+                                            value={email}
+                                            onChange={(e) =>
+                                                setUserName(e.target.value)
+                                            }
+                                            className="input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-floating mb-3">
+                                <div className="field">
+                                    <label className="label">Password</label>
+                                    <div className="control">
+                                        <input
+                                            type="password"
+                                            placeholder="Enter password"
+                                            value={password}
+                                            onChange={(e) =>
+                                                setPassword(e.target.value)
+                                            }
+                                            className="input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <ErrorMessage message={errorMessage} />
+                            <br />
+                            <div>
+                                <button
+                                    className="btn btn-primary"
+                                    type="submit"
+                                >
+                                    Login
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="field">
-                        <label className="label">Password</label>
-                        <div className="control">
-                            <input
-                                type="password"
-                                placeholder="Enter password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="input"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <ErrorMessage message={errorMessage} />
-                    <br />
-                    <button className="button is-primary" type="submit">
-                        Login
-                    </button>
-                </form>
+                </div>
             </div>
         );
     } else {
