@@ -87,7 +87,7 @@ class SignupForm extends React.Component {
 
     render() {
         if (this.state.hasSignedUp) {
-            return <Navigate to="/" replace={true} />;
+            return <Navigate to="/dashboard" replace={true} />;
         }
         return (
             <div className="my-5 containerw">
