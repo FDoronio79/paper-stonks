@@ -1,3 +1,15 @@
+09/29
+
+-   created the wireframe design on figma
+    -   dashboard page
+    -   home page
+    -   buy/sell and update buying power
+
+09/30
+
+-   made the diagram of our microservice architecture on excalidraw
+    -   also included the endpoints we needed for the MVP and the requests that we need
+
 10/3
 
 -   Created issues/features.
@@ -30,3 +42,8 @@
 -   added redirect to login function to go to dashboard
 -   added logout function
 -   styled the main page
+
+10/13
+
+-   worked on react front end to get the buying power update form to work.
+    -   also getting the current buying power to show as well

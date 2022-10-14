@@ -1,47 +1,45 @@
 import React, { useState, useContext } from "react";
 import ErrorMessage from "./ErrorMessege";
-import { UserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
-
+// import { UserContext } from "../context/UserContext";
+// import { useNavigate } from "react-router-dom";
+import { useToken } from "../Token";
 const Login = () => {
+    const [token, login] = useToken();
     const [email, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [fastapi_token, setToken] = useContext(UserContext);
-    const navigate = useNavigate();
+    // const [fastapi_token, setToken] = useContext(UserContext);
+    // const navigate = useNavigate();
 
     const submitLogin = async () => {
-        const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            credentials: "include",
-            body: JSON.stringify(
-                `grant_type=&username=${email}&password=${password}&scope=&client_id=&client_secret=`
-            ),
-        };
-
-        const response = await fetch(
-            "http://localhost:8080/token",
-            requestOptions
-        );
-        const data = await response.json();
-        console.log(data);
-        if (!response.ok) {
-            setErrorMessage(data.detail);
-        } else {
-            setToken(data.access_token);
-            navigate("/dashboard")
-        }
+        // const requestOptions = {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        //     body: JSON.stringify(
+        //         `grant_type=&username=${email}&password=${password}&scope=&client_id=&client_secret=`
+        //     ),
+        // };
+        login(email, password);
+        // const response = await fetch(
+        //     "http://localhost:8080/token",
+        //     requestOptions
+        // );
+        // const data = await response.json();
+        // console.log(data);
+        // if (!response.ok) {
+        //     setErrorMessage(data.detail);
+        // } else {
+        //     setToken(data.access_token);
+        // }
     };
-    console.log("token", fastapi_token)
+
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
         console.log("logged in!");
-        
     };
 
-    if (!fastapi_token) {
+    if (!token) {
         return (
             <div className="my-5 containerw">
                 <div className="offset-3 col-6">
@@ -97,6 +95,9 @@ const Login = () => {
                 </div>
             </div>
         );
+    } else {
+        return null;
+        // navigate("/dashboard");
     }
 };
 
