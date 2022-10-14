@@ -97,6 +97,23 @@ class AccountQueries():
                         hashed_password=account[4]
                     )
 
+    def getHashedPass(username: str):
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT id hashed_pass
+                    FROM accounts
+                    WHERE username = %s;
+                    """,
+                    [username]
+                )
+                account = result.fetchone()
+                if account == None:
+                    return None
+                else:
+                    return account[0]
+
     def create(self, account: AccountIn, hashed_pass) -> AccountOutWithPassword:
         with pool.connection() as conn:
             #                 # get a cursor (something to run SQL with)

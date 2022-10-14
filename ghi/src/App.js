@@ -8,10 +8,16 @@ import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import { UserContext } from "./context/UserContext";
+// import { AuthProvider, useToken } from "./Token";
 import PositionForm from "./components/PositionForm";
 
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
+// function GetToken() {
+//     useToken();
+//     return null;
+// }
 
 function App() {
     // const [launch_info, setLaunchInfo] = useState([]);
@@ -37,6 +43,8 @@ function App() {
     // }, [])
 
     return (
+        // <AuthProvider>
+        // <GetToken />
         <>
             <MainPage />
             <BrowserRouter>
@@ -53,6 +61,7 @@ function App() {
                 </div>
             </BrowserRouter>
         </>
+        /* </AuthProvider> */
     );
 }
 
