@@ -104,24 +104,6 @@ function Nav() {
                                     <NavLink
                                         className="nav-link active"
                                         aria-current="page"
-                                        to="/Login"
-                                    >
-                                        Login
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
-                                        to="/Signup"
-                                    >
-                                        Signup
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
                                         to="/dashboard"
                                     >
                                         Dashboard
