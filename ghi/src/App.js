@@ -13,6 +13,10 @@ import { SearchContext } from "./SearchContext";
 import { useState, useContext } from "react";
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
+// function GetToken() {
+//     useToken();
+//     return null;
+// }
 
 function App() {
     const [symbol, setSymbol] = useState("");
@@ -40,6 +44,8 @@ function App() {
     // }, [])
 
     return (
+        // <AuthProvider>
+        // <GetToken />
         <>
             <MainPage />
             <BrowserRouter>
@@ -73,6 +79,7 @@ function App() {
                 </div>
             </BrowserRouter>
         </>
+        /* </AuthProvider> */
     );
 }
 

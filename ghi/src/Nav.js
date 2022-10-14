@@ -60,6 +60,15 @@ function Nav({ setSymbol, symbol }) {
                                     Signup
                                 </NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink
+                                    className="nav-link active"
+                                    aria-current="page"
+                                    to="/dashboard"
+                                >
+                                    Dashboard
+                                </NavLink>
+                            </li>
                             <form className="d-flex">
                                 <input
                                     className="form-control me-2"

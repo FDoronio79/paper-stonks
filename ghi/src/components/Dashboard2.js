@@ -6,7 +6,6 @@ const Dashboard = ({}) => {
     const [fastapi_token, setToken] = useContext(UserContext);
     // const [hasSignedUp, ]
     const [buyingPower, setBuyingPower] = useState("");
-    console.log("\n\n\n\nbuying power");
     console.log(buyingPower);
     console.log(setBuyingPower);
     // useEffect(() => {
@@ -80,10 +79,9 @@ const Dashboard = ({}) => {
         console.log("updated buying power");
     };
 
-    const logout = async () => {
-        await fetch(`http://localhost:8080/token`, {
+    const logout = () => {
+        fetch(`http://localhost:8080/token`, {
             method: "DELETE",
-            credentials: "include",
         });
         setToken(null);
         console.log("DELETED!");
