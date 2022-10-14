@@ -5,7 +5,11 @@ import { UserContext } from "../context/UserContext";
 const Dashboard = () => {
     const [fastapi_token, setToken] = useContext(UserContext);
     // const [hasSignedUp, ]
-
+    useEffect(() => {
+        fetch('http://localhost:8080/api/accounts')
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    })
     const logout = () => {
         fetch(`http://localhost:8080/token`, {
             method: "DELETE",
