@@ -48,29 +48,29 @@ function App() {
                         setSymbol={setSymbol}
                         symbol={symbol}
                     />
-                    <div className="container">
-                        <Routes>
-                            {/* <ErrorNotification error={error} />
-      <Construct info={launch_info} /> */}
-                            <Route
-                                path="/dashboard"
-                                element={<Dashboard />}
-                            />
-                            <Route
-                                path="/login"
-                                element={<LoginForm />}
-                            />
-                            <Route
-                                path="/signup"
-                                element={<SignupForm />}
-                            />
-                            <Route
-                                path="/stock"
-                                element={<StockDetail search={symbol} />}
-                            />
-                        </Routes>
-                    </div>
                 </SearchContext.Provider>
+                <div className="container">
+                    <Routes>
+                        {/* <ErrorNotification error={error} />
+      <Construct info={launch_info} /> */}
+                        <Route
+                            path="/dashboard"
+                            element={<Dashboard />}
+                        />
+                        <Route
+                            path="/login"
+                            element={<LoginForm />}
+                        />
+                        <Route
+                            path="/signup"
+                            element={<SignupForm />}
+                        />
+                        <Route
+                            path="/stock"
+                            element={<StockDetail search={symbol} />}
+                        />
+                    </Routes>
+                </div>
             </BrowserRouter>
         </>
     );

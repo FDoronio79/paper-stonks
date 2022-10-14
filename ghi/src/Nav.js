@@ -71,7 +71,7 @@ function Nav({ setSymbol, symbol }) {
                                 />
                                 <li className="nav-item">
                                     <NavLink
-                                        className="nav-link active"
+                                        className="nav-link active justify-content-end"
                                         aria-current="page"
                                         to="/stock"
                                     >
