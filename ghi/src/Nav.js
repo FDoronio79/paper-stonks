@@ -63,6 +63,25 @@ function Nav({ setSymbol, symbol }) {
                                         Signup
                                     </NavLink>
                                 </li>
+                                <form className="d-flex">
+                                    <input
+                                        className="form-control me-2"
+                                        type="search"
+                                        placeholder="Search"
+                                        aria-label="Search"
+                                        onChange={(e) => setSymbol(e.target.value)}
+                                        value={symbol}
+                                    />
+                                    <li className="nav-item">
+                                        <NavLink
+                                            className="nav-link active justify-content-end"
+                                            aria-current="page"
+                                            to="/stock"
+                                        >
+                                            Search
+                                        </NavLink>
+                                    </li>
+                                </form>
                             </ul>
                         </div>
                     </div>
