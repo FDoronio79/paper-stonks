@@ -8,6 +8,8 @@ import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import PositionForm from "./components/PositionForm";
+
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
 
@@ -46,6 +48,7 @@ function App() {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/signup" element={<SignupForm />} />
+                        <Route path="/position" element={<PositionForm />} />
                     </Routes>
                 </div>
             </BrowserRouter>
