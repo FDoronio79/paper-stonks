@@ -53,8 +53,14 @@
     -Collaborated on getting tables working for transactions and accounts 
     -
 
-#### 10/5/22
+#### 10/11/22
     -Pair programming with jessica, working on the table for our positoins 
     -
     
 
+#### 10/13/22
+    -Worked on UI stuff for the front end
+        -Worked out issues with Boostrap in order to make our app look closer to 
+        our Figma version
+#### 10/14/22
+    -Collaborated with Matt and Leo to figure out our log in/out issues 
