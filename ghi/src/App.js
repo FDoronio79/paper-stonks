@@ -1,15 +1,17 @@
 // import { useEffect, useState } from 'react';
 // import Construct from './Construct.js'
 // import ErrorNotification from './ErrorNotification';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import MainPage from "./MainPage";
 import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import StockDetail from "./components/StockDetail";
+import { SearchContext } from "./SearchContext";
+import { useState, useContext } from "react";
 import { UserContext } from "./context/UserContext";
-// import { AuthProvider, useToken } from "./Token";
 import PositionForm from "./components/PositionForm";
 
 // import Header from "./components/Header";
@@ -20,6 +22,8 @@ import PositionForm from "./components/PositionForm";
 // }
 
 function App() {
+    const [symbol, setSymbol] = useState("");
+
     // const [launch_info, setLaunchInfo] = useState([]);
     // const [error, setError] = useState(null);
 
@@ -48,14 +52,32 @@ function App() {
         <>
             <MainPage />
             <BrowserRouter>
-                <Nav />
+                <SearchContext.Provider value={symbol}>
+                    <Nav
+                        setSymbol={setSymbol}
+                        symbol={symbol}
+                    />
+                </SearchContext.Provider>
                 <div className="container">
                     <Routes>
                         {/* <ErrorNotification error={error} />
       <Construct info={launch_info} /> */}
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/login" element={<LoginForm />} />
-                        <Route path="/signup" element={<SignupForm />} />
+                        <Route
+                            path="/dashboard"
+                            element={<Dashboard />}
+                        />
+                        <Route
+                            path="/login"
+                            element={<LoginForm />}
+                        />
+                        <Route
+                            path="/signup"
+                            element={<SignupForm />}
+                        />
+                        <Route
+                            path="/stock"
+                            element={<StockDetail search={symbol} />}
+                        />
                         <Route path="/position" element={<PositionForm />} />
                     </Routes>
                 </div>
