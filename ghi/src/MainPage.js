@@ -9,10 +9,6 @@ function MainPage() {
                     MAIN PAGE
                 </p>
             </div> */}
-
-            <div>
-                
-            </div>
         </div>
     );
 }
