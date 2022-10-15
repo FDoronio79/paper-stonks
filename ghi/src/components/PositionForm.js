@@ -15,57 +15,31 @@ function FormParameters(props) {
     )
 }
 
-
-function PositionForm(props) {
+export default function PositionForm({price, symbol}) {
 
     // const [username, setUsername] = useState('');
     // const [symbol, setSymbol] = useState('');
     // const [name, setName] = useState('');
     const [quantity, setQuantity] = useState('');
     // const [type_of, setType] = useState('');
-
-
-
-    useEffect(() => {
-        async function getAccount() {
-            const token = localStorage.getItem('AccountsToken')
-            const url = `${process.env.REACT_APP_API_HOST}/api/accounts`;
-            const requestOptions ={
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'fastapi_token': token
-                }
-            };
-
-            const response = await fetch(url, requestOptions);
-
-            if (response.ok) {
-                const data = await response.json();
-                username(data);
-            };
-        };
-        getAccount();
-    }, [username])
-
+    const username = localStorage.getItem('Username');
 
 
     return (
-        <div className="container text-left col-5 mt-5 border border-dark p-3 ">
+        <div className="container text-left border border-dark p-3 ">
         <form>
             <div className="row my-4">
                 <div className="col">
-                    <h2>Buy Order</h2>
+                    <h4>Buy Order</h4>
                 </div>
                 <div className="col">
-                    <h2>symbol here</h2>
+                    <h4>{symbol}</h4>
                 </div>
             </div>
 
             <div className="row my-4">
                 <div className="col">
-                    <h2>Shares</h2>
+                    <h4>Shares</h4>
                 </div>
                 <div className="col">
                 <FormParameters 
@@ -79,61 +53,27 @@ function PositionForm(props) {
 
             <div className="row my-4">
                 <div className="col">
-                    <h2>Market Price:</h2>
+                    <h4>Market Price:</h4>
                 </div>
                 <div className="col">
-                    <h2>$100.00</h2>
+                    <h4>{price}</h4>
                 </div>
             </div>
 
             <div className="row my-4">
                 <div className="col">
-                    <h2>Estimated cost:</h2>
+                    <h4>Estimated cost:</h4>
                 </div>
                 <div className="col">
-                    <h2>----</h2>
+                    <h4>{quantity * price}</h4>
                 </div>
             </div>
 
-        <button type="cancel" className="sumbit col-12 p-3 mb-2 bg-dark text-white">Review</button> 
+        <button type="submit" className="sumbit col-12 p-3 mb-2 bg-dark text-white">BUY</button> 
         </form>
         </div>
         );      
 }
 
-export default PositionForm
-
-
-
-
-
-
-
-//         <div className="mb-3">
-//             <label htmlFor="price" className="example-form-label">price</label>
-//             <input value={price} onChange={e => setPrice(e.target.value)} required type="price" className="form-control" id="price" placeholder="price" />
-//         </div>
-
-//         <div className="mb-3">
-//             <label htmlFor="type_of" className="example-form-label">type_of</label>
-//             <input value={type_of} onChange={e => setType(e.target.value)} required type="type_of" className="form-control" id="type_of" placeholder="type_of" />
-//         </div>
-
-//         <div className="mb-3">
-//             <label htmlFor="quantity" className="example-form-label">quantity</label>
-//             <input value={quantity} onChange={e => setQuantity(e.target.value)} required type="quantity" className="form-control" id="quantity" placeholder="quantity" />
-//         </div>
-
-//         <div className="mb-3">
-//             <label htmlFor="time_of_purchase" className="example-form-label">time_of_purchase</label>
-//             <input value={time_of_purchase} onChange={e => setTime(e.target.value)} required type="time_of_purchase" className="form-control" id="time_of_purchase" placeholder="time_of_purchase" />
-//         </div>
-//         <button type="submit" className="sumbit">Submit</button> 
-
-//         </form>
-//     );
-// }
-
-// export default TransactionForm
 
 

@@ -36,7 +36,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
-        console.log("logged in!");
+        console.log("logged in2!");
     };
 
     if (!token) {

@@ -1,5 +1,8 @@
 import { useEffect, useContext, useState } from "react";
 import { SearchContext } from "../SearchContext";
+import PositionForm from "./PositionForm";
+
+
 function StockDetail({ search }) {
     // const search = useContext(SearchContext);
     const [symbol, setSymbol] = useState(search);
@@ -39,15 +42,40 @@ function StockDetail({ search }) {
             <button
                 type="button"
                 className="btn btn-dark"
+                data-bs-toggle="offcanvas" data-bs-target="#offcanvasBUY" aria-controls="offcanvasBUY"
             >
                 Buy
             </button>
             <button
                 type="button"
                 className="btn btn-light"
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
             >
                 Sell
             </button>
+            <div className="offcanvas offcanvas-end offcanvas-size-lg" tabindex="-1" id="offcanvasBUY" aria-labelledby="offcanvasBUY">
+            <div className="offcanvas-header">
+                <h5 className="offcanvas-title" id="offcanvasBUY">BUY {symbol.toUpperCase()}</h5>
+                <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div className="offcanvas-body">
+                <PositionForm price={price} symbol={symbol.toUpperCase()}/>
+            </div>
+            </div>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">BUY {symbol.toUpperCase()}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <PositionForm price={price} symbol={symbol.toUpperCase()}/>
+                </div>
+                </div>
+            </div>
+            </div>
         </>
     );
 }
