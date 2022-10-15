@@ -24,31 +24,30 @@ function PositionForm(props) {
     const [quantity, setQuantity] = useState('');
     // const [type_of, setType] = useState('');
 
-    useEffect(() => {
-        async function getToken() {
-            const url = `${process.env.REACT_APP_API_HOST}/token`;
-            const response = fetch(url);
-            if (response.ok) {
-                const data = await response.json();
-            }
 
-        }
-    }
-    
-    )
 
     useEffect(() => {
         async function getAccount() {
+            const token = localStorage.getItem('AccountsToken')
             const url = `${process.env.REACT_APP_API_HOST}/api/accounts`;
-            const response = fetch(url);
+            const requestOptions ={
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'fastapi_token': token
+                }
+            };
+
+            const response = await fetch(url, requestOptions);
+
             if (response.ok) {
                 const data = await response.json();
-            }
-
-        }
-    }
-    
-    )
+                username(data);
+            };
+        };
+        getAccount();
+    }, [username])
 
 
 
