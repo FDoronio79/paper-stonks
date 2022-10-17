@@ -22,7 +22,10 @@ function Nav({ setSymbol, symbol }) {
 
     if (!fastapi_token) {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-success">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-secondary"
+            style={{
+                color: "#292929"
+            }}>
                 <div className="container-fluid">
                     <NavLink
                         className="navbar-brand"
