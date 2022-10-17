@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
@@ -80,32 +80,12 @@ const Dashboard = ({}) => {
         console.log("updated buying power");
     };
 
-    const logout = async () => {
-        await fetch(`http://localhost:8080/token`, {
-            method: "DELETE",
-            credentials: "include",
-        });
-        setToken(null);
-        console.log("DELETED!");
-        console.log(fastapi_token);
-    };
     if (!fastapi_token) {
         console.log("ooops");
         return <Navigate replace to="/login" />;
     } else {
         return (
             <>
-                <button className="btn btn-primary" onClick={logout}>
-                    {" "}
-                    Logout{" "}
-                </button>
-                {/* <div>
-                    {buyingPower.map((accounts) => (
-                        <div value={accounts.buying_power}>
-                            {accounts.buying_power}
-                        </div>
-                    ))}
-                </div> */}
                 <div>
                     <form className="box" onSubmit={handleSubmit}>
                         <div className="form-floating mb-3">

@@ -10,8 +10,9 @@ import LoginForm from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
-import { useState, useContext } from "react";
+import { useState, useContext, createContext } from "react";
 import { UserContext } from "./context/UserContext";
+import ReactSwitch from "react-switch"
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
 // function GetToken() {
@@ -19,9 +20,15 @@ import { UserContext } from "./context/UserContext";
 //     return null;
 // }
 
+export const ThemeContext = createContext(null)
+
 function App() {
     const [symbol, setSymbol] = useState("");
+    const [theme, setTheme] = useState("dark")
 
+    const toggleTheme = () => {
+        setTheme((curr) => (curr === "light" ? "dark" : "light"));
+    };
     // const [launch_info, setLaunchInfo] = useState([]);
     // const [error, setError] = useState(null);
 
@@ -47,38 +54,46 @@ function App() {
     return (
         // <AuthProvider>
         // <GetToken />
-        <>
-            <MainPage />
-            <BrowserRouter>
-                <SearchContext.Provider value={symbol}>
-                    <Nav
-                        setSymbol={setSymbol}
-                        symbol={symbol}
-                    />
-                </SearchContext.Provider>
-                <div className="container">
-                    <Routes>
-                        {/* <ErrorNotification error={error} />
-      <Construct info={launch_info} /> */}
-                        <Route
-                            path="/dashboard"
-                            element={<Dashboard />}
+    <>
+        <ThemeContext.Provider value={{theme, toggleTheme}}>   
+            <div className="App" id={theme}>
+                <MainPage />
+                <BrowserRouter>
+                    <SearchContext.Provider value={symbol}>
+                        <Nav
+                            setSymbol={setSymbol}
+                            symbol={symbol}
                         />
-                        <Route
-                            path="/login"
-                            element={<LoginForm />}
-                        />
-                        <Route
-                            path="/signup"
-                            element={<SignupForm />}
-                        />
-                        <Route
-                            path="/stock"
-                            element={<StockDetail search={symbol} />}
-                        />
-                    </Routes>
-                </div>
-            </BrowserRouter>
+                    </SearchContext.Provider>
+                    <div className="container">
+                        <Routes>
+                            {/* <ErrorNotification error={error} />
+            <Construct info={launch_info} /> */}
+                            <Route
+                                path="/dashboard"
+                                element={<Dashboard />}
+                            />
+                            <Route
+                                path="/login"
+                                element={<LoginForm />}
+                            />
+                            <Route
+                                path="/signup"
+                                element={<SignupForm />}
+                            />
+                            <Route
+                                path="/stock"
+                                element={<StockDetail search={symbol} />}
+                            />
+                        </Routes>
+                    </div>
+                </BrowserRouter>
+            </div>
+            <div className="switch">
+                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
+                <ReactSwitch onChange={toggleTheme} checked={theme === "dark"}/>
+            </div>
+        </ThemeContext.Provider> 
         </>
         /* </AuthProvider> */
     );

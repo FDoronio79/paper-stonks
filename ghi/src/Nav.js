@@ -2,10 +2,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { SearchContext } from "./SearchContext";
 import { UserContext } from "./context/UserContext";
+import { Navigate } from "react-router-dom";
+
 
 function Nav({ setSymbol, symbol }) {
     const [fastapi_token, setToken] = useContext(UserContext);
     const search = useContext(SearchContext);
+
+    const logout = async () => {
+        await fetch(`http://localhost:8080/token`, {
+            method: "DELETE",
+            credentials: "include",
+        });
+        setToken(null);
+        console.log("DELETED!");
+        console.log(fastapi_token);
+    };
+
+
     if (!fastapi_token) {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-success">
@@ -155,6 +169,12 @@ function Nav({ setSymbol, symbol }) {
                                         </NavLink>
                                     </li>
                                 </form>
+                                <li>
+                                <button className="btn btn-primary" onClick={logout}>
+                    {" "}
+                    Logout{" "}
+                </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
