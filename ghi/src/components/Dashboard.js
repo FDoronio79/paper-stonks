@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import StockInfo from "./StockInfo";
@@ -11,50 +11,31 @@ const Dashboard = ({}) => {
     const [fastapi_token, setToken] = useContext(UserContext);
     // const [hasSignedUp, ]
     const [buyingPower, setBuyingPower] = useState("");
-    console.log("\n\n\n\nbuying power");
-    console.log(buyingPower);
-    console.log(setBuyingPower);
-    // useEffect(() => {
-    //     async function getData() {
-    //         const url = "http://localhost:8080/api/accounts";
-    //         const response = await fetch(url);
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             setBuyingPower(data);
-    //         }
-    //     }
-    //     getData();
-    // }, []);
-    // useEffect(() => {
-    //     updateBuyingPower();
-    //    }, [bp]);
-
-    // const getData = async () => {
-    //     let response = await fetch("http://localhost:8080/api/accounts");
-    //     let data = await response.json();
-    //     setBuyingPower(data);
-    //    };
-
-    // const updateBuyingPower = async () => {
-    //     const requestOptions = {
-    //         method: "PUT",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             // Authorization: `Bearer ${token}`,
-    //         },
-    //         // body: JSON.stringify({ bp_change: buyingPower }),
-    //     };
-    //     const gettoken = await fetch("http://localhost:8080/token");
-    //     const response = await fetch(
-    //         `http://localhost:8080/api/accounts?bp_change=${buyingPower}`,
-    //         requestOptions
-    //     );
-    //     const data = await response.json();
-    //     console.log(response);
-    //     if (response.ok) {
-    //         setBuyingPower(data.buying_power);
-    //     }
-    // };
+    const [currentbuyingPower, setCurrentBuyingPower] = useState("");
+    // console.log("\n\n\n\nbuying power");
+    console.log(currentbuyingPower);
+    // console.log(setBuyingPower);
+    useEffect(() => {
+        async function getBuyingPower() {
+            const requestOptions = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            };
+            const response = await fetch(
+                `http://localhost:8080/api/accounts`,
+                requestOptions
+            );
+            if (response.ok) {
+                const data = await response.json();
+                setCurrentBuyingPower(data["buying_power"]);
+                console.log(data);
+            }
+        }
+        getBuyingPower();
+    }, [setCurrentBuyingPower]);
 
     const updateBuyingPower = async () => {
         const requestOptions = {
@@ -70,7 +51,7 @@ const Dashboard = ({}) => {
         );
         const data = await response.json();
         console.log(response);
-        console.log(data);
+        // console.log(data);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
@@ -91,6 +72,11 @@ const Dashboard = ({}) => {
     } else {
         return (
             <>
+                <div>
+                    <label className="label">
+                        Current Buying Power:{currentbuyingPower}
+                    </label>
+                </div>
                 <div>
                     <form className="box" onSubmit={handleSubmit}>
                         <div className="form-floating mb-3">
