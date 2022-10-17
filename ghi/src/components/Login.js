@@ -33,7 +33,7 @@ const Login = () => {
             navigate("/dashboard")
         }
     };
-    console.log("token", fastapi_token)
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();

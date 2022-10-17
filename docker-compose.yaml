@@ -37,6 +37,7 @@ services:
             NODE_ENV: development
             HOST: "0.0.0.0"
             REACT_APP_API_HOST: http://localhost:8000
+            ALPHA_VANTAGE: ${ALPHA_VANTAGE}
     accounts_service:
         build:
             context: ./accounts_service
@@ -62,7 +63,6 @@ services:
         environment:
             DATABASE_URL: postgresql://trading:password@postgres/trading
             WAIT_HOSTS: postgres:5432
-            SIGNING_KEY: 23b6b2f3fe4f7b9c4d163e5d27c439cd48c43f9544900f18b5d6a06c8be160df
             WAIT_BEFORE: 5
             WAIT_TIMEOUT: 60
     pg-admin:
