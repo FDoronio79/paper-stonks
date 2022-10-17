@@ -8,8 +8,6 @@ import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
 import Dashboard from "./components/Dashboard";
-import StockInfo from "./StockInfo";
-import CryptoInfo from "./CryptoInfo";
 // import { AuthProvider, useToken } from "./Token";
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
@@ -58,48 +56,7 @@ function App() {
                     </Routes>
                 </div>
             </BrowserRouter>
-            <div className="container-fluid container-max-widths:(sm)"
-            style={{
             
-            }}>
-                <div className="row gx-5">
-
-                <div className="col"> 
-                <div className="p-3 border rounded"
-                style={{
-                    background: "#292828",
-                    borderRadius: "120px",
-                    border: "#198754",
-                        }}>
-                        <StockInfo /> 
-                </div> 
-                </div>
-
-                
-                <div className="col"> 
-                <div className="p-3 border rounded"
-                style={{
-                    background: "#292828",
-                    borderRadius: "120px",
-                    border: "#198754",
-                        }}>
-                        <CryptoInfo /> 
-                </div> 
-                </div>
-
-                <div className="col"> 
-                <div className="p-3 border rounded"
-                style={{
-                    background: "#292828",
-                    borderRadius: "120px",
-                    border: "#198754",
-                        }}>
-                        <h5> Temp Market Watch </h5>
-                </div> 
-                </div>
-
-                </div>
-            </div>
         </>
         /* </AuthProvider> */
     );

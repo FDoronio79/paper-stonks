@@ -2,6 +2,9 @@ import { useEffect, useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
+import StockInfo from "./StockInfo";
+import CryptoInfo from "./CryptoInfo";
+
 const Dashboard = ({}) => {
     const [fastapi_token, setToken] = useContext(UserContext);
     // const [hasSignedUp, ]
