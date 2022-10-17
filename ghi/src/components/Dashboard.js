@@ -47,7 +47,7 @@ const Dashboard = ({}) => {
         );
         const data = await response.json();
         console.log(response);
-        // console.log(data);
+        // // console.log(data);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {

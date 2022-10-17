@@ -10,8 +10,9 @@ import LoginForm from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
-import { useState, useContext } from "react";
+import { useState, useContext, createContext } from "react";
 import { UserContext } from "./context/UserContext";
+import ReactSwitch from "react-switch";
 import PositionForm from "./components/PositionForm";
 
 // import Header from "./components/Header";
@@ -21,9 +22,15 @@ import PositionForm from "./components/PositionForm";
 //     return null;
 // }
 
+export const ThemeContext = createContext(null);
+
 function App() {
     const [symbol, setSymbol] = useState("");
+    const [theme, setTheme] = useState("dark");
 
+    const toggleTheme = () => {
+        setTheme((curr) => (curr === "light" ? "dark" : "light"));
+    };
     // const [launch_info, setLaunchInfo] = useState([]);
     // const [error, setError] = useState(null);
 
@@ -50,38 +57,46 @@ function App() {
         // <AuthProvider>
         // <GetToken />
         <>
-            <MainPage />
-            <BrowserRouter>
-                <SearchContext.Provider value={symbol}>
-                    <Nav
-                        setSymbol={setSymbol}
-                        symbol={symbol}
-                    />
-                </SearchContext.Provider>
-                <div className="container">
-                    <Routes>
-                        {/* <ErrorNotification error={error} />
-      <Construct info={launch_info} /> */}
-                        <Route
-                            path="/dashboard"
-                            element={<Dashboard />}
-                        />
-                        <Route
-                            path="/login"
-                            element={<LoginForm />}
-                        />
-                        <Route
-                            path="/signup"
-                            element={<SignupForm />}
-                        />
-                        <Route
-                            path="/stock"
-                            element={<StockDetail search={symbol} />}
-                        />
-                        <Route path="/position" element={<PositionForm />} />
-                    </Routes>
+            <div className="switch">
+                <label>
+                    {" "}
+                    {theme === "light" ? "Light Mode" : "Dark Mode"}{" "}
+                </label>
+                <ReactSwitch
+                    onChange={toggleTheme}
+                    checked={theme === "dark"}
+                />
+            </div>
+            <ThemeContext.Provider value={{ theme, toggleTheme }}>
+                <div className="App" id={theme}>
+                    <MainPage />
+                    <BrowserRouter>
+                        <SearchContext.Provider value={symbol}>
+                            <Nav setSymbol={setSymbol} symbol={symbol} />
+                        </SearchContext.Provider>
+                        <div className="container">
+                            <Routes>
+                                {/* <ErrorNotification error={error} />
+            <Construct info={launch_info} /> */}
+                                <Route
+                                    path="/dashboard"
+                                    element={<Dashboard />}
+                                />
+                                <Route path="/login" element={<LoginForm />} />
+                                <Route
+                                    path="/signup"
+                                    element={<SignupForm />}
+                                />
+                                <Route
+                                    path="/stock"
+                                    element={<StockDetail search={symbol} />}
+                                />
+                                <Route path="/position" element={<PositionForm />} />
+                            </Routes>
+                        </div>
+                    </BrowserRouter>
                 </div>
-            </BrowserRouter>
+            </ThemeContext.Provider>
         </>
         /* </AuthProvider> */
     );
