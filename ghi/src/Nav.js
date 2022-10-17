@@ -4,7 +4,6 @@ import { SearchContext } from "./SearchContext";
 import { UserContext } from "./context/UserContext";
 import { Navigate } from "react-router-dom";
 
-
 function Nav({ setSymbol, symbol }) {
     const [fastapi_token, setToken] = useContext(UserContext);
     const search = useContext(SearchContext);
@@ -19,18 +18,11 @@ function Nav({ setSymbol, symbol }) {
         console.log(fastapi_token);
     };
 
-
     if (!fastapi_token) {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-secondary"
-            style={{
-                color: "#292929"
-            }}>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
                 <div className="container-fluid">
-                    <NavLink
-                        className="navbar-brand"
-                        to="/"
-                    >
+                    <NavLink className="navbar-brand" to="/">
                         Paper Stonks
                     </NavLink>
                     <button
@@ -86,7 +78,9 @@ function Nav({ setSymbol, symbol }) {
                                         type="search"
                                         placeholder="Search"
                                         aria-label="Search"
-                                        onChange={(e) => setSymbol(e.target.value)}
+                                        onChange={(e) =>
+                                            setSymbol(e.target.value)
+                                        }
                                         value={symbol}
                                     />
                                     <li className="nav-item">
@@ -109,10 +103,7 @@ function Nav({ setSymbol, symbol }) {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-success">
                 <div className="container-fluid">
-                    <NavLink
-                        className="navbar-brand"
-                        to="/"
-                    >
+                    <NavLink className="navbar-brand" to="/">
                         Paper Stonks
                     </NavLink>
                     <button
@@ -159,7 +150,9 @@ function Nav({ setSymbol, symbol }) {
                                         type="search"
                                         placeholder="Search"
                                         aria-label="Search"
-                                        onChange={(e) => setSymbol(e.target.value)}
+                                        onChange={(e) =>
+                                            setSymbol(e.target.value)
+                                        }
                                         value={symbol}
                                     />
                                     <li className="nav-item">
@@ -173,10 +166,13 @@ function Nav({ setSymbol, symbol }) {
                                     </li>
                                 </form>
                                 <li>
-                                <button className="btn btn-primary" onClick={logout}>
-                    {" "}
-                    Logout{" "}
-                </button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={logout}
+                                    >
+                                        {" "}
+                                        Logout{" "}
+                                    </button>
                                 </li>
                             </ul>
                         </div>
