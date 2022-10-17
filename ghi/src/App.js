@@ -20,7 +20,7 @@ import ReactSwitch from "react-switch"
 //     return null;
 // }
 
-export const ThemeContext = createContext(null)
+export const ThemeContext = createContext("dark")
 
 function App() {
     const [symbol, setSymbol] = useState("");
@@ -55,6 +55,10 @@ function App() {
         // <AuthProvider>
         // <GetToken />
     <>
+            <div className="switch">
+                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
+                <ReactSwitch onChange={toggleTheme} checked={theme === "dark"}/>
+            </div>
         <ThemeContext.Provider value={{theme, toggleTheme}}>   
             <div className="App" id={theme}>
                 <MainPage />
@@ -70,7 +74,7 @@ function App() {
                             {/* <ErrorNotification error={error} />
             <Construct info={launch_info} /> */}
                             <Route
-                                path="/dashboard"
+                                path="/portfolio"
                                 element={<Dashboard />}
                             />
                             <Route
@@ -89,10 +93,7 @@ function App() {
                     </div>
                 </BrowserRouter>
             </div>
-            <div className="switch">
-                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
-                <ReactSwitch onChange={toggleTheme} checked={theme === "dark"}/>
-            </div>
+
         </ThemeContext.Provider> 
         </>
         /* </AuthProvider> */
