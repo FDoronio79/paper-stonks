@@ -58,6 +58,8 @@ export default function PositionForm({ price, symbol, name }) {
         } else {
             alert("Success!");
         }
+
+        // FOR LATER UPDATE BUYING POWER
     };
 
     const handleSubmit = (e) => {
