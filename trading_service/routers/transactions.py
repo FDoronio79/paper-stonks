@@ -1,17 +1,15 @@
 from fastapi import APIRouter, Depends, Response
 from typing import Union, List, Optional
 from queries.transactions import TransactionIn, TransactionRepository, TransactionOut, Error
-
-
 router = APIRouter()
 
 
-
 @router.post("/transactions", response_model=Union[TransactionOut, Error])
-def create_transaction(transaction: TransactionIn, 
-    response: Response,
-    repo: TransactionRepository = Depends()
-):
+def create_transaction(transaction: TransactionIn,
+                       response: Response,
+                       repo: TransactionRepository = Depends()
+                       ):
+
     return repo.create(transaction)
 
 
@@ -30,12 +28,6 @@ def get_one_transaction(
     return repo.get_one(transaction_id)
 
 
-
 # case where you buy and have no position
 # case where you're selling but not all
 # case where you're selling all, delete
-
-
-
-
-

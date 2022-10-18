@@ -29,6 +29,7 @@ const Login = () => {
         if (!response.ok) {
             setErrorMessage(data.detail);
         } else {
+            localStorage.setItem("Username", email);
             setToken(data.access_token);
             navigate("/dashboard")
         }
@@ -37,7 +38,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
-        console.log("logged in!");
+        console.log("logged in1!");
         
     };
 
