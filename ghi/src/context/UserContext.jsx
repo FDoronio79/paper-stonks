@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 export const UserProvider = (props) => {
     const [fastapi_token, setToken] = useState(localStorage.getItem("AccountsToken"));
-
+    const [username, setUsername] = useState(localStorage.getItem("Username"));
     useEffect(() => {
         const fetchUser = async () => {
             const requestOptions = {

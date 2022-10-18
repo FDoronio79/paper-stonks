@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const [email, setUserName] = useState("");
+    const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [fastapi_token, setToken] = useContext(UserContext);
@@ -16,7 +16,7 @@ const Login = () => {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             credentials: "include",
             body: JSON.stringify(
-                `grant_type=&username=${email}&password=${password}&scope=&client_id=&client_secret=`
+                `grant_type=&username=${username}&password=${password}&scope=&client_id=&client_secret=`
             ),
         };
 
@@ -29,7 +29,7 @@ const Login = () => {
         if (!response.ok) {
             setErrorMessage(data.detail);
         } else {
-            localStorage.setItem("Username", email);
+            localStorage.setItem("Username", username);
             setToken(data.access_token);
             navigate("/dashboard")
         }
@@ -38,7 +38,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
-        console.log("logged in1!");
+        console.log("logged in!");
         
     };
 
@@ -56,7 +56,7 @@ const Login = () => {
                                         <input
                                             type="text"
                                             placeholder="Enter username"
-                                            value={email}
+                                            value={username}
                                             onChange={(e) =>
                                                 setUserName(e.target.value)
                                             }
