@@ -5,17 +5,13 @@ export default function PositionForm({ price, symbol, name }) {
     // position: username, symbol, quantity, type_of, name
     const [buyingPower, setBuyingPower] = useState("");
     const buyingPow = localStorage.getItem("buyingPower");
-
+    const [updateQuantity, setUpdateQuantity] = useState("");
     const usernameAcc = localStorage.getItem("Username");
     const symbolStock = symbol;
     const [quantity1, setQuantity] = useState("");
 
     const typeOfItem = "stock";
     const nameStock = name;
-
-    // const priceStock = price;
-    // const timedate = Date.now.UTC();
-    // const typeOfTrans = "BUY"
 
     const estimatedPrice = quantity1 * price;
     const withoutDollarSign = buyingPow.replace("$", "");
@@ -50,26 +46,13 @@ export default function PositionForm({ price, symbol, name }) {
             body: JSON.stringify(positionDict),
         };
 
-        // const requestOptionsBp = {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     credentials: "include",
-        // };
-
         const response = await fetch(
             "http://localhost:8090/positions",
             requestOptions
         );
-        // const responseBp = await fetch(
-        //     `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
-        //     requestOptionsBp
-        // );
         const data = await response.json();
-        // const dataBp = await responseBp.json();
+
         console.log(data);
-        // console.log(dataBp);
         if (response.ok) {
             const requestOptionsBp = {
                 method: "PUT",
@@ -89,6 +72,41 @@ export default function PositionForm({ price, symbol, name }) {
             setTimeout(() => {
                 window.location.reload();
             }, 500);
+        } else if (!response.ok) {
+            const requestOptionsUpdateP = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            };
+            const responseUpdateP = await fetch(
+                `http://localhost:8090/positions/${symbol}`,
+                requestOptionsUpdateP
+            );
+            const dataUpdateP = await responseUpdateP.json();
+            console.log(dataUpdateP);
+            setUpdateQuantity(data);
+            if (responseUpdateP.ok) {
+                const requestOptionsBp = {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                };
+                const responseBp = await fetch(
+                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    requestOptionsBp
+                );
+                const dataBp = await responseBp.json();
+                console.log(dataBp);
+                setBuyingPower(dataBp);
+                alert("Success!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            }
         } else {
             alert("Could not process request. Please try again later");
         }
