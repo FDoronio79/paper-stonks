@@ -51,7 +51,7 @@ class PositionRepository:
             print(e)
             return {"error": "Could not get that position"}
 
-    def create(self, position: PositionsIn) -> PositionsOut:
+    def create(self, position: PositionsIn) -> Union[PositionsOut, Error]:
         try:
             # connect the database
             with pool.connection() as conn:  # will create connection
@@ -80,7 +80,8 @@ class PositionRepository:
                     return PositionsOut(id=id, **old_data)
         except Exception as e:
             print(e)
-            return {"message": "Could not create position"}
+
+            return Error(message="Could not create position")
 
     def get_all(self, username: str) -> Union[Error, List[PositionsOut]]:
         try:

@@ -11,7 +11,11 @@ def create_position(position: PositionsIn,
                     response: Response,
                     repo: PositionRepository = Depends()
                     ):
-    return repo.create(position)
+
+    position_response = repo.create(position)
+    if isinstance(position_response, Error):
+        response.status_code = 400
+    return position_response
 
 
 @router.get("/positions/{position_symbol}", response_model=Optional[PositionsOut])
