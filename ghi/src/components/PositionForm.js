@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function PositionForm({ price, symbol, name }) {
     // transaction: username, symbol, quantity, type_of, time_of_purchase, price
     // position: username, symbol, quantity, type_of, name
-
+    const [buyingPower, setBuyingPower] = useState("");
     const buyingPow = localStorage.getItem("buyingPower");
 
     const usernameAcc = localStorage.getItem("Username");
@@ -22,7 +22,7 @@ export default function PositionForm({ price, symbol, name }) {
     const removedCommas = withoutDollarSign.replaceAll(",", "");
     const buyingp = parseFloat(removedCommas);
     const maxQuantity = Math.floor(buyingp / price);
-
+    const bpchange = 0 - estimatedPrice;
     var positionDict = {
         username: usernameAcc,
         symbol: symbolStock,
@@ -50,13 +50,34 @@ export default function PositionForm({ price, symbol, name }) {
             body: JSON.stringify(positionDict),
         };
 
-        const response = await fetch("http://localhost:8090/positions", requestOptions);
+        const requestOptionsBp = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+        };
+
+        const response = await fetch(
+            "http://localhost:8090/positions",
+            requestOptions
+        );
+        const responseBp = await fetch(
+            `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+            requestOptionsBp
+        );
         const data = await response.json();
+        const dataBp = await responseBp.json();
         console.log(data);
-        if (!response.ok) {
-            alert("Could not process request. Please try again later");
-        } else {
+        console.log(dataBp);
+        if (response.ok && responseBp.ok) {
             alert("Success!");
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+            setBuyingPower(data);
+        } else {
+            alert("Could not process request. Please try again later");
         }
     };
 
