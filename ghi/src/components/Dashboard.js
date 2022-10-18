@@ -8,13 +8,13 @@ const Dashboard = ({}) => {
     const [fastapi_token, setToken] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
-    const [positions, setPositions] = useState("")
+    const [positions, setPositions] = useState([])
     const [username, setUserName] = useContext(UserContext)
 
     localStorage.setItem("Username", username);
     console.log("user", username)
     localStorage.setItem("position", positions);
-    console.log("position", positions);
+    console.log("positions", positions);
 
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
@@ -101,15 +101,26 @@ const Dashboard = ({}) => {
         return (
             <>
                 <div>
-                    <label className="label">
-                        {/* Current Position: {positions.map(position => {
-                            return (
-                                <tr key={position.id}>
-                                    <td>{position.symbol}</td>
-                                </tr>
-                            )
-                        })} */}
-                    </label>
+                    <tabel className="label">
+                        <thead>
+                            <tr>
+                                <th>Symbole</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {positions.map(position => {
+                                return (
+                                    <tr key={position.id}>
+                                        <td>{position.symbol}</td>
+                                        <td>{position.name}</td>
+                                        <td>{position.quantity}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </tabel>
                 </div>
                 <div>
                     <label className="label">
