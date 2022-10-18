@@ -16,6 +16,7 @@ export const UserProvider = (props) => {
             };
 
             const response = await fetch("/api/accounts", requestOptions);
+            
 
             if (!response.ok) {
                 setToken(null);
