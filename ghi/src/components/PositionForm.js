@@ -50,32 +50,45 @@ export default function PositionForm({ price, symbol, name }) {
             body: JSON.stringify(positionDict),
         };
 
-        const requestOptionsBp = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        };
+        // const requestOptionsBp = {
+        //     method: "PUT",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     credentials: "include",
+        // };
 
         const response = await fetch(
             "http://localhost:8090/positions",
             requestOptions
         );
-        const responseBp = await fetch(
-            `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
-            requestOptionsBp
-        );
+        // const responseBp = await fetch(
+        //     `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+        //     requestOptionsBp
+        // );
         const data = await response.json();
-        const dataBp = await responseBp.json();
+        // const dataBp = await responseBp.json();
         console.log(data);
-        console.log(dataBp);
-        if (response.ok && responseBp.ok) {
+        // console.log(dataBp);
+        if (response.ok) {
+            const requestOptionsBp = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            };
+            const responseBp = await fetch(
+                `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                requestOptionsBp
+            );
+            const dataBp = await responseBp.json();
+            console.log(dataBp);
+            setBuyingPower(dataBp);
             alert("Success!");
             setTimeout(() => {
                 window.location.reload();
             }, 500);
-            setBuyingPower(data);
         } else {
             alert("Could not process request. Please try again later");
         }
