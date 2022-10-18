@@ -1,5 +1,3 @@
-from turtle import position
-from unicodedata import name
 from pydantic import BaseModel
 from queries.pool import pool
 from typing import List, Union, Optional
@@ -27,7 +25,7 @@ class PositionsOut(BaseModel):
 
 
 class PositionRepository:
-    def get_one(self, position_symbol: str) -> Optional[PositionsOut]:
+    def get_one(self, username: str, position_symbol: str) -> Optional[PositionsOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -35,9 +33,9 @@ class PositionRepository:
                         """
                         SELECT id, username, symbol, name, quantity, type_of
                         FROM positions
-                        WHERE symbol = %s;
+                        WHERE symbol = %s AND username = %s
                         """,
-                        [position_symbol]
+                        [position_symbol, username]
                     )
                     record = result.fetchone()
                     position = PositionsOut(
@@ -51,7 +49,7 @@ class PositionRepository:
                 return position
         except Exception as e:
             print(e)
-            return {"message": "Could not get that position"}
+            return {"error": "Could not get that position"}
 
     def create(self, position: PositionsIn) -> PositionsOut:
         try:
@@ -84,92 +82,90 @@ class PositionRepository:
             print(e)
             return {"message": "Could not create position"}
 
-
-    def get_all(self) -> Union[Error, List[PositionsOut]]:
-            try:
-                #connect the database
-                with pool.connection() as conn:    #will create connection
-                    #get a cursor (something to run SQL with)
-                    with conn.cursor() as db:
-                        #Run our SELECT statement
-                        result = db.execute(
-                            """
+    def get_all(self, username: str) -> Union[Error, List[PositionsOut]]:
+        try:
+            # connect the database
+            with pool.connection() as conn:  # will create connection
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    result = db.execute(
+                        """
                             SELECT id, username, symbol, name, quantity, type_of
                             FROM positions
+                            WHERE username = %s
                             ORDER BY id;
-                            """
+                            """, [username]
+                    )
+                    result = []  # can rewrite at list comprehension
+                    for record in db:
+                        print(record)
+                        position = PositionsOut(
+                            id=record[0],
+                            username=record[1],
+                            symbol=record[2],
+                            name=record[3],
+                            quantity=record[4],
+                            type_of=record[5],
                         )
-                        result = [] #can rewrite at list comprehension
-                        for record in db:
-                            print(record)
-                            position = PositionsOut(
-                                id=record[0],
-                                username=record[1],
-                                symbol=record[2],
-                                name=record[3],
-                                quantity=record[4],
-                                type_of=record[5],
-                            )
-                            result.append(position)
-                        return result
+                        result.append(position)
+                    return result
 
-            except Exception as e:
-                print(e)
-                return {"message": "Could not get all positions"}
-        
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get all positions"}
 
-    def delete(self, position_symbol: str) -> bool:
+    def delete(self, position_symbol: str, username: str) -> bool:
         try:
-            #connect the database
-            with pool.connection() as conn:    #will create connection
-                #get a cursor (something to run SQL with)
+            # connect the database
+            with pool.connection() as conn:  # will create connection
+                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    #Run our SELECT statement
+                    # Run our SELECT statement
                     db.execute(
                         """
                         DELETE FROM positions
-                        WHERE symbol = %s
+                        WHERE symbol = %s AND username = %s
                         """,
-                        [position_symbol]
+                        [position_symbol, username]
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-                
-    def update(self, position_symbol: str, position: PositionsIn) -> Union[PositionsOut, Error]:
+    def update(self, position: PositionsIn) -> Union[PositionsOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
                         UPDATE positions
-                        SET username = %s
-                        , symbol = %s
-                        , name = %s
-                        , quantity = %s
-                        , type_of = %s
-                        WHERE symbol = %s
+                        SET quantity = %s
+
+                        WHERE symbol = %s AND username = %s
+                        RETURNING id, username, symbol, name, quantity, type_of
                         """,
                         [
-                            position.username,
-                            position.symbol,
-                            position.name,
                             position.quantity,
-                            position.type_of,
-                            position_symbol
+                            position.symbol,
+                            position.username,
                         ]
                     )
-                    old_data = position.dict()
-                    return PositionsOut(id=position_symbol, **old_data)
-                    
+                    record = result.fetchone()
+                    print(record)
+                    return PositionsOut(
+                        id=record[0],
+                        username=record[1],
+                        symbol=record[2],
+                        name=record[3],
+                        quantity=record[4],
+                        type_of=record[5],
+                    )
+
         except Exception as e:
             print(e)
             return {"message": "Could not edit that position"}
-
-
-
 
     def position_in_to_out(self, id: int, position: PositionsIn):
         old_data = position.dict()
