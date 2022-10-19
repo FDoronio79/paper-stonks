@@ -1,11 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import Login from './Login'
 
 
 const Dashboard = ({}) => {
-    const [fastapi_token, setToken] = useContext(UserContext);
+    const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([])
