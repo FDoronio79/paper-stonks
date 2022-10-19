@@ -7,15 +7,21 @@ import CryptoInfo from "./CryptoInfo";
 
 
 
+
 const Dashboard = ({}) => {
-    const [fastapi_token, setToken] = useContext(UserContext);
-    // const [hasSignedUp, ]
+    const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
+    const [positions, setPositions] = useState([])
+    const [username, setUserName] = useContext(UserContext)
+
+    localStorage.setItem("Username", username);
+    console.log("user", username)
+    localStorage.setItem("position", positions);
+    console.log("positions", positions);
+
     localStorage.setItem("buyingPower", currentbuyingPower);
-    // console.log("\n\n\n\nbuying power");
     console.log(currentbuyingPower);
-    // console.log(setBuyingPower);
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -32,11 +38,37 @@ const Dashboard = ({}) => {
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
-                console.log(data);
+                setUserName(data["username"])
+                console.log("work", data);
             }
         }
         getBuyingPower();
-    }, [setCurrentBuyingPower]);
+    }, [setCurrentBuyingPower, setUserName]);
+
+    useEffect(() => {
+        async function getPositions() {
+            const requestOptions = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            };
+            const response = await fetch(
+                `http://localhost:8090/positions?username=${username}`,
+                requestOptions
+            );
+            console.log("RESPONSE", response)
+            if (response.ok) {
+                const data = await response.json();
+                setPositions(data);
+                console.log("bruhhhh",data);
+            } else {
+                console.log("WTF")
+            }
+        }
+        getPositions();
+    }, [setPositions])
 
     const updateBuyingPower = async () => {
         const requestOptions = {
@@ -52,7 +84,6 @@ const Dashboard = ({}) => {
         );
         const data = await response.json();
         console.log(response);
-        // // console.log(data);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
@@ -73,6 +104,28 @@ const Dashboard = ({}) => {
     } else {
         return (
             <>
+                <div>
+                    <tabel className="label">
+                        <thead>
+                            <tr>
+                                <th>Symbole</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {positions.map(position => {
+                                return (
+                                    <tr key={position.id}>
+                                        <td>{position.symbol}</td>
+                                        <td>{position.name}</td>
+                                        <td>{position.quantity}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </tabel>
+                </div>
                 <div>
                     <label className="label">
                         Current Buying Power:{currentbuyingPower}

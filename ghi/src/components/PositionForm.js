@@ -1,21 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PositionForm({ price, symbol, name }) {
     // transaction: username, symbol, quantity, type_of, time_of_purchase, price
     // position: username, symbol, quantity, type_of, name
     const [buyingPower, setBuyingPower] = useState("");
     const buyingPow = localStorage.getItem("buyingPower");
-
+    const [updateQuantity, setUpdateQuantity] = useState("");
     const usernameAcc = localStorage.getItem("Username");
     const symbolStock = symbol;
     const [quantity1, setQuantity] = useState("");
+    const [currentQuantity, setCurrentQuantity] = useState("");
 
     const typeOfItem = "stock";
     const nameStock = name;
-
-    // const priceStock = price;
-    // const timedate = Date.now.UTC();
-    // const typeOfTrans = "BUY"
 
     const estimatedPrice = quantity1 * price;
     const withoutDollarSign = buyingPow.replace("$", "");
@@ -23,6 +20,7 @@ export default function PositionForm({ price, symbol, name }) {
     const buyingp = parseFloat(removedCommas);
     const maxQuantity = Math.floor(buyingp / price);
     const bpchange = 0 - estimatedPrice;
+    const newQuantity = parseInt(quantity1) + currentQuantity;
     var positionDict = {
         username: usernameAcc,
         symbol: symbolStock,
@@ -31,67 +29,141 @@ export default function PositionForm({ price, symbol, name }) {
         name: nameStock,
     };
 
-    // var transactionDict = {
-    //     username: usernameAcc,
-    //     symbol: symbolStock,
-    //     quantity: quantity1,
-    //     type_of: typeOfTrans,
-    //     price: priceStock,
-    //     time_of_purchase: timedate
-    // };
+    var updatePositionDict = {
+        username: usernameAcc,
+        symbol: symbolStock,
+        quantity: newQuantity,
+        type_of: typeOfItem,
+        name: nameStock,
+    };
 
-    // var dataDict = {positionDict, transactionDict};
-
-    const submitTransaction = async () => {
-        const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify(positionDict),
-        };
-
-        // const requestOptionsBp = {
-        //     method: "PUT",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     credentials: "include",
-        // };
-
-        const response = await fetch(
-            "http://localhost:8090/positions",
-            requestOptions
-        );
-        // const responseBp = await fetch(
-        //     `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
-        //     requestOptionsBp
-        // );
-        const data = await response.json();
-        // const dataBp = await responseBp.json();
-        console.log(data);
-        // console.log(dataBp);
-        if (response.ok) {
-            const requestOptionsBp = {
-                method: "PUT",
+    useEffect(() => {
+        async function getCurrentQuantity() {
+            const requestOptions = {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
             };
-            const responseBp = await fetch(
-                `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
-                requestOptionsBp
+            const response = await fetch(
+                `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+                requestOptions
             );
-            const dataBp = await responseBp.json();
-            console.log(dataBp);
-            setBuyingPower(dataBp);
-            alert("Success!");
-            setTimeout(() => {
-                window.location.reload();
-            }, 500);
-        } else {
-            alert("Could not process request. Please try again later");
+            if (response.ok) {
+                const data = await response.json();
+                setCurrentQuantity(data["quantity"]);
+                console.log(data);
+            } else {
+            }
         }
+        getCurrentQuantity();
+    }, [setCurrentQuantity]);
+
+    const submitTransaction = async () => {
+        // const requestOptionsGet = {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     credentials: "include",
+        // };
+        // const responseGet = await fetch(
+        //     `http://localhost:8090/positions/${symbolStock}`,
+        //     requestOptionsGet
+        // );
+        // if (!responseGet.ok) {
+        try {
+            const requestOptionsGet = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            };
+            const responseGet = await fetch(
+                `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+                requestOptionsGet
+            );
+            if (responseGet.ok) {
+                const requestOptionsUpdateP = {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(updatePositionDict),
+                    credentials: "include",
+                };
+                const responseUpdateP = await fetch(
+                    `http://localhost:8090/positions/${symbolStock}`,
+                    requestOptionsUpdateP
+                );
+                const dataUpdateP = await responseUpdateP.json();
+                console.log(dataUpdateP);
+                console.log("CURRENT QUANTITY1", currentQuantity);
+                console.log("QUANTITYTOADD", quantity1);
+                console.log("NEW QUANTITY", newQuantity);
+                setUpdateQuantity(dataUpdateP);
+                if (responseUpdateP.ok) {
+                    const requestOptionsBp = {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        credentials: "include",
+                    };
+                    const responseBp = await fetch(
+                        `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                        requestOptionsBp
+                    );
+                    const dataBp = await responseBp.json();
+                    console.log(dataBp);
+                    setBuyingPower(dataBp);
+                    alert("Success!");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                }
+            }
+        } catch (e) {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(positionDict),
+            };
+
+            const response = await fetch(
+                "http://localhost:8090/positions",
+                requestOptions
+            );
+            const data = await response.json();
+
+            console.log(data);
+            if (response.ok) {
+                const requestOptionsBp = {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                };
+                const responseBp = await fetch(
+                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    requestOptionsBp
+                );
+                const dataBp = await responseBp.json();
+                console.log(dataBp);
+                setBuyingPower(dataBp);
+                alert("Success!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            } else {
+                alert("Could not process request. Please try again later");
+            }
+        }
+        // }
     };
 
     const handleSubmit = (e) => {

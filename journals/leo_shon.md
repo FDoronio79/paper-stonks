@@ -47,3 +47,15 @@
 
 -   worked on react front end to get the buying power update form to work.
     -   also getting the current buying power to show as well
+
+10/14
+
+-   couldn't get the cookies to grab the account data when trying to update buying power so we fixed this blocker
+
+10/15
+
+-   got buying power to update when buying stocks
+
+10/16
+
+-   got the buying function done where the user will create a position when no previous stocks of it were found and will update a position when a previous iteration of it has been found
