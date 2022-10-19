@@ -47,3 +47,5 @@
 
 -   Made an endpoint that returns the current logged in user's details such as buying power, username, full name and email
 -   Made an endpoint that allows a logged in user to update their buying power balance
+
+#### 10/11/22
