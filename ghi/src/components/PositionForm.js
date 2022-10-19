@@ -61,86 +61,50 @@ export default function PositionForm({ price, symbol, name }) {
     }, [setCurrentQuantity]);
 
     const submitTransaction = async () => {
-        const requestOptionsGet = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        };
-        const responseGet = await fetch(
-            `http://localhost:8090/positions/${symbolStock}`,
-            requestOptionsGet
-        );
-        if (!responseGet.ok) {
-            try {
-                const requestOptionsGet = {
-                    method: "GET",
+        // const requestOptionsGet = {
+        //     method: "GET",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     credentials: "include",
+        // };
+        // const responseGet = await fetch(
+        //     `http://localhost:8090/positions/${symbolStock}`,
+        //     requestOptionsGet
+        // );
+        // if (!responseGet.ok) {
+        try {
+            const requestOptionsGet = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            };
+            const responseGet = await fetch(
+                `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+                requestOptionsGet
+            );
+            if (responseGet.ok) {
+                const requestOptionsUpdateP = {
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    body: JSON.stringify(updatePositionDict),
                     credentials: "include",
                 };
-                const responseGet = await fetch(
-                    `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
-                    requestOptionsGet
+                const responseUpdateP = await fetch(
+                    `http://localhost:8090/positions/${symbolStock}`,
+                    requestOptionsUpdateP
                 );
-                if (responseGet.ok) {
-                    const requestOptionsUpdateP = {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(updatePositionDict),
-                        credentials: "include",
-                    };
-                    const responseUpdateP = await fetch(
-                        `http://localhost:8090/positions/${symbolStock}`,
-                        requestOptionsUpdateP
-                    );
-                    const dataUpdateP = await responseUpdateP.json();
-                    console.log(dataUpdateP);
-                    console.log("CURRENT QUANTITY1", currentQuantity);
-                    console.log("QUANTITYTOADD", quantity1);
-                    console.log("NEW QUANTITY", newQuantity);
-                    setUpdateQuantity(dataUpdateP);
-                    if (responseUpdateP.ok) {
-                        const requestOptionsBp = {
-                            method: "PUT",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            credentials: "include",
-                        };
-                        const responseBp = await fetch(
-                            `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
-                            requestOptionsBp
-                        );
-                        const dataBp = await responseBp.json();
-                        console.log(dataBp);
-                        setBuyingPower(dataBp);
-                        alert("Success!");
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 500);
-                    }
-                }
-            } catch (e) {
-                const requestOptions = {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    credentials: "include",
-                    body: JSON.stringify(positionDict),
-                };
-
-                const response = await fetch(
-                    "http://localhost:8090/positions",
-                    requestOptions
-                );
-                const data = await response.json();
-
-                console.log(data);
-                if (response.ok) {
+                const dataUpdateP = await responseUpdateP.json();
+                console.log(dataUpdateP);
+                console.log("CURRENT QUANTITY1", currentQuantity);
+                console.log("QUANTITYTOADD", quantity1);
+                console.log("NEW QUANTITY", newQuantity);
+                setUpdateQuantity(dataUpdateP);
+                if (responseUpdateP.ok) {
                     const requestOptionsBp = {
                         method: "PUT",
                         headers: {
@@ -159,11 +123,47 @@ export default function PositionForm({ price, symbol, name }) {
                     setTimeout(() => {
                         window.location.reload();
                     }, 500);
-                } else {
-                    alert("Could not process request. Please try again later");
                 }
             }
+        } catch (e) {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(positionDict),
+            };
+
+            const response = await fetch(
+                "http://localhost:8090/positions",
+                requestOptions
+            );
+            const data = await response.json();
+
+            console.log(data);
+            if (response.ok) {
+                const requestOptionsBp = {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                };
+                const responseBp = await fetch(
+                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    requestOptionsBp
+                );
+                const dataBp = await responseBp.json();
+                console.log(dataBp);
+                setBuyingPower(dataBp);
+                alert("Success!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            } else {
+                alert("Could not process request. Please try again later");
+            }
         }
+        // }
     };
 
     const handleSubmit = (e) => {
