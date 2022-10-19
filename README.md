@@ -21,7 +21,21 @@ We are targeting finance enthusiasts who want to practice their stock investment
 
 ## Functionality
 
-This is where can talk about the funcationality of our application. We can describe the pages and the things you can do on each; 
+Visitor not-logged in:
+- Visitors of the site can view the site's homepage. The homepage features an about section with company information and a guide on how to navigate the site
+- Using the search bar, visitors can search for stocks of interest and go to it's page
+- Visitors can create an account 
+
+Visitors logged-in
+- Additional features once logged in include:
+- A user can add "money" or "buying power" to their account
+- On a specific stock page, the user will have access to the "Buy" and "Sell" options
+- A user can "buy" a stock, gaining a position in that stock
+- On a specific stock page, if a user has a position in that stock, it will be displayed
+- A user can also sell their stock
+- Portfolio page will display a list of a user's positions and total investment amount
+
+
 
 ## Project Initialization
 
