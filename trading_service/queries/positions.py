@@ -25,7 +25,7 @@ class PositionsOut(BaseModel):
 
 
 class PositionRepository:
-    def get_one(self, username: str, position_symbol: str) -> Optional[PositionsOut]:
+    def get_one(self, username: str, position_symbol: str) -> Union[PositionsOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -49,7 +49,7 @@ class PositionRepository:
                 return position
         except Exception as e:
             print(e)
-            return {"error": "Could not get that position"}
+            return Error(message="Could not find a position")
 
     def create(self, position: PositionsIn) -> Union[PositionsOut, Error]:
         try:

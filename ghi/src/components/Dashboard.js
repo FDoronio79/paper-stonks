@@ -8,9 +8,7 @@ const Dashboard = ({}) => {
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     localStorage.setItem("buyingPower", currentbuyingPower);
-    // console.log("\n\n\n\nbuying power");
-    console.log(currentbuyingPower);
-    // console.log(setBuyingPower);
+
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -20,10 +18,7 @@ const Dashboard = ({}) => {
                 },
                 credentials: "include",
             };
-            const response = await fetch(
-                `http://localhost:8080/api/accounts`,
-                requestOptions
-            );
+            const response = await fetch(`http://localhost:8080/api/accounts`, requestOptions);
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
@@ -63,31 +58,32 @@ const Dashboard = ({}) => {
     };
 
     if (!fastapi_token) {
-        console.log("ooops");
-        return <Navigate replace to="/login" />;
+        return (
+            <Navigate
+                replace
+                to="/login"
+            />
+        );
     } else {
         return (
             <>
                 <div>
-                    <label className="label">
-                        Current Buying Power:{currentbuyingPower}
-                    </label>
+                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
                 </div>
                 <div>
-                    <form className="box" onSubmit={handleSubmit}>
+                    <form
+                        className="box"
+                        onSubmit={handleSubmit}
+                    >
                         <div className="form-floating mb-3">
                             <div className="field">
-                                <label className="label">
-                                    Update Buying Power
-                                </label>
+                                <label className="label">Update Buying Power</label>
                                 <div className="control">
                                     <input
                                         type="text"
                                         placeholder="add or subtract buying power"
                                         // value={buyingPower}
-                                        onChange={(e) =>
-                                            setBuyingPower(e.target.value)
-                                        }
+                                        onChange={(e) => setBuyingPower(e.target.value)}
                                         className="input"
                                         required
                                     />
@@ -95,7 +91,10 @@ const Dashboard = ({}) => {
                             </div>
                         </div>
                         <div>
-                            <button className="btn btn-primary" type="submit">
+                            <button
+                                className="btn btn-primary"
+                                type="submit"
+                            >
                                 Update Buying Power
                             </button>
                         </div>

@@ -18,13 +18,18 @@ def create_position(position: PositionsIn,
     return position_response
 
 
-@router.get("/positions/{position_symbol}", response_model=Optional[PositionsOut])
+@router.get("/positions/{position_symbol}", response_model=Union[PositionsOut, Error])
 def get_one_position(
     username: str,
     position_symbol: str,
+    response: Response,
     repo: PositionRepository = Depends(),
 ) -> PositionsOut:
-    return repo.get_one(username=username, position_symbol=position_symbol)
+    position_response = repo.get_one(
+        username=username, position_symbol=position_symbol)
+    if isinstance(position_response, Error):
+        response.status_code = 200
+    return position_response
 
 
 @router.get("/positions", response_model=Union[Error, List[PositionsOut]])

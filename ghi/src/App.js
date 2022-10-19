@@ -13,7 +13,8 @@ import { SearchContext } from "./SearchContext";
 import { useState, useContext, createContext } from "react";
 import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
-import PositionForm from "./components/PositionForm";
+import BuyForm from "./components/BuyForm";
+import SellForm from "./components/SellForm";
 
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
@@ -58,21 +59,24 @@ function App() {
         // <GetToken />
         <>
             <div className="switch">
-                <label>
-                    {" "}
-                    {theme === "light" ? "Light Mode" : "Dark Mode"}{" "}
-                </label>
+                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
                 <ReactSwitch
                     onChange={toggleTheme}
                     checked={theme === "dark"}
                 />
             </div>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                <div className="App" id={theme}>
+                <div
+                    className="App"
+                    id={theme}
+                >
                     <MainPage />
                     <BrowserRouter>
                         <SearchContext.Provider value={symbol}>
-                            <Nav setSymbol={setSymbol} symbol={symbol} />
+                            <Nav
+                                setSymbol={setSymbol}
+                                symbol={symbol}
+                            />
                         </SearchContext.Provider>
                         <div className="container">
                             <Routes>
@@ -82,7 +86,10 @@ function App() {
                                     path="/dashboard"
                                     element={<Dashboard />}
                                 />
-                                <Route path="/login" element={<LoginForm />} />
+                                <Route
+                                    path="/login"
+                                    element={<LoginForm />}
+                                />
                                 <Route
                                     path="/signup"
                                     element={<SignupForm />}
@@ -91,7 +98,14 @@ function App() {
                                     path="/stock"
                                     element={<StockDetail search={symbol} />}
                                 />
-                                <Route path="/position" element={<PositionForm />} />
+                                <Route
+                                    path="/position/buy"
+                                    element={<BuyForm />}
+                                />
+                                <Route
+                                    path="/position/sell"
+                                    element={<SellForm />}
+                                />
                             </Routes>
                         </div>
                     </BrowserRouter>
