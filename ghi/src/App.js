@@ -26,7 +26,7 @@ export const ThemeContext = createContext(null);
 
 function App() {
     const [symbol, setSymbol] = useState("");
-    const [theme, setTheme] = useState("dark");
+    const [theme, setTheme] = useState("light");
 
     const toggleTheme = () => {
         setTheme((curr) => (curr === "light" ? "dark" : "light"));
@@ -91,7 +91,10 @@ function App() {
                                     path="/stock"
                                     element={<StockDetail search={symbol} />}
                                 />
-                                <Route path="/position" element={<PositionForm />} />
+                                <Route
+                                    path="/position"
+                                    element={<PositionForm />}
+                                />
                             </Routes>
                         </div>
                     </BrowserRouter>
