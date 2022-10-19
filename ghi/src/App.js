@@ -91,7 +91,10 @@ function App() {
                                     path="/stock"
                                     element={<StockDetail search={symbol} />}
                                 />
-                                <Route path="/position" element={<PositionForm />} />
+                                <Route
+                                    path="/position"
+                                    element={<PositionForm />}
+                                />
                             </Routes>
                         </div>
                     </BrowserRouter>

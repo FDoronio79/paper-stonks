@@ -32,6 +32,8 @@ services:
             - ./ghi:/app
         ports:
             - "3000:3000"
+        env_file:
+            - .env
         environment:
             HOST_OS: ${OS}
             NODE_ENV: development
