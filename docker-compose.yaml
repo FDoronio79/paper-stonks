@@ -40,8 +40,6 @@ services:
             HOST: "0.0.0.0"
             REACT_APP_API_HOST: http://localhost:8000
             ALPHA_VANTAGE: ${ALPHA_VANTAGE}
-        env_file:
-            - .env
     accounts_service:
         build:
             context: ./accounts_service
