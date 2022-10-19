@@ -24,7 +24,7 @@ export default function PositionForm({price, symbol, name}) {
     const buyingp = parseFloat(buyingPow);
     console.log(typeof buyingp)
     console.log(typeof price)
-    const maxQuantity = (buyingp / price);
+    const maxQuantity = (buyingp * price);
     console.log(typeof maxQuantity)
 
     var positionDict = {
