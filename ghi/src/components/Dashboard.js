@@ -9,14 +9,15 @@ const Dashboard = ({}) => {
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([])
     const [username, setUserName] = useContext(UserContext)
+    const [stockPrice, setStockPrice] = useState([])
 
     localStorage.setItem("Username", username);
     console.log("user", username)
     localStorage.setItem("position", positions);
     console.log("positions", positions);
-
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
+    
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -61,6 +62,9 @@ const Dashboard = ({}) => {
             } else {
                 console.log("WTF")
             }
+        }
+        async function getStockData() {
+            const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${positions.symbol}&apikey=${process.env.ALPHA_VANTAGE}`;
         }
         getPositions();
     }, [setPositions])
