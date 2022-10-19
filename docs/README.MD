@@ -10,7 +10,7 @@ Paper Stonks - because stonks for life!
 
 ## Design
 
-- [API design](/api_endpoints.md)
+- [API design](docs/api_endpoints.md)
 - [Data model](docs/data-models.md)
 - [GHI](docs/ghi.md)
 - [Integrations](docs/integrations.md)
