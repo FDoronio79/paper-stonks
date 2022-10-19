@@ -1,6 +1,6 @@
-### API Endpoints Documentation
+# API Endpoints Documentation
 
-#### Accounts Service
+## Accounts Service
 
 ##### Create Account
 
@@ -87,7 +87,7 @@
     }
     ```
 
-#### Trading Service
+## Trading Service
 
 ##### Get Position
 
