@@ -8,7 +8,7 @@ const Dashboard = ({}) => {
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useContext(UserContext);
-    const [prices, setPrices] = useState([]);
+    const [prices] = useState([]);
 
     localStorage.setItem("Username", username);
     console.log("user", username);

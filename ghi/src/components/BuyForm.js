@@ -186,7 +186,6 @@ export default function BuyForm({ price, symbol, name }) {
         e.preventDefault();
         submitTransaction();
         console.log("Transaction Submitted");
-
         setTimeout(() => {
             window.location.reload();
         }, 500);
