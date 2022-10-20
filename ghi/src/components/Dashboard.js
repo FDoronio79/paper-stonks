@@ -8,7 +8,7 @@ const Dashboard = ({}) => {
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([])
     const [username, setUserName] = useContext(UserContext)
-    const [prices, setPrice] = useState([])
+
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -84,15 +84,13 @@ const Dashboard = ({}) => {
             console.log("stock price?", responses)
             let idx = 0
             for (let position of positions) {
-                if (!(position["symbol"] in prices)) {
-                    prices[position["symbol"]] = 0;
+                if (!(position["value"] in position)) {
+                    position["value"] = 0;
                 }
                 let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                prices[position["symbol"]] = stockPrice.toFixed(2);
+                position["value"] = stockPrice.toFixed(2);
                 idx++;
-                console.log("prices", prices);
             }
-
             //response will be an unordered data from the endpoint
             // loop over data, build a dictionary of symbol that points to the price {symbol:price}
             //when loop over position prices[position.symbol]
@@ -146,6 +144,7 @@ const Dashboard = ({}) => {
                                 <th scope="col">Symbol</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Quantity</th>
+                                <th scope="col">Value</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -155,20 +154,7 @@ const Dashboard = ({}) => {
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                        <thead>
-                            <tr>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            {Object.entries(prices).map(([key, val], i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>${val}</td>
+                                        <td>${position.value}</td>
                                     </tr>
                                 );
                             })}
