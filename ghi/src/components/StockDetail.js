@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
-import PositionForm from "./PositionForm";
-
+import BuyForm from "./BuyForm";
+import SellForm from "./SellForm";
 
 function StockDetail({ search }) {
     // const search = useContext(SearchContext);
-    const [symbol, setSymbol] = useState(search);
+    const [symbol, setSymbol] = useState(search.toUpperCase());
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
     const buyingPow = localStorage.getItem("buyingPower");
-    const [name, setNameStock] = useState('');
+    const [name, setNameStock] = useState("");
+    const [shares_owned, setSharesOwned] = useState("");
+    const usernameAcc = localStorage.getItem("Username");
 
     useEffect(() => {
         async function getStockData() {
+            // console.log("HELLO", process.env.REACT_APP_ALPHA_VANTAGE);
             const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${search}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
             const nameUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
             const responseName = await fetch(nameUrl);
             if (responseName.ok) {
                 const data = await responseName.json();
-                setNameStock((data["Name"]));
+                setNameStock(data["Name"]);
             }
             const response = await fetch(priceUrl);
             if (response.ok) {
@@ -31,10 +34,26 @@ function StockDetail({ search }) {
                 setPercent(roundedPercent);
                 console.log(data);
             }
+
+            //check to see if they have a position
+            const checkPositionsUrl = `http://localhost:8090/positions/${symbol}?username=${usernameAcc}`;
+
+            const checkOptions = {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+            };
+            const positionCheckResponse = await fetch(checkPositionsUrl, checkOptions);
+
+            if (positionCheckResponse.ok) {
+                const checkData = await positionCheckResponse.json();
+                console.log("\n\n\n\n\nPosition Check data", checkData);
+                setSharesOwned(checkData["quantity"]);
+            }
         }
 
         getStockData();
-    }, [setSymbol, setNameStock]);
+    }, [setSymbol, setNameStock, setSharesOwned]);
 
     return (
         <>
@@ -42,50 +61,103 @@ function StockDetail({ search }) {
                 <h3>Buying Power</h3>
                 <h4>{buyingPow}</h4>
             </div>
-            <div className="container">
-                <h1>{symbol.toUpperCase()}</h1>
-                <h1>{name}</h1>
-                <p>Price: ${price}</p>
-                <p>
-                    PRICE CHANGE: {change} by {percent}%
-                </p>
+            <div className="row my-4">
+                <div className="col">
+                    <div className="container">
+                        <h1>{symbol.toUpperCase()}</h1>
+                        <h1>{name}</h1>
+                        <p>Price: ${price}</p>
+                        <p>
+                            PRICE CHANGE: {change} by {percent}%
+                        </p>
+                    </div>
+                </div>
+                {shares_owned > 0 ? (
+                    <div className="col">
+                        <h4>Your position</h4>
+                        <h5>{shares_owned}</h5>
+                    </div>
+                ) : (
+                    <div className="col"></div>
+                )}
             </div>
 
             <button
                 type="button"
                 className="btn btn-dark"
-                data-bs-toggle="offcanvas" data-bs-target="#offcanvasBUY" aria-controls="offcanvasBUY"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasBUY"
+                aria-controls="offcanvasBUY"
             >
                 Buy
             </button>
             <button
                 type="button"
                 className="btn btn-dark"
-                data-bs-toggle="offcanvas" data-bs-target="#offcanvasSELL" aria-controls="offcanvasSELL"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSELL"
+                aria-controls="offcanvasSELL"
             >
                 Sell
             </button>
 
-            <div className="offcanvas offcanvas-end offcanvas-size-lg" tabindex="-1" id="offcanvasBUY" aria-labelledby="offcanvasBUY">
-            <div className="offcanvas-header">
-                <h5 className="offcanvas-title" id="offcanvasBUY">BUY {symbol.toUpperCase()}</h5>
-                <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div className="offcanvas-body">
-                <PositionForm price={price} symbol={symbol.toUpperCase()} name={name}/>
-            </div>
+            <div
+                className="offcanvas offcanvas-end offcanvas-size-lg"
+                tabIndex="-1"
+                id="offcanvasBUY"
+                aria-labelledby="offcanvasBUY"
+            >
+                <div className="offcanvas-header">
+                    <h5
+                        className="offcanvas-title"
+                        id="offcanvasBUY"
+                    >
+                        BUY {symbol.toUpperCase()}
+                    </h5>
+                    <button
+                        type="button"
+                        className="btn-close text-reset"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div className="offcanvas-body">
+                    <BuyForm
+                        price={price}
+                        symbol={symbol.toUpperCase()}
+                        name={name}
+                    />
+                </div>
             </div>
 
-            <div className="offcanvas offcanvas-end offcanvas-size-lg" tabindex="-1" id="offcanvasSELL" aria-labelledby="offcanvasSELL">
-            <div className="offcanvas-header">
-                <h5 className="offcanvas-title" id="offcanvasSELL">SELL {symbol.toUpperCase()}</h5>
-                <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <div
+                className="offcanvas offcanvas-end offcanvas-size-lg"
+                tabIndex="-1"
+                id="offcanvasSELL"
+                aria-labelledby="offcanvasSELL"
+            >
+                <div className="offcanvas-header">
+                    <h5
+                        className="offcanvas-title"
+                        id="offcanvasSELL"
+                    >
+                        SELL {symbol.toUpperCase()}
+                    </h5>
+                    <button
+                        type="button"
+                        className="btn-close text-reset"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div className="offcanvas-body">
+                    <SellForm
+                        price={price}
+                        symbol={symbol.toUpperCase()}
+                        name={name}
+                    />
+                </div>
             </div>
-            <div className="offcanvas-body">
-                <PositionForm price={price} symbol={symbol.toUpperCase()} name={name} />
-            </div>
-            </div>
-
         </>
     );
 }

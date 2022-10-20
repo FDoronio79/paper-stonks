@@ -7,7 +7,6 @@ import CryptoInfo from "./CryptoInfo";
 
 
 
-
 const Dashboard = ({}) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
@@ -15,13 +14,25 @@ const Dashboard = ({}) => {
     const [positions, setPositions] = useState([])
     const [username, setUserName] = useContext(UserContext)
 
+
     localStorage.setItem("Username", username);
-    console.log("user", username)
+    console.log("user", username);
     localStorage.setItem("position", positions);
     console.log("positions", positions);
-
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
+
+    /* MATT'S SUGGESTION FOR THE TABLE (MAY NOT WORK)
+    1. Create a positions_dict{}
+    2. for each position
+        - create a position{}
+        - add symbol, name, quantity
+        - fetch the price, add it to the dictionary
+        - append position{} to position_dict{}
+    3. map positions_dict into a table?
+    */
+
+    // function to get current buying power of the user and setting it to a variable
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -38,7 +49,7 @@ const Dashboard = ({}) => {
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
-                setUserName(data["username"])
+                setUserName(data["username"]);
                 console.log("work", data);
             }
         }
@@ -58,18 +69,47 @@ const Dashboard = ({}) => {
                 `http://localhost:8090/positions?username=${username}`,
                 requestOptions
             );
-            console.log("RESPONSE", response)
+            console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                console.log("bruhhhh",data);
+                console.log("bruhhhh", data);
             } else {
-                console.log("WTF")
+                console.log("WTF");
             }
         }
         getPositions();
-    }, [setPositions])
+    }, [setPositions]);
 
+    useEffect(() => {
+        async function getStockPrice() {
+            const responses = await Promise.all(positions.map(async position => {
+                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                const response = await fetch(priceUrl)
+                if(response.ok) {
+                    const data = await response.json()
+                    return data
+                } else {
+                    console.log("ayoo")
+                }
+                
+            }))
+            console.log("stock price?", responses)
+            let idx = 0
+            let positions_arr = []
+            for (let position of positions) {
+                if (!(position["value"] in position)) {
+                    position["value"] = 0;
+                }
+                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                position["value"] = stockPrice.toFixed(2);
+                idx++;
+            }
+        }
+        getStockPrice();
+    });
+
+    // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
         const requestOptions = {
             method: "PUT",
@@ -99,32 +139,34 @@ const Dashboard = ({}) => {
     };
 
     if (!fastapi_token) {
-        console.log("ooops");
         return <Navigate replace to="/login" />;
     } else {
         return (
             <>
                 <div>
-                    <tabel className="label">
+                    <table className="table table-striped">
                         <thead>
+                            <h3>Positions</h3>
                             <tr>
-                                <th>Symbole</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Value</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {positions.map(position => {
+                            {positions.map((position) => {
                                 return (
                                     <tr key={position.id}>
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
+                                        <td>${position.value}</td>
                                     </tr>
-                                )
+                                );
                             })}
                         </tbody>
-                    </tabel>
+                    </table>
                 </div>
                 <div>
                     <label className="label">
@@ -142,7 +184,7 @@ const Dashboard = ({}) => {
                                     <input
                                         type="text"
                                         placeholder="add or subtract buying power"
-                                        // value={buyingPower}
+                                        value={buyingPower}
                                         onChange={(e) =>
                                             setBuyingPower(e.target.value)
                                         }

@@ -7,13 +7,15 @@ import MainPage from "./MainPage";
 import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
+import Transactions from "./components/Transactions";
 import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
 import { useState, useContext, createContext } from "react";
 import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
-import PositionForm from "./components/PositionForm";
+import BuyForm from "./components/BuyForm";
+import SellForm from "./components/SellForm";
 import HomePage from "./components/HomePage"
 
 // import Header from "./components/Header";
@@ -87,6 +89,10 @@ function App() {
                                     path="/dashboard"
                                     element={<Dashboard />}
                                 />
+                                <Route
+                                    path="/Transactions"
+                                    element={<Transactions />}
+                                />
                                 <Route path="/login" element={<LoginForm />} />
                                 <Route
                                     path="/signup"
@@ -97,8 +103,12 @@ function App() {
                                     element={<StockDetail search={symbol} />}
                                 />
                                 <Route
-                                    path="/position"
-                                    element={<PositionForm />}
+                                    path="/position/buy"
+                                    element={<BuyForm />}
+                                />
+                                <Route
+                                    path="/position/sell"
+                                    element={<SellForm />}
                                 />
                             </Routes>
                         </div>

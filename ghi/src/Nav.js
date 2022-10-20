@@ -15,7 +15,6 @@ function Nav({ setSymbol, symbol }) {
         });
         setToken(null);
         console.log("DELETED!");
-        console.log(fastapi_token);
     };
 
     if (!fastapi_token) {
@@ -142,6 +141,15 @@ function Nav({ setSymbol, symbol }) {
                                         to="/dashboard"
                                     >
                                         Dashboard
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink
+                                        className="nav-link active"
+                                        aria-current="page"
+                                        to="/transactions"
+                                    >
+                                        Transactions
                                     </NavLink>
                                 </li>
                                 <form className="d-flex">
