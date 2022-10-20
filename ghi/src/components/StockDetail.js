@@ -13,8 +13,8 @@ function StockDetail({ search }) {
 
     useEffect(() => {
         async function getStockData() {
-            const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${search}&apikey=${process.env.ALPHA_VANTAGE}`;
-            const nameUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.ALPHA_VANTAGE}`;
+            const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${search}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+            const nameUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
             const responseName = await fetch(nameUrl);
             if (responseName.ok) {
                 const data = await responseName.json();
