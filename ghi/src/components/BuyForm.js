@@ -116,7 +116,10 @@ export default function BuyForm({ price, symbol, name }) {
                     body: JSON.stringify(transactionDict),
                 };
 
-                const response = await fetch("http://localhost:8090/transactions", requestOptions);
+                const response = await fetch(
+                    "http://localhost:8090/transactions",
+                    requestOptions
+                );
                 const data = await response.json();
 
                 console.log("TRANSACTION MADE", data);
@@ -144,7 +147,10 @@ export default function BuyForm({ price, symbol, name }) {
                 body: JSON.stringify(positionDict),
             };
 
-            const response = await fetch("http://localhost:8090/positions", requestOptions);
+            const response = await fetch(
+                "http://localhost:8090/positions",
+                requestOptions
+            );
             const data = await response.json();
 
             console.log(data);
@@ -156,7 +162,10 @@ export default function BuyForm({ price, symbol, name }) {
                     body: JSON.stringify(transactionDict),
                 };
 
-                const response = await fetch("http://localhost:8090/transactions", requestOptions);
+                const response = await fetch(
+                    "http://localhost:8090/transactions",
+                    requestOptions
+                );
                 const data = await response.json();
 
                 console.log("TRANSACTION MADE", data);
@@ -186,10 +195,10 @@ export default function BuyForm({ price, symbol, name }) {
         e.preventDefault();
         submitTransaction();
         console.log("Transaction Submitted");
-        navigate("/dashboard");
         setTimeout(() => {
             window.location.reload();
         }, 500);
+        navigate("/dashboard");
     };
 
     return (

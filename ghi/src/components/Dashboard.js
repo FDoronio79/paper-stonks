@@ -2,15 +2,13 @@ import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
-
-
-const Dashboard = ({ }) => {
+const Dashboard = ({}) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
-    const [positions, setPositions] = useState([])
-    const [username, setUserName] = useContext(UserContext)
-    const [prices, setPrices] = useState([])
+    const [positions, setPositions] = useState([]);
+    const [username, setUserName] = useContext(UserContext);
+    const [prices] = useState([]);
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -28,7 +26,10 @@ const Dashboard = ({ }) => {
                 },
                 credentials: "include",
             };
-            const response = await fetch(`http://localhost:8080/api/accounts`, requestOptions);
+            const response = await fetch(
+                `http://localhost:8080/api/accounts`,
+                requestOptions
+            );
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
@@ -66,22 +67,26 @@ const Dashboard = ({ }) => {
 
     useEffect(() => {
         async function getStockPrice() {
-            const responses = await Promise.all(positions.map(async position => {
-                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-                const response = await fetch(priceUrl)
-                const data = await response.json()
-                return data
-            }))
-            console.log("stock price?", responses)
-            let idx = 0
+            const responses = await Promise.all(
+                positions.map(async (position) => {
+                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                    const response = await fetch(priceUrl);
+                    const data = await response.json();
+                    return data;
+                })
+            );
+            console.log("stock price?", responses);
+            let idx = 0;
             for (let position of positions) {
                 if (!(position["symbol"] in prices)) {
-                    prices[position["symbol"]] = 0
+                    prices[position["symbol"]] = 0;
                 }
-                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"]
-                prices[position["symbol"]] = stockPrice.toFixed(2)
+                let stockPrice =
+                    responses[idx]["Global Quote"]["05. price"] *
+                    position["quantity"];
+                prices[position["symbol"]] = stockPrice.toFixed(2);
                 idx++;
-                console.log("prices", prices)
+                console.log("prices", prices);
             }
 
             //response will be an unordered data from the endpoint
@@ -120,12 +125,7 @@ const Dashboard = ({ }) => {
     };
 
     if (!fastapi_token) {
-        return (
-            <Navigate
-                replace
-                to="/login"
-            />
-        );
+        return <Navigate replace to="/login" />;
     } else {
         return (
             <>
@@ -155,35 +155,37 @@ const Dashboard = ({ }) => {
                                 <th>Value</th>
                             </tr>
                         </thead>
-                        <tbody >
-                            {Object.entries(prices).map(([,val], i) => {
+                        <tbody>
+                            {Object.entries(prices).map(([, val], i) => {
                                 return (
                                     <tr key={i}>
                                         <td>${val}</td>
                                     </tr>
-                                )
-                            })
-                            }
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
                 <div>
-                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
+                    <label className="label">
+                        Current Buying Power:{currentbuyingPower}
+                    </label>
                 </div>
                 <div>
-                    <form
-                        className="box"
-                        onSubmit={handleSubmit}
-                    >
+                    <form className="box" onSubmit={handleSubmit}>
                         <div className="form-floating mb-3">
                             <div className="field">
-                                <label className="label">Update Buying Power</label>
+                                <label className="label">
+                                    Update Buying Power
+                                </label>
                                 <div className="control">
                                     <input
                                         type="text"
                                         placeholder="add or subtract buying power"
                                         value={buyingPower}
-                                        onChange={(e) => setBuyingPower(e.target.value)}
+                                        onChange={(e) =>
+                                            setBuyingPower(e.target.value)
+                                        }
                                         className="input"
                                         required
                                     />
@@ -191,10 +193,7 @@ const Dashboard = ({ }) => {
                             </div>
                         </div>
                         <div>
-                            <button
-                                className="btn btn-primary"
-                                type="submit"
-                            >
+                            <button className="btn btn-primary" type="submit">
                                 Update Buying Power
                             </button>
                         </div>
