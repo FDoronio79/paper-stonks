@@ -9,7 +9,7 @@ const Dashboard = ({}) => {
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([])
     const [username, setUserName] = useContext(UserContext)
-    const [stockPrice, setStockPrice] = useState([])
+    const [prices, setPrices] = useState([])
 
     localStorage.setItem("Username", username);
     console.log("user", username)
@@ -63,9 +63,6 @@ const Dashboard = ({}) => {
                 console.log("WTF")
             }
         }
-        async function getStockData() {
-            const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${positions.symbol}&apikey=${process.env.ALPHA_VANTAGE}`;
-        }
         getPositions();
     }, [setPositions])
 
@@ -78,16 +75,16 @@ const Dashboard = ({}) => {
                 return data                
             }))
             console.log("stock price?", responses)
-            let prices = {}
-            
+            let idx = 0
             for (let position of positions) {
                 if (!(position["symbol"] in prices)) {
                     prices[position["symbol"]] = 0
-                } else {
-                    prices[position["symbol"]] = parseFloat(responses["Global Quote"]["05. price"])
                 }
+                prices[position["symbol"]] = responses[idx]["Global Quote"]["05. price"] * position["quantity"]
+                idx++;
                 console.log("prices", prices)
             }
+            
             //response will be an unordered data from the endpoint
             // loop over data, build a dictionary of symbol that points to the price {symbol:price}
             //when loop over position prices[position.symbol]
@@ -136,6 +133,7 @@ const Dashboard = ({}) => {
                                 <th>Symbole</th>
                                 <th>Name</th>
                                 <th>Quantity</th>
+                                <th>Value</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,6 +146,22 @@ const Dashboard = ({}) => {
                                     </tr>
                                 )
                             })}
+                            
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.entries(prices).map(([key, val], i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td>${val}</td>
+                                            </tr>
+                                        )
+                                    })
+                            }
                         </tbody>
                     </tabel>
                 </div>
