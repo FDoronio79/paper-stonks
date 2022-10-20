@@ -91,15 +91,14 @@ const Dashboard = ({}) => {
             }))
             console.log("stock price?", responses)
             let idx = 0
+            let positions_arr = []
             for (let position of positions) {
-                if (idx < positions.length) {
-                    if (!(position["value"] in position)) {
-                        position["value"] = 0;
-                    }
-                    let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                    position["value"] = stockPrice.toFixed(2);
-                    idx++;
+                if (!(position["value"] in position)) {
+                    position["value"] = 0;
                 }
+                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                position["value"] = stockPrice.toFixed(2);
+                idx++;
             }
         }
         getStockPrice();
