@@ -13,7 +13,7 @@ const Dashboard = ({ }) => {
     const [prices, setPrices] = useState([])
 
     localStorage.setItem("Username", username);
-    console.log("user", username)
+    console.log("user", username);
     localStorage.setItem("position", positions);
     console.log("positions", positions);
     localStorage.setItem("buyingPower", currentbuyingPower);
@@ -28,14 +28,11 @@ const Dashboard = ({ }) => {
                 },
                 credentials: "include",
             };
-            const response = await fetch(
-                `http://localhost:8080/api/accounts`,
-                requestOptions
-            );
+            const response = await fetch(`http://localhost:8080/api/accounts`, requestOptions);
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
-                setUserName(data["username"])
+                setUserName(data["username"]);
                 console.log("work", data);
             }
         }
@@ -55,17 +52,17 @@ const Dashboard = ({ }) => {
                 `http://localhost:8090/positions?username=${username}`,
                 requestOptions
             );
-            console.log("RESPONSE", response)
+            console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
                 console.log("bruhhhh", data);
             } else {
-                console.log("WTF")
+                console.log("WTF");
             }
         }
         getPositions();
-    }, [setPositions])
+    }, [setPositions]);
 
     useEffect(() => {
         async function getStockPrice() {
@@ -91,8 +88,8 @@ const Dashboard = ({ }) => {
             // loop over data, build a dictionary of symbol that points to the price {symbol:price}
             //when loop over position prices[position.symbol]
         }
-        getStockPrice()
-    })
+        getStockPrice();
+    });
 
     const updateBuyingPower = async () => {
         const requestOptions = {
@@ -123,29 +120,34 @@ const Dashboard = ({ }) => {
     };
 
     if (!fastapi_token) {
-        console.log("ooops");
-        return <Navigate replace to="/login" />;
+        return (
+            <Navigate
+                replace
+                to="/login"
+            />
+        );
     } else {
         return (
             <>
                 <div>
-                    <table className="label">
+                    <table className="table table-striped">
                         <thead>
+                            <h3>Positions</h3>
                             <tr>
-                                <th>Symbole</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Quantity</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {positions.map(position => {
+                            {positions.map((position) => {
                                 return (
                                     <tr key={position.id}>
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
                                     </tr>
-                                )
+                                );
                             })}
                         </tbody>
                         <thead>
@@ -166,25 +168,22 @@ const Dashboard = ({ }) => {
                     </table>
                 </div>
                 <div>
-                    <label className="label">
-                        Current Buying Power:{currentbuyingPower}
-                    </label>
+                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
                 </div>
                 <div>
-                    <form className="box" onSubmit={handleSubmit}>
+                    <form
+                        className="box"
+                        onSubmit={handleSubmit}
+                    >
                         <div className="form-floating mb-3">
                             <div className="field">
-                                <label className="label">
-                                    Update Buying Power
-                                </label>
+                                <label className="label">Update Buying Power</label>
                                 <div className="control">
                                     <input
                                         type="text"
                                         placeholder="add or subtract buying power"
                                         value={buyingPower}
-                                        onChange={(e) =>
-                                            setBuyingPower(e.target.value)
-                                        }
+                                        onChange={(e) => setBuyingPower(e.target.value)}
                                         className="input"
                                         required
                                     />
@@ -192,7 +191,10 @@ const Dashboard = ({ }) => {
                             </div>
                         </div>
                         <div>
-                            <button className="btn btn-primary" type="submit">
+                            <button
+                                className="btn btn-primary"
+                                type="submit"
+                            >
                                 Update Buying Power
                             </button>
                         </div>
