@@ -27,6 +27,7 @@ const Dashboard = ({}) => {
     3. map positions_dict into a table?
     */
 
+    // function to get current buying power of the user and setting it to a variable
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -36,7 +37,10 @@ const Dashboard = ({}) => {
                 },
                 credentials: "include",
             };
-            const response = await fetch(`http://localhost:8080/api/accounts`, requestOptions);
+            const response = await fetch(
+                `http://localhost:8080/api/accounts`,
+                requestOptions
+            );
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
@@ -88,7 +92,9 @@ const Dashboard = ({}) => {
                 if (!(position["symbol"] in prices)) {
                     prices[position["symbol"]] = 0;
                 }
-                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                let stockPrice =
+                    responses[idx]["Global Quote"]["05. price"] *
+                    position["quantity"];
                 prices[position["symbol"]] = stockPrice.toFixed(2);
                 idx++;
                 console.log("prices", prices);
@@ -101,6 +107,7 @@ const Dashboard = ({}) => {
         getStockPrice();
     });
 
+    // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
         const requestOptions = {
             method: "PUT",
@@ -130,12 +137,7 @@ const Dashboard = ({}) => {
     };
 
     if (!fastapi_token) {
-        return (
-            <Navigate
-                replace
-                to="/login"
-            />
-        );
+        return <Navigate replace to="/login" />;
     } else {
         return (
             <>
@@ -177,22 +179,25 @@ const Dashboard = ({}) => {
                     </table>
                 </div>
                 <div>
-                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
+                    <label className="label">
+                        Current Buying Power:{currentbuyingPower}
+                    </label>
                 </div>
                 <div>
-                    <form
-                        className="box"
-                        onSubmit={handleSubmit}
-                    >
+                    <form className="box" onSubmit={handleSubmit}>
                         <div className="form-floating mb-3">
                             <div className="field">
-                                <label className="label">Update Buying Power</label>
+                                <label className="label">
+                                    Update Buying Power
+                                </label>
                                 <div className="control">
                                     <input
                                         type="text"
                                         placeholder="add or subtract buying power"
                                         value={buyingPower}
-                                        onChange={(e) => setBuyingPower(e.target.value)}
+                                        onChange={(e) =>
+                                            setBuyingPower(e.target.value)
+                                        }
                                         className="input"
                                         required
                                     />
@@ -200,10 +205,7 @@ const Dashboard = ({}) => {
                             </div>
                         </div>
                         <div>
-                            <button
-                                className="btn btn-primary"
-                                type="submit"
-                            >
+                            <button className="btn btn-primary" type="submit">
                                 Update Buying Power
                             </button>
                         </div>
