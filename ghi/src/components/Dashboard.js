@@ -10,7 +10,7 @@ const Dashboard = ({ }) => {
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([])
     const [username, setUserName] = useContext(UserContext)
-    const [prices, setPrices] = useState([])
+    const [prices, setPrice] = useState([])
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -71,6 +71,7 @@ const Dashboard = ({ }) => {
                 const response = await fetch(priceUrl)
                 const data = await response.json()
                 return data
+                
             }))
             console.log("stock price?", responses)
             let idx = 0
@@ -156,7 +157,7 @@ const Dashboard = ({ }) => {
                             </tr>
                         </thead>
                         <tbody >
-                            {Object.entries(prices).map(([,val], i) => {
+                            {Object.entries(prices).map(([key, val], i) => {
                                 return (
                                     <tr key={i}>
                                         <td>${val}</td>
