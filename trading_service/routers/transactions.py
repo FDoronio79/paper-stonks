@@ -5,11 +5,9 @@ router = APIRouter()
 
 
 @router.post("/transactions", response_model=Union[TransactionOut, Error])
-def create_transaction(transaction: TransactionIn,
-                       response: Response,
-                       repo: TransactionRepository = Depends()
-                       ):
-
+def create_transaction(transaction: TransactionIn, response: Response, 
+    repo: TransactionRepository = Depends()
+    ):
     return repo.create(transaction)
 
 
