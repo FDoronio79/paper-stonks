@@ -3,7 +3,8 @@ import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 
-const Dashboard = ({}) => {
+
+const Dashboard = ({ }) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
@@ -17,7 +18,7 @@ const Dashboard = ({}) => {
     console.log("positions", positions);
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
-    
+
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -58,7 +59,7 @@ const Dashboard = ({}) => {
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                console.log("bruhhhh",data);
+                console.log("bruhhhh", data);
             } else {
                 console.log("WTF")
             }
@@ -72,7 +73,7 @@ const Dashboard = ({}) => {
                 const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
                 const response = await fetch(priceUrl)
                 const data = await response.json()
-                return data                
+                return data
             }))
             console.log("stock price?", responses)
             let idx = 0
@@ -80,11 +81,12 @@ const Dashboard = ({}) => {
                 if (!(position["symbol"] in prices)) {
                     prices[position["symbol"]] = 0
                 }
-                prices[position["symbol"]] = responses[idx]["Global Quote"]["05. price"] * position["quantity"]
+                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"]
+                prices[position["symbol"]] = stockPrice.toFixed(2)
                 idx++;
                 console.log("prices", prices)
             }
-            
+
             //response will be an unordered data from the endpoint
             // loop over data, build a dictionary of symbol that points to the price {symbol:price}
             //when loop over position prices[position.symbol]
@@ -127,13 +129,12 @@ const Dashboard = ({}) => {
         return (
             <>
                 <div>
-                    <tabel className="label">
+                    <table className="label">
                         <thead>
                             <tr>
                                 <th>Symbole</th>
                                 <th>Name</th>
                                 <th>Quantity</th>
-                                <th>Value</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,24 +147,23 @@ const Dashboard = ({}) => {
                                     </tr>
                                 )
                             })}
-                            
                         </tbody>
                         <thead>
                             <tr>
                                 <th>Value</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {Object.entries(prices).map(([key, val], i) => {
-                                        return (
-                                            <tr key={i}>
-                                                <td>${val}</td>
-                                            </tr>
-                                        )
-                                    })
+                        <tbody >
+                            {Object.entries(prices).map(([,val], i) => {
+                                return (
+                                    <tr key={i}>
+                                        <td>${val}</td>
+                                    </tr>
+                                )
+                            })
                             }
                         </tbody>
-                    </tabel>
+                    </table>
                 </div>
                 <div>
                     <label className="label">
