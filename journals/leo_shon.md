@@ -65,3 +65,4 @@
 10/19
 
 -   made a transactions page
+-   displayed total portforlio value in dashboard page

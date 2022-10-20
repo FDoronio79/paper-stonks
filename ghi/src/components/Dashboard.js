@@ -6,9 +6,9 @@ const Dashboard = ({}) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
-    const [positions, setPositions] = useState([])
-    const [username, setUserName] = useContext(UserContext)
-
+    const [positions, setPositions] = useState([]);
+    const [username, setUserName] = useContext(UserContext);
+    const [portfolioValue, setPortfolioValue] = useState([]);
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -78,29 +78,35 @@ const Dashboard = ({}) => {
 
     useEffect(() => {
         async function getStockPrice() {
-            const responses = await Promise.all(positions.map(async position => {
-                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-                const response = await fetch(priceUrl)
-                if(response.ok) {
-                    const data = await response.json()
-                    return data
-                } else {
-                    console.log("ayoo")
-                }
-                
-            }))
-            console.log("stock price?", responses)
-            let idx = 0
+            const responses = await Promise.all(
+                positions.map(async (position) => {
+                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                    const response = await fetch(priceUrl);
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data;
+                    } else {
+                        console.log("ayoo");
+                    }
+                })
+            );
+            console.log("stock price?", responses);
+            let idx = 0;
+            let count = 0;
             for (let position of positions) {
                 if (idx < positions.length) {
                     if (!(position["value"] in position)) {
                         position["value"] = 0;
                     }
-                    let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                    let stockPrice =
+                        responses[idx]["Global Quote"]["05. price"] *
+                        position["quantity"];
                     position["value"] = stockPrice.toFixed(2);
                     idx++;
                 }
+                count += parseFloat(position["value"]);
             }
+            setPortfolioValue(count);
         }
         getStockPrice();
     });
@@ -164,6 +170,12 @@ const Dashboard = ({}) => {
                         </tbody>
                     </table>
                 </div>
+                <div>
+                    <label className="label">
+                        Current Portfolio Value:${portfolioValue}
+                    </label>
+                </div>
+                <div></div>
                 <div>
                     <label className="label">
                         Current Buying Power:{currentbuyingPower}
