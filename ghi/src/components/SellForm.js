@@ -19,6 +19,7 @@ export default function BuyForm({ price, symbol, name }) {
     const submitTransaction = async () => {
         const quantityDelta = parseInt(quantity1);
         if (quantityDelta === currentQuantity) {
+            //delete position
             const deleteURL = `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`;
             const deleteOptions = {
                 method: "DELETE",
@@ -36,6 +37,7 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Sold all shares of ${symbol}!`);
             }
         } else {
+            //update position
             const putURL = `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}`;
             const quantityDelta = parseInt(quantity1);
 
@@ -97,12 +99,15 @@ export default function BuyForm({ price, symbol, name }) {
             },
             credentials: "include",
         };
+        console.log("BEFORE FETCH");
         const responseBp = await fetch(
             `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
             requestOptionsBp
         );
+        console.log("AFTER FETCH");
         const dataBp = await responseBp.json();
-        console.log(dataBp);
+        console.log("AFTER JSON");
+        console.log("dataBp", dataBp);
     };
 
     useEffect(() => {
@@ -134,10 +139,10 @@ export default function BuyForm({ price, symbol, name }) {
         submitTransaction();
         console.log("Transaction Submitted");
 
-        navigate("/dashboard");
         setTimeout(() => {
             window.location.reload();
         }, 500);
+        navigate("/dashboard");
     };
 
     return (

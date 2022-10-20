@@ -2,15 +2,13 @@ import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
-
-
-const Dashboard = ({ }) => {
+const Dashboard = ({}) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
-    const [positions, setPositions] = useState([])
-    const [username, setUserName] = useContext(UserContext)
-    const [prices, setPrices] = useState([])
+    const [positions, setPositions] = useState([]);
+    const [username, setUserName] = useContext(UserContext);
+    const [prices, setPrices] = useState([]);
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -66,22 +64,24 @@ const Dashboard = ({ }) => {
 
     useEffect(() => {
         async function getStockPrice() {
-            const responses = await Promise.all(positions.map(async position => {
-                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-                const response = await fetch(priceUrl)
-                const data = await response.json()
-                return data
-            }))
-            console.log("stock price?", responses)
-            let idx = 0
+            const responses = await Promise.all(
+                positions.map(async (position) => {
+                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                    const response = await fetch(priceUrl);
+                    const data = await response.json();
+                    return data;
+                })
+            );
+            console.log("stock price?", responses);
+            let idx = 0;
             for (let position of positions) {
                 if (!(position["symbol"] in prices)) {
-                    prices[position["symbol"]] = 0
+                    prices[position["symbol"]] = 0;
                 }
-                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"]
-                prices[position["symbol"]] = stockPrice.toFixed(2)
+                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                prices[position["symbol"]] = stockPrice.toFixed(2);
                 idx++;
-                console.log("prices", prices)
+                console.log("prices", prices);
             }
 
             //response will be an unordered data from the endpoint
@@ -155,15 +155,14 @@ const Dashboard = ({ }) => {
                                 <th>Value</th>
                             </tr>
                         </thead>
-                        <tbody >
-                            {Object.entries(prices).map(([,val], i) => {
+                        <tbody>
+                            {Object.entries(prices).map(([, val], i) => {
                                 return (
                                     <tr key={i}>
                                         <td>${val}</td>
                                     </tr>
-                                )
-                            })
-                            }
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
