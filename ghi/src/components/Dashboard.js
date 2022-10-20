@@ -17,6 +17,16 @@ const Dashboard = ({}) => {
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
 
+    /* MATT'S SUGGESTION FOR THE TABLE (MAY NOT WORK)
+    1. Create a positions_dict{}
+    2. for each position
+        - create a position{}
+        - add symbol, name, quantity
+        - fetch the price, add it to the dictionary
+        - append position{} to position_dict{}
+    3. map positions_dict into a table?
+    */
+
     // function to get current buying power of the user and setting it to a variable
     useEffect(() => {
         async function getBuyingPower() {
