@@ -7,6 +7,7 @@ import MainPage from "./MainPage";
 import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
+import Transactions from "./components/Transactions";
 import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
@@ -59,24 +60,21 @@ function App() {
         // <GetToken />
         <>
             <div className="switch">
-                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
+                <label>
+                    {" "}
+                    {theme === "light" ? "Light Mode" : "Dark Mode"}{" "}
+                </label>
                 <ReactSwitch
                     onChange={toggleTheme}
                     checked={theme === "dark"}
                 />
             </div>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                <div
-                    className="App"
-                    id={theme}
-                >
+                <div className="App" id={theme}>
                     <MainPage />
                     <BrowserRouter>
                         <SearchContext.Provider value={symbol}>
-                            <Nav
-                                setSymbol={setSymbol}
-                                symbol={symbol}
-                            />
+                            <Nav setSymbol={setSymbol} symbol={symbol} />
                         </SearchContext.Provider>
                         <div className="container">
                             <Routes>
@@ -87,9 +85,10 @@ function App() {
                                     element={<Dashboard />}
                                 />
                                 <Route
-                                    path="/login"
-                                    element={<LoginForm />}
+                                    path="/Transactions"
+                                    element={<Transactions />}
                                 />
+                                <Route path="/login" element={<LoginForm />} />
                                 <Route
                                     path="/signup"
                                     element={<SignupForm />}

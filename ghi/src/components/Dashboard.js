@@ -17,6 +17,7 @@ const Dashboard = ({}) => {
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
 
+    // function to get current buying power of the user and setting it to a variable
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -96,6 +97,7 @@ const Dashboard = ({}) => {
         getStockPrice();
     });
 
+    // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
         const requestOptions = {
             method: "PUT",

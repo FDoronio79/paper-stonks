@@ -51,6 +51,7 @@ export default function BuyForm({ price, symbol, name }) {
         name: nameStock,
     };
 
+    // function to get current quantity of specific stock you own
     useEffect(() => {
         async function getCurrentQuantity() {
             const requestOptions = {
@@ -74,7 +75,9 @@ export default function BuyForm({ price, symbol, name }) {
         getCurrentQuantity();
     }, [setCurrentQuantity]);
 
+    // this function will take care off all edge cases when buying a stock
     const submitTransaction = async () => {
+        // first it will try to see if the user already has that specific stock in his profile
         const requestOptionsGet = {
             method: "GET",
             headers: {
@@ -89,6 +92,7 @@ export default function BuyForm({ price, symbol, name }) {
         const data = await responseGet.json();
 
         if (!data["message"]) {
+            // if the user does have it then it will update their position with a PUT method
             const requestOptionsUpdateP = {
                 method: "PUT",
                 headers: {
@@ -108,6 +112,7 @@ export default function BuyForm({ price, symbol, name }) {
             console.log("NEW QUANTITY", newQuantity);
             setUpdateQuantity(dataUpdateP);
             if (responseUpdateP.ok) {
+                // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 currDateTime = Date.now();
                 const requestOptions = {
                     method: "POST",
@@ -140,6 +145,7 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             }
         } else {
+            // if user doesn't have that specific stock then it will create a new position
             const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -155,6 +161,7 @@ export default function BuyForm({ price, symbol, name }) {
 
             console.log(data);
             if (response.ok) {
+                // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 const requestOptions = {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

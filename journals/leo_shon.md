@@ -59,8 +59,9 @@
 10/18
 
 -   got the buying function done where the user will create a position when no previous stocks of it were found and will update a position when a previous iteration of it has been found
+-   merged the buy and sell function so the user can use both
+-   protected all endpoints in the backend for trading microservice
 
 10/19
 
--   got the buying function to update its buying power whenever a transaction is made and added post request to make a transaction on each of the edge cases.
--   got all functions of selling: UPDATE and DELETE to work as well as updating buying power when a user makes a sale
+-   made a transactions page
