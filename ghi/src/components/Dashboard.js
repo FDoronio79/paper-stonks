@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
-const Dashboard = ({}) => {
+const Dashboard = ({ }) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
@@ -81,13 +81,13 @@ const Dashboard = ({}) => {
             const responses = await Promise.all(positions.map(async position => {
                 const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
                 const response = await fetch(priceUrl)
-                if(response.ok) {
+                if (response.ok) {
                     const data = await response.json()
                     return data
                 } else {
                     console.log("ayoo")
                 }
-                
+
             }))
             console.log("stock price?", responses)
             let idx = 0
@@ -97,7 +97,10 @@ const Dashboard = ({}) => {
                         position["value"] = 0;
                     }
                     let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                    position["value"] = stockPrice.toFixed(2);
+                    position["value"] = stockPrice.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                    });
                     idx++;
                 }
             }
@@ -157,7 +160,7 @@ const Dashboard = ({}) => {
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
-                                        <td>${position.value}</td>
+                                        <td>{position.value}</td>
                                     </tr>
                                 );
                             })}
