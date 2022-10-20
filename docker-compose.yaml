@@ -15,14 +15,6 @@ services:
             - POSTGRES_PASSWORD= test-databases
         ports:
             - 15432:5432
-    fastapi:
-        build:
-            context: sample_service
-            dockerfile: Dockerfile.dev
-        ports:
-            - 8000:8000
-        volumes:
-            - ./sample_service:/app
 
     ghi:
         image: node:lts-bullseye
@@ -49,10 +41,12 @@ services:
             - "8080:8000"
         volumes:
             - ./accounts_service:/app
+        env_file:
+            - .env
         environment:
             DATABASE_URL: postgresql://accounts:password@postgres/accounts
             WAIT_HOSTS: postgres:5432
-            SIGNING_KEY: 23b6b2f3fe4f7b9c4d163e5d27c439cd48c43f9544900f18b5d6a06c8be160df
+            SIGNING_KEY: ${SIGNING_KEY}
             WAIT_BEFORE: 5
             WAIT_TIMEOUT: 60
     trading_service:
@@ -63,8 +57,11 @@ services:
             - "8090:8000"
         volumes:
             - ./trading_service:/app
+        env_file:
+            - .env
         environment:
             DATABASE_URL: postgresql://trading:password@postgres/trading
+            SIGNING_KEY: ${SIGNING_KEY}
             WAIT_HOSTS: postgres:5432
             WAIT_BEFORE: 5
             WAIT_TIMEOUT: 60

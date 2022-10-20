@@ -19,6 +19,7 @@ export default function BuyForm({ price, symbol, name }) {
     const submitTransaction = async () => {
         const quantityDelta = parseInt(quantity1);
         if (quantityDelta === currentQuantity) {
+            //delete position
             const deleteURL = `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`;
             const deleteOptions = {
                 method: "DELETE",
@@ -33,9 +34,49 @@ export default function BuyForm({ price, symbol, name }) {
             if (!response.ok) {
                 alert("Could not process request. Please try again later");
             } else {
+                //Creating transaction
+                let transactionDict = {
+                    username: usernameAcc,
+                    symbol: symbolStock,
+                    quantity: quantityDelta,
+                    type_of: "sell",
+                    price: price,
+                    time_of_purchase: Date.now(),
+                };
+                const transactionOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify(transactionDict),
+                };
+
+                const response = await fetch(
+                    `${process.env.REACT_APP_TRADING_HOST}/transactions`,
+                    transactionOptions
+                );
+                const data = await response.json();
+
+                console.log("TRANSACTION MADE", data);
+
+                // FOR LATER UPDATE BUYING POWER
+                const bpchange = estimatedPrice;
+                const requestOptionsBp = {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                };
+                const responseBp = await fetch(
+                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    requestOptionsBp
+                );
+                const dataBp = await responseBp.json();
+                console.log("NEW BUYING POWER", dataBp);
                 alert(`Sold all shares of ${symbol}!`);
             }
         } else {
+            //update position
             const putURL = `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}`;
             const quantityDelta = parseInt(quantity1);
 
@@ -61,48 +102,48 @@ export default function BuyForm({ price, symbol, name }) {
             if (!response.ok) {
                 alert("Could not process request. Please try again later");
             } else {
+                //Creating transaction
+                let transactionDict = {
+                    username: usernameAcc,
+                    symbol: symbolStock,
+                    quantity: quantityDelta,
+                    type_of: "sell",
+                    price: price,
+                    time_of_purchase: Date.now(),
+                };
+                const transactionOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify(transactionDict),
+                };
+
+                const response = await fetch(
+                    `${process.env.REACT_APP_TRADING_HOST}/transactions`,
+                    transactionOptions
+                );
+                const data = await response.json();
+
+                console.log("TRANSACTION MADE", data);
+
+                // FOR LATER UPDATE BUYING POWER
+                const bpchange = estimatedPrice;
+                const requestOptionsBp = {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                };
+                const responseBp = await fetch(
+                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    requestOptionsBp
+                );
+                const dataBp = await responseBp.json();
+                console.log("NEW BUYING POWER", dataBp);
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
-        //Creating transaction
-        let transactionDict = {
-            username: usernameAcc,
-            symbol: symbolStock,
-            quantity: quantityDelta,
-            type_of: "sell",
-            price: price,
-            time_of_purchase: Date.now(),
-        };
-        const transactionOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify(transactionDict),
-        };
-
-        const response = await fetch(
-            `${process.env.REACT_APP_TRADING_HOST}/transactions`,
-            transactionOptions
-        );
-        const data = await response.json();
-
-        console.log("TRANSACTION MADE", data);
-
-        // FOR LATER UPDATE BUYING POWER
-        const bpchange = estimatedPrice;
-        const requestOptionsBp = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        };
-        const responseBp = await fetch(
-            `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
-            requestOptionsBp
-        );
-        const dataBp = await responseBp.json();
-        console.log(dataBp);
     };
 
     useEffect(() => {
@@ -133,11 +174,10 @@ export default function BuyForm({ price, symbol, name }) {
         e.preventDefault();
         submitTransaction();
         console.log("Transaction Submitted");
-
-        navigate("/dashboard");
         setTimeout(() => {
             window.location.reload();
         }, 500);
+        navigate("/dashboard");
     };
 
     return (

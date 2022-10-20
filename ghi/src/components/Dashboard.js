@@ -2,9 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
-
-
-const Dashboard = ({ }) => {
+const Dashboard = ({}) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
@@ -18,6 +16,16 @@ const Dashboard = ({ }) => {
     console.log("positions", positions);
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
+
+    /* MATT'S SUGGESTION FOR THE TABLE (MAY NOT WORK)
+    1. Create a positions_dict{}
+    2. for each position
+        - create a position{}
+        - add symbol, name, quantity
+        - fetch the price, add it to the dictionary
+        - append position{} to position_dict{}
+    3. map positions_dict into a table?
+    */
 
     useEffect(() => {
         async function getBuyingPower() {
@@ -77,12 +85,12 @@ const Dashboard = ({ }) => {
             let idx = 0
             for (let position of positions) {
                 if (!(position["symbol"] in prices)) {
-                    prices[position["symbol"]] = 0
+                    prices[position["symbol"]] = 0;
                 }
-                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"]
-                prices[position["symbol"]] = stockPrice.toFixed(2)
+                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                prices[position["symbol"]] = stockPrice.toFixed(2);
                 idx++;
-                console.log("prices", prices)
+                console.log("prices", prices);
             }
 
             //response will be an unordered data from the endpoint
@@ -162,9 +170,8 @@ const Dashboard = ({ }) => {
                                     <tr key={i}>
                                         <td>${val}</td>
                                     </tr>
-                                )
-                            })
-                            }
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>

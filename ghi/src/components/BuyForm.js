@@ -186,10 +186,10 @@ export default function BuyForm({ price, symbol, name }) {
         e.preventDefault();
         submitTransaction();
         console.log("Transaction Submitted");
-        navigate("/dashboard");
         setTimeout(() => {
             window.location.reload();
         }, 500);
+        navigate("/dashboard");
     };
 
     return (
