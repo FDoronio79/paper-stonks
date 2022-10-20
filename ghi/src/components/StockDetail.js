@@ -4,7 +4,7 @@ import SellForm from "./SellForm";
 
 function StockDetail({ search }) {
     // const search = useContext(SearchContext);
-    const [symbol, setSymbol] = useState(search);
+    const [symbol, setSymbol] = useState(search.toUpperCase());
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
