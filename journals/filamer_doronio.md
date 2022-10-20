@@ -37,3 +37,15 @@
 - Added accountvo to Signup frontend to create a trading_service accountvo account  with the same username as the account_service account.
 - Working on Logout on the front end
 - Drafting Mainpage 
+
+
+#### 10/12 - 10/14
+ - Hammered out Login and Logout
+ - Authentication works on both front end and backend
+
+#### 10/17
+- Took day off
+
+#### 10/18
+- Worked on display positions on portfolio page
+- Positions are displaying on the portfolio page!

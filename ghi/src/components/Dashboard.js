@@ -3,12 +3,18 @@ import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const Dashboard = ({}) => {
-    const [fastapi_token, setToken] = useContext(UserContext);
-    // const [hasSignedUp, ]
+    const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
-    localStorage.setItem("buyingPower", currentbuyingPower);
+    const [positions, setPositions] = useState([]);
+    const [username, setUserName] = useContext(UserContext);
 
+    localStorage.setItem("Username", username);
+    console.log("user", username);
+    localStorage.setItem("position", positions);
+    console.log("positions", positions);
+    localStorage.setItem("buyingPower", currentbuyingPower);
+    console.log(currentbuyingPower);
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -22,11 +28,65 @@ const Dashboard = ({}) => {
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
-                console.log(data);
+                setUserName(data["username"]);
+                console.log("work", data);
             }
         }
         getBuyingPower();
-    }, [setCurrentBuyingPower]);
+    }, [setCurrentBuyingPower, setUserName]);
+
+    useEffect(() => {
+        async function getPositions() {
+            const requestOptions = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            };
+            const response = await fetch(
+                `http://localhost:8090/positions?username=${username}`,
+                requestOptions
+            );
+            console.log("RESPONSE", response);
+            if (response.ok) {
+                const data = await response.json();
+                setPositions(data);
+                console.log("bruhhhh", data);
+            } else {
+                console.log("WTF");
+            }
+        }
+        getPositions();
+    }, [setPositions]);
+
+    useEffect(() => {
+        async function getStockPrice() {
+            const responses = await Promise.all(
+                positions.map(async (position) => {
+                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                    const response = await fetch(priceUrl);
+                    const data = await response.json();
+                    return data;
+                })
+            );
+            console.log("stock price?", responses);
+            let prices = {};
+
+            for (let position of positions) {
+                if (!(position["symbol"] in prices)) {
+                    prices[position["symbol"]] = 0;
+                } else {
+                    prices[position["symbol"]] = parseFloat(responses["Global Quote"]["05. price"]);
+                }
+                console.log("prices", prices);
+            }
+            //response will be an unordered data from the endpoint
+            // loop over data, build a dictionary of symbol that points to the price {symbol:price}
+            //when loop over position prices[position.symbol]
+        }
+        getStockPrice();
+    });
 
     const updateBuyingPower = async () => {
         const requestOptions = {
@@ -42,7 +102,6 @@ const Dashboard = ({}) => {
         );
         const data = await response.json();
         console.log(response);
-        // // console.log(data);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
@@ -68,6 +127,29 @@ const Dashboard = ({}) => {
         return (
             <>
                 <div>
+                    <table className="table table-striped">
+                        <thead>
+                            <h3>Positions</h3>
+                            <tr>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {positions.map((position) => {
+                                return (
+                                    <tr key={position.id}>
+                                        <td>{position.symbol}</td>
+                                        <td>{position.name}</td>
+                                        <td>{position.quantity}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+                <div>
                     <label className="label">Current Buying Power:{currentbuyingPower}</label>
                 </div>
                 <div>
@@ -82,7 +164,7 @@ const Dashboard = ({}) => {
                                     <input
                                         type="text"
                                         placeholder="add or subtract buying power"
-                                        // value={buyingPower}
+                                        value={buyingPower}
                                         onChange={(e) => setBuyingPower(e.target.value)}
                                         className="input"
                                         required

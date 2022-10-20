@@ -29,6 +29,7 @@ function StockDetail({ search }) {
                 setPrice(parseFloat(data["Global Quote"]["05. price"]));
                 setChange(parseFloat(data["Global Quote"]["09. change"]));
                 let tempPercent = data["Global Quote"]["10. change percent"].substring(-1);
+                console.log(`tempPercent: ${tempPercent}`);
                 let roundedPercent = parseFloat(tempPercent).toFixed(2);
                 setPercent(roundedPercent);
                 console.log(data);

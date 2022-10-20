@@ -35,8 +35,8 @@ steps = [
         # "Up" SQL statement; Create table
         """
         CREATE TABLE positions (
-            symbol VARCHAR(100) PRIMARY KEY NOT NULL,
-            id SERIAL UNIQUE NOT NULL,
+            symbol VARCHAR(100) NOT NULL,
+            id SERIAL PRIMARY KEY NOT NULL,
             username VARCHAR(100) REFERENCES accounts(username) NOT NULL,
             name VARCHAR(100) NOT NULL,
             quantity NUMERIC NOT NULL,
