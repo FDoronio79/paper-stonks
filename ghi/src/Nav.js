@@ -15,14 +15,16 @@ function Nav({ setSymbol, symbol }) {
         });
         setToken(null);
         console.log("DELETED!");
-        console.log(fastapi_token);
     };
 
     if (!fastapi_token) {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
                 <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">
+                    <NavLink
+                        className="navbar-brand"
+                        to="/"
+                    >
                         Paper Stonks
                     </NavLink>
                     <button
@@ -78,9 +80,7 @@ function Nav({ setSymbol, symbol }) {
                                         type="search"
                                         placeholder="Search"
                                         aria-label="Search"
-                                        onChange={(e) =>
-                                            setSymbol(e.target.value)
-                                        }
+                                        onChange={(e) => setSymbol(e.target.value)}
                                         value={symbol}
                                     />
                                     <li className="nav-item">
@@ -103,7 +103,10 @@ function Nav({ setSymbol, symbol }) {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-success">
                 <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">
+                    <NavLink
+                        className="navbar-brand"
+                        to="/"
+                    >
                         Paper Stonks
                     </NavLink>
                     <button
@@ -150,9 +153,7 @@ function Nav({ setSymbol, symbol }) {
                                         type="search"
                                         placeholder="Search"
                                         aria-label="Search"
-                                        onChange={(e) =>
-                                            setSymbol(e.target.value)
-                                        }
+                                        onChange={(e) => setSymbol(e.target.value)}
                                         value={symbol}
                                     />
                                     <li className="nav-item">

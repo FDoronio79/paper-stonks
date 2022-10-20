@@ -49,3 +49,22 @@
 -   Made an endpoint that allows a logged in user to update their buying power balance
 
 #### 10/11/22
+
+-   Created a Stock detail page that pulls real stock data from 3rd party api, to display stock data.
+-   added a search box in the nav bar in Nav.js for the user to search for a stock by symbol
+
+#### 10/12/22
+
+-   created an endpoint for changing the buying power for an account for a logged in user
+
+#### 10/14/22
+
+-   helped teammate fix a bug allowing the front end to send authenticated token to back end api for authentication
+
+#### 10/17/22
+
+-   integrated front end stock page position from to create a new position via post request
+
+#### 10/18/22
+
+-
