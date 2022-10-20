@@ -52,10 +52,15 @@
 
 -   couldn't get the cookies to grab the account data when trying to update buying power so we fixed this blocker
 
-10/15
+10/17
 
 -   got buying power to update when buying stocks
 
-10/16
+10/18
 
 -   got the buying function done where the user will create a position when no previous stocks of it were found and will update a position when a previous iteration of it has been found
+
+10/19
+
+-   got the buying function to update its buying power whenever a transaction is made and added post request to make a transaction on each of the edge cases.
+-   got all functions of selling: UPDATE and DELETE to work as well as updating buying power when a user makes a sale
