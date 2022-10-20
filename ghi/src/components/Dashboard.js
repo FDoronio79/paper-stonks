@@ -77,23 +77,26 @@ const Dashboard = ({}) => {
             const responses = await Promise.all(positions.map(async position => {
                 const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
                 const response = await fetch(priceUrl)
-                const data = await response.json()
-                return data
+                if(response.ok) {
+                    const data = await response.json()
+                    return data
+                } else {
+                    console.log("ayoo")
+                }
                 
             }))
             console.log("stock price?", responses)
             let idx = 0
             for (let position of positions) {
-                if (!(position["value"] in position)) {
-                    position["value"] = 0;
+                if (idx < positions.length) {
+                    if (!(position["value"] in position)) {
+                        position["value"] = 0;
+                    }
+                    let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                    position["value"] = stockPrice.toFixed(2);
+                    idx++;
                 }
-                let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                position["value"] = stockPrice.toFixed(2);
-                idx++;
             }
-            //response will be an unordered data from the endpoint
-            // loop over data, build a dictionary of symbol that points to the price {symbol:price}
-            //when loop over position prices[position.symbol]
         }
         getStockPrice();
     });
