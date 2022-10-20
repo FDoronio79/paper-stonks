@@ -2,19 +2,17 @@ import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
-
 const Dashboard = ({}) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
-    const [positions, setPositions] = useState([])
-    const [username, setUserName] = useContext(UserContext)
+    const [positions, setPositions] = useState([]);
+    const [username, setUserName] = useContext(UserContext);
 
     localStorage.setItem("Username", username);
-    console.log("user", username)
+    console.log("user", username);
     localStorage.setItem("position", positions);
     console.log("positions", positions);
-
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
     useEffect(() => {
@@ -33,7 +31,7 @@ const Dashboard = ({}) => {
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
-                setUserName(data["username"])
+                setUserName(data["username"]);
                 console.log("work", data);
             }
         }
@@ -53,17 +51,17 @@ const Dashboard = ({}) => {
                 `http://localhost:8090/positions?username=${username}`,
                 requestOptions
             );
-            console.log("RESPONSE", response)
+            console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                console.log("bruhhhh",data);
+                console.log("bruhhhh", data);
             } else {
-                console.log("WTF")
+                console.log("WTF");
             }
         }
         getPositions();
-    }, [setPositions])
+    }, [setPositions]);
 
     const updateBuyingPower = async () => {
         const requestOptions = {
@@ -109,14 +107,14 @@ const Dashboard = ({}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {positions.map(position => {
+                            {positions.map((position) => {
                                 return (
                                     <tr key={position.id}>
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
                                     </tr>
-                                )
+                                );
                             })}
                         </tbody>
                     </tabel>

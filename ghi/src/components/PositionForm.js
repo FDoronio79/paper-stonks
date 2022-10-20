@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PositionForm({ price, symbol, name }) {
     // transaction: username, symbol, quantity, type_of, time_of_purchase, price
@@ -10,10 +11,12 @@ export default function PositionForm({ price, symbol, name }) {
     const symbolStock = symbol;
     const [quantity1, setQuantity] = useState("");
     const [currentQuantity, setCurrentQuantity] = useState("");
-
+    let currDateTime = Date.now();
+    console.log("DATETIME", currDateTime);
+    // const currTime = new Date().toLocaleTimeString();
     const typeOfItem = "stock";
     const nameStock = name;
-
+    const navigate = useNavigate();
     const estimatedPrice = quantity1 * price;
     const withoutDollarSign = buyingPow.replace("$", "");
     const removedCommas = withoutDollarSign.replaceAll(",", "");
@@ -27,6 +30,15 @@ export default function PositionForm({ price, symbol, name }) {
         quantity: quantity1,
         type_of: typeOfItem,
         name: nameStock,
+    };
+
+    var transactionDict = {
+        username: usernameAcc,
+        symbol: symbolStock,
+        quantity: quantity1,
+        type_of: "BUY",
+        price: price,
+        time_of_purchase: currDateTime,
     };
 
     var updatePositionDict = {
@@ -105,6 +117,21 @@ export default function PositionForm({ price, symbol, name }) {
                 console.log("NEW QUANTITY", newQuantity);
                 setUpdateQuantity(dataUpdateP);
                 if (responseUpdateP.ok) {
+                    currDateTime = Date.now();
+                    const requestOptions = {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        credentials: "include",
+                        body: JSON.stringify(transactionDict),
+                    };
+
+                    const response = await fetch(
+                        "http://localhost:8090/transactions",
+                        requestOptions
+                    );
+                    const data = await response.json();
+
+                    console.log("TRANSACTION MADE", data);
                     const requestOptionsBp = {
                         method: "PUT",
                         headers: {
@@ -141,6 +168,20 @@ export default function PositionForm({ price, symbol, name }) {
 
             console.log(data);
             if (response.ok) {
+                const requestOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify(transactionDict),
+                };
+
+                const response = await fetch(
+                    "http://localhost:8090/transactions",
+                    requestOptions
+                );
+                const data = await response.json();
+
+                console.log("TRANSACTION MADE", data);
                 const requestOptionsBp = {
                     method: "PUT",
                     headers: {
@@ -170,6 +211,7 @@ export default function PositionForm({ price, symbol, name }) {
         e.preventDefault();
         submitTransaction();
         console.log("Transaction Submitted");
+        navigate("/dashboard");
     };
 
     return (
