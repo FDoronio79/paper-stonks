@@ -92,3 +92,36 @@ Today:
 I worked with Tiffany to complete the FasAPIs for Positions. I did the GET all, POST create, and DELETE. We figured out the ForeignKey fields for Positions and Transactions.
 
 
+## October 12-13, 2022
+
+Today: I worked on the buy and sell form.
+
+I researched how to have a pop up appear on the side of the website when a button is clicked, called off-canvas in bootstrap. I add this functionality to the StockDetail page that Matt worked on. Additionally, I made a table to go into that pop up. I had to figure out how to get information from the stock API, Alpha Vantage. Luckily, Matt had aleady pulled data from it on another page, so I followed a similar method. I was able to get the name and price of the stock to appear in the table. 
+
+
+## October 14-15, 2022
+
+Today: I worked on the table for buy and sell form.
+
+Once I had the form made, I had to figure out how to prevent the form from submitting if the quantity entered is 0 or if the quantity entered surpasses the ammount a user can afford. This took some time to work out getting a user's buying power and multiplying that with the price of the stock. Matt and Leo assisted in figuring this out.
+
+
+## October 17-18, 2022
+
+Today: I worked on the ReadMe
+
+Using the example ReadMe provided in Project Advice, I made the ReadMe today. I kept the main ReadMe page short and simple like the suggestion and added links to the additional information. It is mostly done, but I think we may add a Demo page and I may modify the API page.
+
+
+## October 19, 2022
+
+Today: I figured out how to make unit tests!!
+
+Following the video of James making unit tests, I was able to create 4 unit tests. I want them to be checked by an instructor but I think they are good to go. All 4 unit tests test endpoints only. I would like to learn how to run a unit test on the query functions, and making a mock database in the future.
+
+
+## October 20, 2022
+
+Today: I reconvened with my team and set a plan for finishing up our project.
+
+We made a plan to start transitioning to getting ready to submit the project. We want to be able to deploy the project this weekend or Monday. I made plans to help my teammates make unit tests tomorrow or on the weekend. Additionally, I will focus on CI/CD documentation. We need to figure out how to clean up the code to finally submit it.

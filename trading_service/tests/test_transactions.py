@@ -79,7 +79,6 @@ transaction2 = {
     }
 
 
-
 # test function; returns empty output; checks that the API route works
 
 def test_get_transaction_empty():
