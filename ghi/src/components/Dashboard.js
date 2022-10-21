@@ -1,6 +1,11 @@
 import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+// import StockInfo from "./StockInfo";
+// import CryptoInfo from "./CryptoInfo";
+
+
+
 
 const Dashboard = ({ }) => {
     const [fastapi_token] = useContext(UserContext);
@@ -216,6 +221,24 @@ const Dashboard = ({ }) => {
                 </div>
                 <div>
                     <p>Welcome to your Dashboard</p>
+                    <div className="container-fluid container-max-widths:(sm)"
+                        style={{
+                                }}>
+                {/* <div className="row gx-5">
+                    <div className="col"> 
+                        <StockInfo /> 
+                    </div>
+                
+                    <div className="col"> 
+                            <CryptoInfo /> 
+                    </div>
+
+                <div className="col"> 
+                </div>
+
+                </div> */}
+            </div>
+
                 </div>
             </>
         );
