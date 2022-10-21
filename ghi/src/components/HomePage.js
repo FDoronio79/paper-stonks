@@ -1,6 +1,5 @@
 import React from "react";
-import ps_logo from "../ghi/src/ps_logo.png"
-console.log(ps_logo)
+// import ps_logo from "../ghi/src/ps_logo.png"
 
 
 function HomePage() {
@@ -14,7 +13,7 @@ function HomePage() {
                 </p>
             </div>
 
-            <img src={ps_logo} alt="Logo" />;
+            {/* <img src={ps_logo} alt="Logo" />; */}
 
         </div>
     </>
