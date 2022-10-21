@@ -99,10 +99,7 @@ const Dashboard = ({ }) => {
                         position["value"] = 0;
                     }
                     let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                    position["value"] = stockPrice.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                    });
+                    position["value"] = stockPrice.toFixed(2);
                     idx++;
                 }
                 count += parseFloat(position["value"]);
