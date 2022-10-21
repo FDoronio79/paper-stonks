@@ -12,7 +12,11 @@ sys.path.append(abs_dir)
 
 from main import app
 
+<<<<<<< HEAD
 from queries.positions import PositionRepository
+=======
+
+>>>>>>> main
 from queries.transactions import TransactionRepository
 from jwtdown_fastapi.authentication import Authenticator
 from authenticator import authenticator
