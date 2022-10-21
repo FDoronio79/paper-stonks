@@ -9,6 +9,8 @@ const Dashboard = ({ }) => {
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useContext(UserContext);
     const [portfolioValue, setPortfolioValue] = useState([]);
+    const [seeValue, setSeeValue] = useState(false)
+    
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -138,6 +140,10 @@ const Dashboard = ({ }) => {
         console.log("updated buying power");
     };
 
+    function seeValueToggle() {
+        setSeeValue(true);
+    }
+
     if (!fastapi_token) {
         return <Navigate replace to="/login" />;
     } else {
@@ -152,6 +158,7 @@ const Dashboard = ({ }) => {
                                 <th scope="col">Name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Value</th>
+                                <button scope="col" onClick={seeValueToggle}>Check Value</button>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,7 +168,7 @@ const Dashboard = ({ }) => {
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
-                                        <td>{position.value}</td>
+                                        <td>$ {position.value}</td>
                                     </tr>
                                 );
                             })}
@@ -170,7 +177,7 @@ const Dashboard = ({ }) => {
                 </div>
                 <div>
                     <label className="label">
-                        Current Portfolio Value:${portfolioValue}
+                        Current Positions Value:${portfolioValue}
                     </label>
                 </div>
                 <div></div>
