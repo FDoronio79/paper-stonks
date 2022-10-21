@@ -41,6 +41,7 @@
     -Discovered a pipline failure, have yet to find a resolution 
 
 #### 10/6/22
+    -Worked on following the FastAPI videos once again in order to figure out how to intgrate it with the project.
 
 #### 10/7/22
     -Met with team to discuss goals
@@ -55,7 +56,7 @@
 
 #### 10/11/22
     -Pair programming with jessica, working on the table for our positoins 
-    -
+    -Worked on the FASTAPI for positions and transactions 
     
 
 #### 10/13/22
@@ -64,3 +65,5 @@
         our Figma version
 #### 10/14/22
     -Collaborated with Matt and Leo to figure out our log in/out issues 
+        -Turned out to be an issue with tokens
+    -Collaborated on debugging issues related to 
