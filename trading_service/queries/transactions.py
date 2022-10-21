@@ -60,7 +60,7 @@ class TransactionRepository:
             print(e)
             return {"message": "Could no get that transaction"}
 
-    def get_all(self) -> Union[Error, List[TransactionOut]]:
+    def get_all(self, username) -> Union[Error, List[TransactionOut]]:
         try:
             # connect the database
             with pool.connection() as conn:  # will create connection
@@ -71,8 +71,9 @@ class TransactionRepository:
                         """
                         SELECT id, username, symbol, type_of, time_of_purchase, quantity, price
                         FROM transactions
+                        WHERE username = %s
                         ORDER BY time_of_purchase;
-                        """
+                        """, [username]
                     )
                     result = []  # can rewrite at list comprehension
                     for record in db:
