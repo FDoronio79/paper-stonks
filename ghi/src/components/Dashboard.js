@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import StockInfo from "./StockInfo";
-import CryptoInfo from "./CryptoInfo";
+// import StockInfo from "./StockInfo";
+// import CryptoInfo from "./CryptoInfo";
 
 
 
@@ -219,7 +219,7 @@ const Dashboard = ({}) => {
                     <div className="container-fluid container-max-widths:(sm)"
                         style={{
                                 }}>
-                <div className="row gx-5">
+                {/* <div className="row gx-5">
                     <div className="col"> 
                         <StockInfo /> 
                     </div>
@@ -231,7 +231,7 @@ const Dashboard = ({}) => {
                 <div className="col"> 
                 </div>
 
-                </div>
+                </div> */}
             </div>
 
                 </div>
