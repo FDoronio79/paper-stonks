@@ -21,7 +21,7 @@ We are targeting finance enthusiasts who want to practice their stock investment
 
 ## Functionality
 
-Visitor not-logged in:
+Visitors not-logged in:
 - Visitors of the site can view the site's homepage. The homepage features an about section with company information and a guide on how to navigate the site
 - Using the search bar, visitors can search for stocks of interest and go to it's page
 - Visitors can create an account 
@@ -47,6 +47,9 @@ Follow these steps to fully deploy this application on your local machine:
 4. Run `docker volume create pg-admin`
 5. Run `docker compose build`
 6. Run `docker compose up`
+
+-Access application on web browser:
+  -localhost:3000
 
 - Access FastAPI Swagger UI:
   - Accounts services: localhost:8080/docs
