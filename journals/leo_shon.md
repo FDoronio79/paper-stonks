@@ -52,10 +52,17 @@
 
 -   couldn't get the cookies to grab the account data when trying to update buying power so we fixed this blocker
 
-10/15
+10/17
 
 -   got buying power to update when buying stocks
 
-10/16
+10/18
 
 -   got the buying function done where the user will create a position when no previous stocks of it were found and will update a position when a previous iteration of it has been found
+-   merged the buy and sell function so the user can use both
+-   protected all endpoints in the backend for trading microservice
+
+10/19
+
+-   made a transactions page
+-   displayed total portforlio value in dashboard page

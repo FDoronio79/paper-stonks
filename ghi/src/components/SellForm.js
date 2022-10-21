@@ -39,7 +39,7 @@ export default function BuyForm({ price, symbol, name }) {
                     username: usernameAcc,
                     symbol: symbolStock,
                     quantity: quantityDelta,
-                    type_of: "sell",
+                    type_of: "SELL",
                     price: price,
                     time_of_purchase: Date.now(),
                 };
@@ -107,7 +107,7 @@ export default function BuyForm({ price, symbol, name }) {
                     username: usernameAcc,
                     symbol: symbolStock,
                     quantity: quantityDelta,
-                    type_of: "sell",
+                    type_of: "SELL",
                     price: price,
                     time_of_purchase: Date.now(),
                 };

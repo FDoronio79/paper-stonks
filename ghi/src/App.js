@@ -7,6 +7,7 @@ import MainPage from "./MainPage";
 import SignupForm from "./components/Signup";
 import Nav from "./Nav";
 import LoginForm from "./components/Login";
+import Transactions from "./components/Transactions";
 import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
@@ -15,6 +16,7 @@ import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
+import HomePage from "./components/HomePage"
 
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
@@ -59,37 +61,39 @@ function App() {
         // <GetToken />
         <>
             <div className="switch">
-                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
+                <label>
+                    {" "}
+                    {theme === "light" ? "Light Mode" : "Dark Mode"}{" "}
+                </label>
                 <ReactSwitch
                     onChange={toggleTheme}
                     checked={theme === "dark"}
                 />
             </div>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                <div
-                    className="App"
-                    id={theme}
-                >
+                <div className="App" id={theme}>
                     <MainPage />
                     <BrowserRouter>
                         <SearchContext.Provider value={symbol}>
-                            <Nav
-                                setSymbol={setSymbol}
-                                symbol={symbol}
-                            />
+                            <Nav setSymbol={setSymbol} symbol={symbol} />
                         </SearchContext.Provider>
                         <div className="container">
                             <Routes>
                                 {/* <ErrorNotification error={error} />
             <Construct info={launch_info} /> */}
                                 <Route
+                                    path="/"
+                                    element={<HomePage />}
+                                />
+                                <Route
                                     path="/dashboard"
                                     element={<Dashboard />}
                                 />
                                 <Route
-                                    path="/login"
-                                    element={<LoginForm />}
+                                    path="/Transactions"
+                                    element={<Transactions />}
                                 />
+                                <Route path="/login" element={<LoginForm />} />
                                 <Route
                                     path="/signup"
                                     element={<SignupForm />}
