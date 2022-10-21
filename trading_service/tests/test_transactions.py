@@ -46,45 +46,45 @@ class MockTransactionQueries:
 #################################################################################
 # creating a sample transaction to put into the mock query (test_get_transaction)
 transaction1 = {
-        "id": 1,
-        "username": "example",
-        "symbol": "AAPL",
-        "price": 100,
-        "type_of": "stock",
-        "quantity": 1,
-        "time_of_purchase": "2022-10-20T00:37:30.684000+00:00"
-        }
+    "id": 1,
+    "username": "example",
+    "symbol": "AAPL",
+    "price": 100,
+    "type_of": "stock",
+    "quantity": 1,
+    "time_of_purchase": "2022-10-20T00:37:30.684000+00:00"
+}
 
 
 # creating a good and bad transaction to pass into the test_create function (test_create_transaction)
 req_body_good = {
-        "username": "example",
-        "symbol": "GOOG",
-        "price": 200,
-        "type_of": "stock",
-        "quantity": 2,
-        "time_of_purchase": "2022-10-20T00:37:30.684000+00:00"
-    }
+    "username": "example",
+    "symbol": "GOOG",
+    "price": 200,
+    "type_of": "stock",
+    "quantity": 2,
+    "time_of_purchase": "2022-10-20T00:37:30.684000+00:00"
+}
 
 req_body_bad = {
-        "symbol": "GOOG",
-        "price": 200,
-        "type_of": "stock",
-        "quantity": 2,
-        "time_of_purchase": "2022-10-20T02:20:39.222Z"
-        }
+    "symbol": "GOOG",
+    "price": 200,
+    "type_of": "stock",
+    "quantity": 2,
+    "time_of_purchase": "2022-10-20T02:20:39.222Z"
+}
 
 response1 = {'detail': [{'loc': ['body', 'username'], 'msg': 'field required', 'type': 'value_error.missing'}]}
 
 transaction2 = {
-        "id": 2,
-        "username": "example",
-        "symbol": "GOOG",
-        "price": 200,
-        "type_of": "stock",
-        "quantity": 2,
-        "time_of_purchase": "2022-10-20T00:37:30.684000+00:00"
-    }
+    "id": 2,
+    "username": "example",
+    "symbol": "GOOG",
+    "price": 200,
+    "type_of": "stock",
+    "quantity": 2,
+    "time_of_purchase": "2022-10-20T00:37:30.684000+00:00"
+}
 
 
 class MockAuth:
@@ -111,8 +111,8 @@ def test_get_transaction_empty():
 # test function; returns mock transaction; checks that the API route works
 def test_get_transaction():
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth 
-    
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+
     response = client.get('/transactions')
 
     assert response.status_code == 200
