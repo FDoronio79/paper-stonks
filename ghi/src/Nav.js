@@ -1,12 +1,12 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
-import { SearchContext } from "./SearchContext";
+import { useContext } from "react";
+// import { SearchContext } from "./SearchContext";
 import { UserContext } from "./context/UserContext";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 function Nav({ setSymbol, symbol }) {
     const [fastapi_token, setToken] = useContext(UserContext);
-    const search = useContext(SearchContext);
+    // const search = useContext(SearchContext);
     const navigate = useNavigate();
 
     const logout = async () => {

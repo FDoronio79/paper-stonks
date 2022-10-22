@@ -6,7 +6,7 @@ function StockDetail({ search }) {
     // const search = useContext(SearchContext);
     const { stockSymbol } = useParams();
     // const [symbol, setSymbol] = useState(search.toUpperCase());
-    const [symbol, setSymbol] = useState(stockSymbol);
+    // const [symbol, setSymbol] = useState(stockSymbol);
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
@@ -56,7 +56,7 @@ function StockDetail({ search }) {
         }
 
         getStockData();
-    }, [stockSymbol, setNameStock, setSharesOwned]);
+    }, [stockSymbol, setNameStock, setSharesOwned, usernameAcc]);
 
     return (
         <>

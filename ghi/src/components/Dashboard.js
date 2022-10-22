@@ -4,14 +4,14 @@ import { UserContext } from "../context/UserContext";
 // import StockInfo from "./StockInfo";
 // import CryptoInfo from "./CryptoInfo";
 
-const Dashboard = ({}) => {
+const Dashboard = () => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useContext(UserContext);
     const [portfolioValue, setPortfolioValue] = useState([]);
-    const [seeValue, setSeeValue] = useState(false);
+    // const [seeValue, setSeeValue] = useState(false);
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -74,7 +74,7 @@ const Dashboard = ({}) => {
             }
         }
         getPositions();
-    }, []);
+    }, [username]);
 
     let getStockPrice = async () => {
         let stockPrices;
@@ -101,6 +101,7 @@ const Dashboard = ({}) => {
                     count += stockPrice;
                     return { ...position, value: stockPrice.toFixed(2) };
                 }
+                return [];
             });
             console.log("The Prices", stockPrices);
             setPortfolioValue(count.toFixed(2));
@@ -114,7 +115,7 @@ const Dashboard = ({}) => {
         if (positions.length > 0 && !positions[0]?.value) {
             getStockPrice();
         }
-    }, [positions]);
+    }, [positions, getStockPrice]);
 
     // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
@@ -144,10 +145,6 @@ const Dashboard = ({}) => {
         updateBuyingPower();
         console.log("updated buying power");
     };
-
-    function seeValueToggle() {
-        setSeeValue(true);
-    }
 
     if (!fastapi_token) {
         return (

@@ -14,7 +14,7 @@ export default function BuyForm({ price, symbol, name }) {
     const withoutDollarSign = buyingPow.replace("$", "");
     const removedCommas = withoutDollarSign.replaceAll(",", "");
     const buyingp = parseFloat(removedCommas);
-    const maxQuantity = Math.floor(buyingp / price);
+    // const maxQuantity = Math.floor(buyingp / price);
 
     const submitTransaction = async () => {
         const quantityDelta = parseInt(quantity1);
@@ -168,7 +168,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
-    }, [setCurrentQuantity, submitTransaction]);
+    }, [setCurrentQuantity, submitTransaction, symbolStock, usernameAcc]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 // import Construct from './Construct.js'
 // import ErrorNotification from './ErrorNotification';
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import MainPage from "./MainPage";
 import SignupForm from "./components/Signup";
@@ -11,8 +11,8 @@ import Transactions from "./components/Transactions";
 import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
-import { useState, useContext, createContext } from "react";
-import { UserContext } from "./context/UserContext";
+import { useState, createContext } from "react";
+// import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
