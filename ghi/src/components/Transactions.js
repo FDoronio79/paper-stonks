@@ -31,7 +31,6 @@ const Transactions = ({}) => {
                 setTransactions(data);
                 console.log("TRANSACTION DATA", data);
             } else {
-                console.log("WTF");
             }
         }
         getTransactions();

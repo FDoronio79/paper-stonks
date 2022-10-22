@@ -46,8 +46,8 @@ class MockPositionQueries:
 
 
 class MockTransactionQueries:
-    def get_all(self):
-        return [transaction1]
+    def get_all(self, username):
+        return [transaction1, transaction2]
 
     def create(self, item):
         if item.username != None:
@@ -103,8 +103,8 @@ transaction2 = {
 
 class MockAuth:
     def get_current_account_data(self):
-        return []
-
+        return {"username": "example"}
+    
 
 #################################################################################
 
@@ -112,11 +112,12 @@ class MockAuth:
 
 def test_get_transaction_empty():
     app.dependency_overrides[TransactionRepository] = MockEmptyTransactionQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth.get_current_account_data
     response = client.get('/transactions')
 
+    assert response.json() == [transaction1]
     assert response.status_code == 200
-    assert response.json() == []
+    
 
     app.dependency_overrides = {}
 
@@ -124,12 +125,12 @@ def test_get_transaction_empty():
 # test function; returns mock transaction; checks that the API route works
 def test_get_transaction():
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth.get_current_account_data
 
     response = client.get('/transactions')
-
-    assert response.status_code == 200
     assert response.json() == [transaction1]
+    assert response.status_code == 200
+    
 
     app.dependency_overrides = {}
 

@@ -4,18 +4,14 @@ import { UserContext } from "../context/UserContext";
 // import StockInfo from "./StockInfo";
 // import CryptoInfo from "./CryptoInfo";
 
-
-
-
-const Dashboard = ({ }) => {
+const Dashboard = ({}) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useContext(UserContext);
     const [portfolioValue, setPortfolioValue] = useState([]);
-    const [seeValue, setSeeValue] = useState(false)
-    
+    const [seeValue, setSeeValue] = useState(false);
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -44,15 +40,12 @@ const Dashboard = ({ }) => {
                 },
                 credentials: "include",
             };
-            const response = await fetch(
-                `http://localhost:8080/api/accounts`,
-                requestOptions
-            );
+            const response = await fetch(`http://localhost:8080/api/accounts`, requestOptions);
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
                 setUserName(data["username"]);
-                console.log("work", data);
+                // console.log("work", data);
             }
         }
         getBuyingPower();
@@ -71,51 +64,57 @@ const Dashboard = ({ }) => {
                 `http://localhost:8090/positions?username=${username}`,
                 requestOptions
             );
-            console.log("RESPONSE", response);
+            // console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                console.log("bruhhhh", data, typeof data);
+                // console.log("bruhhhh", data);
             } else {
-                console.log("WTF");
+                // console.log("WTF");
             }
         }
         getPositions();
-    }, [setPositions]);
+    }, []);
 
-    console.log("THIS ONE", positions)
-    useEffect(() => {
-        async function getStockPrice() {
-            const responses = await Promise.all(
-                positions.map(async (position) => {
-                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-                    const response = await fetch(priceUrl);
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data;
-                    } else {
-                        console.log("ayoo");
-                    }
-                })
-            );
-            console.log("stock price?", responses);
-            let idx = 0;
-            let count = 0;
-            for (let position of positions) {
-                if (idx < positions.length) {
-                    if (!(position["value"] in position)) {
-                        position["value"] = 0;
-                    }
-                    let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                    position["value"] = stockPrice.toFixed(2);
-                    idx++;
+    let getStockPrice = async () => {
+        let stockPrices;
+        let idx = 0;
+        let count = 0;
+        await Promise.all(
+            positions.map(async (position) => {
+                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                const response = await fetch(priceUrl);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data;
+                } else {
+                    console.log("ayoo");
                 }
-                count += parseFloat(position["value"]);
-            }
-            setPortfolioValue(count);
+            })
+        ).then((responses) => {
+            stockPrices = positions.map((position) => {
+                if (idx < positions.length) {
+                    let stockPrice =
+                        responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                    idx++;
+                    console.log("Stock Price", typeof stockPrice, stockPrice);
+                    count += stockPrice;
+                    return { ...position, value: stockPrice.toFixed(2) };
+                }
+            });
+            console.log("The Prices", stockPrices);
+            setPortfolioValue(count.toFixed(2));
+        });
+        console.log("i hate promises", stockPrices);
+        setPositions(stockPrices);
+        return stockPrices;
+    };
+
+    useEffect(() => {
+        if (positions.length > 0 && !positions[0]?.value) {
+            getStockPrice();
         }
-        getStockPrice();
-    });
+    }, [positions]);
 
     // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
@@ -131,7 +130,7 @@ const Dashboard = ({ }) => {
             requestOptions
         );
         const data = await response.json();
-        console.log(response);
+        // console.log(response);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
@@ -151,20 +150,24 @@ const Dashboard = ({ }) => {
     }
 
     if (!fastapi_token) {
-        return <Navigate replace to="/login" />;
+        return (
+            <Navigate
+                replace
+                to="/login"
+            />
+        );
     } else {
         return (
             <>
                 <div>
+                    <h3>Positions</h3>
                     <table className="table table-striped">
                         <thead>
-                            <h3>Positions</h3>
                             <tr>
                                 <th scope="col">Symbol</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Value</th>
-                                <button scope="col" onClick={seeValueToggle}>Check Value</button>
                             </tr>
                         </thead>
                         <tbody>
@@ -182,31 +185,26 @@ const Dashboard = ({ }) => {
                     </table>
                 </div>
                 <div>
-                    <label className="label">
-                        Current Positions Value:${portfolioValue}
-                    </label>
+                    <label className="label">Current Positions Value:${portfolioValue}</label>
                 </div>
                 <div></div>
                 <div>
-                    <label className="label">
-                        Current Buying Power:{currentbuyingPower}
-                    </label>
+                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
                 </div>
                 <div>
-                    <form className="box" onSubmit={handleSubmit}>
+                    <form
+                        className="box"
+                        onSubmit={handleSubmit}
+                    >
                         <div className="form-floating mb-3">
                             <div className="field">
-                                <label className="label">
-                                    Update Buying Power
-                                </label>
+                                <label className="label">Update Buying Power</label>
                                 <div className="control">
                                     <input
                                         type="text"
                                         placeholder="add or subtract buying power"
                                         value={buyingPower}
-                                        onChange={(e) =>
-                                            setBuyingPower(e.target.value)
-                                        }
+                                        onChange={(e) => setBuyingPower(e.target.value)}
                                         className="input"
                                         required
                                     />
@@ -214,7 +212,10 @@ const Dashboard = ({ }) => {
                             </div>
                         </div>
                         <div>
-                            <button className="btn btn-primary" type="submit">
+                            <button
+                                className="btn btn-primary"
+                                type="submit"
+                            >
                                 Update Buying Power
                             </button>
                         </div>
@@ -222,10 +223,11 @@ const Dashboard = ({ }) => {
                 </div>
                 <div>
                     <p>Welcome to your Dashboard</p>
-                    <div className="container-fluid container-max-widths:(sm)"
-                        style={{
-                                }}>
-                {/* <div className="row gx-5">
+                    <div
+                        className="container-fluid container-max-widths:(sm)"
+                        style={{}}
+                    >
+                        {/* <div className="row gx-5">
                     <div className="col"> 
                         <StockInfo /> 
                     </div>
@@ -238,8 +240,7 @@ const Dashboard = ({ }) => {
                 </div>
 
                 </div> */}
-            </div>
-
+                    </div>
                 </div>
             </>
         );

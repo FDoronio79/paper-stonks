@@ -16,7 +16,7 @@ import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
-import HomePage from "./components/HomePage"
+import HomePage from "./components/HomePage";
 
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
@@ -61,57 +61,64 @@ function App() {
         // <GetToken />
         <>
             <div className="switch">
-                <label>
-                    {" "}
-                    {theme === "light" ? "Light Mode" : "Dark Mode"}{" "}
-                </label>
+                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
                 <ReactSwitch
                     onChange={toggleTheme}
                     checked={theme === "dark"}
                 />
             </div>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                <div className="App" id={theme}>
+                <div
+                    className="App"
+                    id={theme}
+                >
                     <MainPage />
                     <BrowserRouter>
                         <SearchContext.Provider value={symbol}>
-                            <Nav setSymbol={setSymbol} symbol={symbol} />
-                        </SearchContext.Provider>
-                        <div className="container">
-                            <Routes>
-                                {/* <ErrorNotification error={error} />
+                            <Nav
+                                setSymbol={setSymbol}
+                                symbol={symbol}
+                            />
+
+                            <div className="container">
+                                <Routes>
+                                    {/* <ErrorNotification error={error} />
             <Construct info={launch_info} /> */}
-                                <Route
-                                    path="/"
-                                    element={<HomePage />}
-                                />
-                                <Route
-                                    path="/dashboard"
-                                    element={<Dashboard />}
-                                />
-                                <Route
-                                    path="/Transactions"
-                                    element={<Transactions />}
-                                />
-                                <Route path="/login" element={<LoginForm />} />
-                                <Route
-                                    path="/signup"
-                                    element={<SignupForm />}
-                                />
-                                <Route
-                                    path="/stock"
-                                    element={<StockDetail search={symbol} />}
-                                />
-                                <Route
-                                    path="/position/buy"
-                                    element={<BuyForm />}
-                                />
-                                <Route
-                                    path="/position/sell"
-                                    element={<SellForm />}
-                                />
-                            </Routes>
-                        </div>
+                                    <Route
+                                        path="/"
+                                        element={<HomePage />}
+                                    />
+                                    <Route
+                                        path="/dashboard"
+                                        element={<Dashboard />}
+                                    />
+                                    <Route
+                                        path="/Transactions"
+                                        element={<Transactions />}
+                                    />
+                                    <Route
+                                        path="/login"
+                                        element={<LoginForm />}
+                                    />
+                                    <Route
+                                        path="/signup"
+                                        element={<SignupForm />}
+                                    />
+                                    <Route
+                                        path="/stock/:stockSymbol"
+                                        element={<StockDetail search={symbol} />}
+                                    />
+                                    <Route
+                                        path="/position/buy"
+                                        element={<BuyForm />}
+                                    />
+                                    <Route
+                                        path="/position/sell"
+                                        element={<SellForm />}
+                                    />
+                                </Routes>
+                            </div>
+                        </SearchContext.Provider>
                     </BrowserRouter>
                 </div>
             </ThemeContext.Provider>
