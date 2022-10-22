@@ -11,7 +11,7 @@ export default function BuyForm({ price, symbol, name }) {
     const nameStock = name;
 
     const estimatedPrice = (quantity1 * price).toFixed(2);
-    const withoutDollarSign = buyingPow.replace("$", "");
+    // const withoutDollarSign = buyingPow.replace("$", "");
     // const removedCommas = withoutDollarSign.replaceAll(",", "");
     // const buyingp = parseFloat(removedCommas);
     // const maxQuantity = Math.floor(buyingp / price);
@@ -144,7 +144,7 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
-    });
+    }, []);
 
     useEffect(() => {
         async function getCurrentQuantity() {
