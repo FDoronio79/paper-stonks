@@ -76,46 +76,46 @@ const Dashboard = () => {
         getPositions();
     }, [username]);
 
-    let getStockPrice = async () => {
-        let stockPrices;
-        let idx = 0;
-        let count = 0;
-        await Promise.all(
-            positions.map(async (position) => {
-                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-                const response = await fetch(priceUrl);
-                if (response.ok) {
-                    const data = await response.json();
-                    return data;
-                } else {
-                    console.log("ayoo");
-                }
-            })
-        ).then((responses) => {
-            stockPrices = positions.map((position) => {
-                if (idx < positions.length) {
-                    let stockPrice =
-                        responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                    idx++;
-                    console.log("Stock Price", typeof stockPrice, stockPrice);
-                    count += stockPrice;
-                    return { ...position, value: stockPrice.toFixed(2) };
-                }
-                return [];
-            });
-            console.log("The Prices", stockPrices);
-            setPortfolioValue(count.toFixed(2));
-        });
-        console.log("i hate promises", stockPrices);
-        setPositions(stockPrices);
-        return stockPrices;
-    };
-
     useEffect(() => {
+        let getStockPrice = async () => {
+            let stockPrices;
+            let idx = 0;
+            let count = 0;
+            await Promise.all(
+                positions.map(async (position) => {
+                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                    const response = await fetch(priceUrl);
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data;
+                    } else {
+                        console.log("ayoo");
+                    }
+                })
+            ).then((responses) => {
+                stockPrices = positions.map((position) => {
+                    if (idx < positions.length) {
+                        let stockPrice =
+                            responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                        idx++;
+                        console.log("Stock Price", typeof stockPrice, stockPrice);
+                        count += stockPrice;
+                        return { ...position, value: stockPrice.toFixed(2) };
+                    }
+                    return [];
+                });
+                console.log("The Prices", stockPrices);
+                setPortfolioValue(count.toFixed(2));
+            });
+            console.log("i hate promises", stockPrices);
+            setPositions(stockPrices);
+            return stockPrices;
+        };
+
         if (positions.length > 0 && !positions[0]?.value) {
             getStockPrice();
         }
-    }, [positions, getStockPrice]);
+    }, [positions]);
 
     // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {

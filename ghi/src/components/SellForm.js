@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BuyForm({ price, symbol, name }) {
@@ -12,11 +12,11 @@ export default function BuyForm({ price, symbol, name }) {
 
     const estimatedPrice = (quantity1 * price).toFixed(2);
     const withoutDollarSign = buyingPow.replace("$", "");
-    const removedCommas = withoutDollarSign.replaceAll(",", "");
-    const buyingp = parseFloat(removedCommas);
+    // const removedCommas = withoutDollarSign.replaceAll(",", "");
+    // const buyingp = parseFloat(removedCommas);
     // const maxQuantity = Math.floor(buyingp / price);
 
-    const submitTransaction = async () => {
+    const submitTransaction = useCallback(async () => {
         const quantityDelta = parseInt(quantity1);
         if (quantityDelta === currentQuantity) {
             //delete position
@@ -144,7 +144,7 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
-    };
+    });
 
     useEffect(() => {
         async function getCurrentQuantity() {
