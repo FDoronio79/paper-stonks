@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 function Nav({ setSymbol, symbol }) {
     const [fastapi_token, setToken] = useContext(UserContext);
     const search = useContext(SearchContext);
+    const navigate = useNavigate();
 
     const logout = async () => {
         await fetch(`http://localhost:8080/token`, {
@@ -21,7 +22,10 @@ function Nav({ setSymbol, symbol }) {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
                 <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">
+                    <NavLink
+                        className="navbar-brand"
+                        to="/"
+                    >
                         Paper Stonks
                     </NavLink>
                     <button
@@ -77,20 +81,12 @@ function Nav({ setSymbol, symbol }) {
                                         type="search"
                                         placeholder="Search"
                                         aria-label="Search"
-                                        onChange={(e) =>
-                                            setSymbol(e.target.value)
-                                        }
+                                        onSubmit={(e) => {
+                                            setSymbol(e.target.value);
+                                            navigate("/stock");
+                                        }}
                                         value={symbol}
                                     />
-                                    <li className="nav-item">
-                                        <NavLink
-                                            className="nav-link active justify-content-end"
-                                            aria-current="page"
-                                            to="/stock"
-                                        >
-                                            Search
-                                        </NavLink>
-                                    </li>
                                 </form>
                             </ul>
                         </div>
@@ -102,7 +98,10 @@ function Nav({ setSymbol, symbol }) {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-success">
                 <div className="container-fluid">
-                    <NavLink className="navbar-brand" to="/">
+                    <NavLink
+                        className="navbar-brand"
+                        to="/"
+                    >
                         Paper Stonks
                     </NavLink>
                     <button
@@ -152,26 +151,23 @@ function Nav({ setSymbol, symbol }) {
                                         Transactions
                                     </NavLink>
                                 </li>
-                                <form className="d-flex">
+                                <form
+                                    className="d-flex"
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        navigate(`/stock/${symbol.toUpperCase()}`);
+                                    }}
+                                >
                                     <input
                                         className="form-control me-2"
                                         type="search"
                                         placeholder="Search"
                                         aria-label="Search"
-                                        onChange={(e) =>
-                                            setSymbol(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            setSymbol(e.target.value);
+                                        }}
                                         value={symbol}
                                     />
-                                    <li className="nav-item">
-                                        <NavLink
-                                            className="nav-link active justify-content-end"
-                                            aria-current="page"
-                                            to="/stock"
-                                        >
-                                            Search
-                                        </NavLink>
-                                    </li>
                                 </form>
                                 <li>
                                     <button

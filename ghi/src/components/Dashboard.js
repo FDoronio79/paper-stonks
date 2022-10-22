@@ -50,7 +50,7 @@ const Dashboard = ({}) => {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
                 setUserName(data["username"]);
-                console.log("work", data);
+                // console.log("work", data);
             }
         }
         getBuyingPower();
@@ -69,52 +69,62 @@ const Dashboard = ({}) => {
                 `http://localhost:8090/positions?username=${username}`,
                 requestOptions
             );
-            console.log("RESPONSE", response);
+            // console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                console.log("bruhhhh", data);
+                // console.log("bruhhhh", data);
             } else {
-                console.log("WTF");
+                // console.log("WTF");
             }
         }
         getPositions();
-    }, [setPositions]);
+    }, []);
+
+    let getStockPrice = async  () => {
+        let stockPrices;
+        let idx = 0;
+        let count = 0;
+        await Promise.all(
+            positions.map(async (position) => {
+                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                const response = await fetch(priceUrl);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data;
+                } else {
+                    console.log("ayoo");
+                }
+            })
+        ).then((responses) =>    {
+
+            stockPrices = positions.map((position) =>   {
+                if (idx < positions.length) {
+    
+                let stockPrice =
+                responses[idx]["Global Quote"]["05. price"] *
+                position["quantity"];
+                idx++;
+                console.log("Stock Price", typeof stockPrice, stockPrice)
+                count+=stockPrice
+                return {... position, value: stockPrice };
+                
+                }
+            })
+            console.log("The Prices", stockPrices)
+            setPortfolioValue(count);
+        });
+        console.log('i hate promises', stockPrices);
+        setPositions(stockPrices)
+        return stockPrices;
+    }
 
     useEffect(() => {
-        async function getStockPrice() {
-            const responses = await Promise.all(
-                positions.map(async (position) => {
-                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-                    const response = await fetch(priceUrl);
-                    if (response.ok) {
-                        const data = await response.json();
-                        return data;
-                    } else {
-                        console.log("ayoo");
-                    }
-                })
-            );
-            console.log("stock price?", responses);
-            let idx = 0;
-            let count = 0;
-            for (let position of positions) {
-                if (idx < positions.length) {
-                    if (!(position["value"] in position)) {
-                        position["value"] = 0;
-                    }
-                    let stockPrice =
-                        responses[idx]["Global Quote"]["05. price"] *
-                        position["quantity"];
-                    position["value"] = stockPrice.toFixed(2);
-                    idx++;
-                }
-                count += parseFloat(position["value"]);
-            }
-            setPortfolioValue(count);
+        if (positions.length > 0
+             && !positions[0]?.value)  {
+            getStockPrice();
         }
-        getStockPrice();
-    });
+    }, [positions]);
 
     // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
@@ -130,7 +140,7 @@ const Dashboard = ({}) => {
             requestOptions
         );
         const data = await response.json();
-        console.log(response);
+        // console.log(response);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
@@ -151,9 +161,10 @@ const Dashboard = ({}) => {
         return (
             <>
                 <div>
+                <h3>Positions</h3>
                     <table className="table table-striped">
                         <thead>
-                            <h3>Positions</h3>
+                            
                             <tr>
                                 <th scope="col">Symbol</th>
                                 <th scope="col">Name</th>
@@ -168,7 +179,7 @@ const Dashboard = ({}) => {
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
-                                        <td>${position.value}</td>
+                                        <td>${position?.value}</td>
                                     </tr>
                                 );
                             })}

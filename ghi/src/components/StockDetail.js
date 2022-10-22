@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import BuyForm from "./BuyForm";
 import SellForm from "./SellForm";
-
+import { useParams } from "react-router-dom";
 function StockDetail({ search }) {
     // const search = useContext(SearchContext);
-    const [symbol, setSymbol] = useState(search.toUpperCase());
+    const { stockSymbol } = useParams();
+    // const [symbol, setSymbol] = useState(search.toUpperCase());
+    const [symbol, setSymbol] = useState(stockSymbol);
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
@@ -15,9 +17,10 @@ function StockDetail({ search }) {
 
     useEffect(() => {
         async function getStockData() {
+            setSymbol(stockSymbol);
             // console.log("HELLO", process.env.REACT_APP_ALPHA_VANTAGE);
-            const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${search}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-            const nameUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+            const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+            const nameUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stockSymbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
             const responseName = await fetch(nameUrl);
             if (responseName.ok) {
                 const data = await responseName.json();
@@ -36,7 +39,7 @@ function StockDetail({ search }) {
             }
 
             //check to see if they have a position
-            const checkPositionsUrl = `http://localhost:8090/positions/${symbol}?username=${usernameAcc}`;
+            const checkPositionsUrl = `http://localhost:8090/positions/${stockSymbol}?username=${usernameAcc}`;
 
             const checkOptions = {
                 method: "GET",
@@ -53,7 +56,7 @@ function StockDetail({ search }) {
         }
 
         getStockData();
-    }, [setSymbol, setNameStock, setSharesOwned]);
+    }, [stockSymbol, setNameStock, setSharesOwned]);
 
     return (
         <>
@@ -64,7 +67,7 @@ function StockDetail({ search }) {
             <div className="row my-4">
                 <div className="col">
                     <div className="container">
-                        <h1>{symbol.toUpperCase()}</h1>
+                        <h1>{stockSymbol.toUpperCase()}</h1>
                         <h1>{name}</h1>
                         <p>Price: ${price}</p>
                         <p>
@@ -112,7 +115,7 @@ function StockDetail({ search }) {
                         className="offcanvas-title"
                         id="offcanvasBUY"
                     >
-                        BUY {symbol.toUpperCase()}
+                        BUY {stockSymbol.toUpperCase()}
                     </h5>
                     <button
                         type="button"
@@ -124,7 +127,7 @@ function StockDetail({ search }) {
                 <div className="offcanvas-body">
                     <BuyForm
                         price={price}
-                        symbol={symbol.toUpperCase()}
+                        symbol={stockSymbol.toUpperCase()}
                         name={name}
                     />
                 </div>
@@ -141,7 +144,7 @@ function StockDetail({ search }) {
                         className="offcanvas-title"
                         id="offcanvasSELL"
                     >
-                        SELL {symbol.toUpperCase()}
+                        SELL {stockSymbol.toUpperCase()}
                     </h5>
                     <button
                         type="button"
@@ -153,7 +156,7 @@ function StockDetail({ search }) {
                 <div className="offcanvas-body">
                     <SellForm
                         price={price}
-                        symbol={symbol.toUpperCase()}
+                        symbol={stockSymbol.toUpperCase()}
                         name={name}
                     />
                 </div>
