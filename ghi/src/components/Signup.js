@@ -112,7 +112,7 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
-                            <label htmlFor="username">Username: </label>
+                            <label className="text-left" htmlFor="username">Username: </label>
                             <div className="form-floating mb-3">
                                 <input
                                     onChange={this.handleChangeUsername}

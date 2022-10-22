@@ -21,7 +21,7 @@ client = TestClient(app)
 
 
 class MockAccountQueries:
-    def create(self, item, **kwargs):  # post
+    def create(self, item):  # post
         if item.username != None:
             return good_response_signup
         else:
@@ -30,9 +30,6 @@ class MockAccountQueries:
         # def get_account(self):
         #     return {}
 
-class MockHashedPassword:
-    def get_hashed_password(self):
-        return []
 
 
 mock_new_account_good = {
@@ -64,7 +61,6 @@ good_response_signup = {
 
 def test_signup():
     app.dependency_overrides[AccountQueries] = MockAccountQueries
-    app.dependency_overrides[authenticator.hash_password] = MockHashedPassword
 
     response = client.post(
         '/api/accounts',
