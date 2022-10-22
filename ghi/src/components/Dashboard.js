@@ -19,8 +19,8 @@ const Dashboard = ({ }) => {
 
     localStorage.setItem("Username", username);
     console.log("user", username);
-    localStorage.setItem("position", positions);
-    console.log("positions", positions);
+    // localStorage.setItem("position", positions);
+    // console.log("positions", positions);
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
 
@@ -75,7 +75,7 @@ const Dashboard = ({ }) => {
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                console.log("bruhhhh", data);
+                console.log("bruhhhh", data, typeof data);
             } else {
                 console.log("WTF");
             }
@@ -83,6 +83,7 @@ const Dashboard = ({ }) => {
         getPositions();
     }, [setPositions]);
 
+    console.log("THIS ONE", positions)
     useEffect(() => {
         async function getStockPrice() {
             const responses = await Promise.all(
