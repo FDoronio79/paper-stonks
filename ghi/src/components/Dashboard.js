@@ -1,14 +1,21 @@
 import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+// import StockInfo from "./StockInfo";
+// import CryptoInfo from "./CryptoInfo";
 
-const Dashboard = ({}) => {
+
+
+
+const Dashboard = ({ }) => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useContext(UserContext);
     const [portfolioValue, setPortfolioValue] = useState([]);
+    const [seeValue, setSeeValue] = useState(false)
+    
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -98,9 +105,7 @@ const Dashboard = ({}) => {
                     if (!(position["value"] in position)) {
                         position["value"] = 0;
                     }
-                    let stockPrice =
-                        responses[idx]["Global Quote"]["05. price"] *
-                        position["quantity"];
+                    let stockPrice = responses[idx]["Global Quote"]["05. price"] * position["quantity"];
                     position["value"] = stockPrice.toFixed(2);
                     idx++;
                 }
@@ -140,6 +145,10 @@ const Dashboard = ({}) => {
         console.log("updated buying power");
     };
 
+    function seeValueToggle() {
+        setSeeValue(true);
+    }
+
     if (!fastapi_token) {
         return <Navigate replace to="/login" />;
     } else {
@@ -154,6 +163,7 @@ const Dashboard = ({}) => {
                                 <th scope="col">Name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Value</th>
+                                <button scope="col" onClick={seeValueToggle}>Check Value</button>
                             </tr>
                         </thead>
                         <tbody>
@@ -163,7 +173,7 @@ const Dashboard = ({}) => {
                                         <td>{position.symbol}</td>
                                         <td>{position.name}</td>
                                         <td>{position.quantity}</td>
-                                        <td>${position.value}</td>
+                                        <td>$ {position.value}</td>
                                     </tr>
                                 );
                             })}
@@ -172,7 +182,7 @@ const Dashboard = ({}) => {
                 </div>
                 <div>
                     <label className="label">
-                        Current Portfolio Value:${portfolioValue}
+                        Current Positions Value:${portfolioValue}
                     </label>
                 </div>
                 <div></div>
@@ -211,6 +221,24 @@ const Dashboard = ({}) => {
                 </div>
                 <div>
                     <p>Welcome to your Dashboard</p>
+                    <div className="container-fluid container-max-widths:(sm)"
+                        style={{
+                                }}>
+                {/* <div className="row gx-5">
+                    <div className="col"> 
+                        <StockInfo /> 
+                    </div>
+                
+                    <div className="col"> 
+                            <CryptoInfo /> 
+                    </div>
+
+                <div className="col"> 
+                </div>
+
+                </div> */}
+            </div>
+
                 </div>
             </>
         );

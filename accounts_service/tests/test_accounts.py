@@ -1,46 +1,77 @@
-import os
-from fastapi.testclient import TestClient 
+from fastapi.testclient import TestClient
+
 
 import sys
 import pathlib
+import os
 
 fastapi_dir = pathlib.Path(__file__).parent.parent.resolve()
 abs_dir = os.path.abspath(fastapi_dir)
 sys.path.append(abs_dir)
 
 from main import app
+
 from queries.accounts import AccountQueries
+from authenticator import authenticator
 
-req_body_good = {
-  "email": "string",
-  "username": "string",
-  "password": "string",
-  "full_name": "string"
-}
-
-account2 = {
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHJpbmciLCJhY2NvdW50Ijp7ImlkIjoiMyIsImVtYWlsIjoic3RyaW5nIiwidXNlcm5hbWUiOiJzdHJpbmciLCJmdWxsX25hbWUiOiJzdHJpbmcifX0.B4rRAxGsUrVB2VNeRtL8rEHSFxBpcO1VfUF5bH3LCmU",
-  "token_type": "Bearer",
-  "account": {
-    "id": "3",
-    "email": "string",
-    "username": "string",
-    "full_name": "string",
-    "hashed_password": "$2b$12$S1GlKsYEyefwQMn5JXl1FuqjtpT8tFHCtxWmqQaSpOtHrCDJwr2qC"
-  }
-}
 
 client = TestClient(app)
 
-class MockEmptyAccountQueries:
-    def get_all(self):
+# hashed_pass = "$2b$12$plchujY4vOgGSFS8mT/xYus7t4J4RWWa1YwFvJ5c1zvVvUoiFSSD2"
+
+
+class MockAccountQueries:
+    def create(self, item, **kwargs):  # post
+        if item.username != None:
+            return good_response_signup
+        else:
+            raise Exception
+
+        # def get_account(self):
+        #     return {}
+
+class MockHashedPassword:
+    def get_hashed_password(self):
         return []
 
-def test_get_positions_empty():
-    app.dependency_overrides[AccountQueries] = MockEmptyAccountQueries
-    response = client.get('/api/accounts', json=req_body_good)
+
+mock_new_account_good = {
+    "email": "bruh10@gmail.com",
+    "username": "bruh10",
+    "password": "password",
+    "full_name": "bruh 10th"
+}
+
+
+mock_new_account_bad = {
+    "email": "bruh1@gmail.com",
+    "password": "password",
+    "full_name": "bruh 10th"
+}
+
+good_response_signup = {
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJicnVoMTAiLCJhY2NvdW50Ijp7ImlkIjoiNSIsImVtYWlsIjoiYnJ1aDFAZ21haWwuY29tIiwidXNlcm5hbWUiOiJicnVoMTAiLCJmdWxsX25hbWUiOiJicnVoIDEwdGgifX0.IO_VCh_knPMlh7-163sVq01ljF7JMl87Fa4Jpo2D7as",
+    "token_type": "Bearer",
+    "account": {
+        "id": "1",
+        "email": "bruh1@gmail.com",
+        "username": "bruh10",
+        "full_name": "bruh 10th",
+        "hashed_password": "$2b$12$plchujY4vOgGSFS8mT/xYus7t4J4RWWa1YwFvJ5c1zvVvUoiFSSD2"
+    }
+}
+
+
+def test_signup():
+    app.dependency_overrides[AccountQueries] = MockAccountQueries
+    app.dependency_overrides[authenticator.hash_password] = MockHashedPassword
+
+    response = client.post(
+        '/api/accounts',
+        json=mock_new_account_good
+    )
 
     assert response.status_code == 200
-    assert response.json() == account2
+    assert response.json() == good_response_signup
 
     app.dependency_overrides = {}

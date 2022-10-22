@@ -71,7 +71,7 @@ function Nav({ setSymbol, symbol }) {
                                         Signup
                                     </NavLink>
                                 </li>
-                                <form className="d-flex">
+                                <form className="d-flex ">
                                     <input
                                         className="form-control me-2"
                                         type="search"

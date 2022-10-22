@@ -99,8 +99,8 @@ class SignupForm extends React.Component {
                             onSubmit={this.handleSubmit}
                             id="create-appointment-form"
                         >
+                            <label htmlFor="Email">Email: </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="Email">Email: </label>
                                 <input
                                     onChange={this.handleChangeEmail}
                                     value={this.state.email}
@@ -112,8 +112,8 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
+                            <label htmlFor="username">Username: </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="username">Username: </label>
                                 <input
                                     onChange={this.handleChangeUsername}
                                     value={this.state.username}
@@ -125,8 +125,8 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
+                            <label htmlFor="password">Password: </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="password">Password: </label>
                                 <input
                                     onChange={this.handleChangePassword}
                                     value={this.state.password}
@@ -138,8 +138,8 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
+                            <label htmlFor="fullName">Full Name: </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="fullName">Full Name: </label>
                                 <input
                                     onChange={this.handleChangeFullName}
                                     value={this.state.full_name}

@@ -16,6 +16,7 @@ import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
+import HomePage from "./components/HomePage"
 
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
@@ -80,6 +81,10 @@ function App() {
                             <Routes>
                                 {/* <ErrorNotification error={error} />
             <Construct info={launch_info} /> */}
+                                <Route
+                                    path="/"
+                                    element={<HomePage />}
+                                />
                                 <Route
                                     path="/dashboard"
                                     element={<Dashboard />}

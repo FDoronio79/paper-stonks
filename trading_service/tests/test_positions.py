@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 
 import sys
 import pathlib
+import os
 
 fastapi_dir = pathlib.Path(__file__).parent.parent.resolve()
 abs_dir = os.path.abspath(fastapi_dir)
@@ -20,6 +21,14 @@ req_body_good = {
     "name": "Apple Inc",
     "quantity": 50,
     "type_of": "stock"
+}
+
+req_body_bad = {
+    "symbol": "GOOG",
+    "price": 200,
+    "type_of": "stock",
+    "quantity": 2,
+    "time_of_purchase": "2022-10-20T02:20:39.222Z"
 }
 
 position2 = [
@@ -49,6 +58,17 @@ position2 = [
   }
 ]
 
+response1 = {'detail': [{'loc': ['body', 'username'], 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ['body', 'name'], 'msg': 'field required', 'type': 'value_error.missing'}]}
+
+createposition2 = {
+    "id": 14,
+    "username": "leo",
+    "symbol": "AAPL",
+    "name": "Apple Inc",
+    "quantity": 50,
+    "type_of": "stock"
+  }
+
 client = TestClient(app)
 
 class MockAuth:
@@ -59,6 +79,13 @@ class MockEmptyPositionQueries:
     def get_all(self, username: str):
         return []
 
+class MockPositionQueries:
+    def create(self, item):
+        if item.username != None:
+            return createposition2
+        else:
+            raise Exception
+
 def test_get_positions_empty():
     app.dependency_overrides[PositionRepository] = MockEmptyPositionQueries
     app.dependency_overrides[authenticator.get_curret_account_data] =MockAuth
@@ -68,3 +95,28 @@ def test_get_positions_empty():
     assert response.json() == position2
 
     app.dependency_overrides = {}
+
+
+
+def test_create_positions_good():
+    app.dependency_overrides[PositionRepository] = MockPositionQueries
+    app.dependency_overrides[authenticator.get_curret_account_data] =MockAuth
+    response = client.post('/positions', json=req_body_good)
+
+    assert response.status_code == 200
+    assert response.json() == createposition2
+
+    app.dependency_overrides = {}
+
+
+
+def test_create_position_bad():  # if no transaction_id, raise an error
+    app.dependency_overrides[PositionRepository] = MockPositionQueries
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+
+    response = client.post('/positions', json=req_body_bad)
+
+    assert response.status_code == 422
+    assert response.json() == response1
+
+    app.dependency_overrides = {}  # imports
