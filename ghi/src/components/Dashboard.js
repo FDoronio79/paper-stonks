@@ -15,8 +15,8 @@ const Dashboard = ({}) => {
 
     localStorage.setItem("Username", username);
     console.log("user", username);
-    localStorage.setItem("position", positions);
-    console.log("positions", positions);
+    // localStorage.setItem("position", positions);
+    // console.log("positions", positions);
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
 
