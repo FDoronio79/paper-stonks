@@ -1,5 +1,3 @@
-# imports 
-
 import os
 from fastapi.testclient import TestClient
 
@@ -14,14 +12,17 @@ sys.path.append(abs_dir)
 
 from main import app
 
+from queries.positions import PositionRepository
 from queries.transactions import TransactionRepository
 from jwtdown_fastapi.authentication import Authenticator
 from authenticator import authenticator
 
+
+
 #################################################################################
 # testing client
 
-client=TestClient(app)
+client = TestClient(app)
 
 #################################################################################
 # mock queries
@@ -32,7 +33,13 @@ class MockEmptyTransactionQueries:
         return []
 
 
+
+class MockEmptyPositionsQueries:
+    def get_all(self, username):
+        return []
+
 # mock queries
+
 
 class MockTransactionQueries:
     def get_all(self, username):
@@ -43,7 +50,6 @@ class MockTransactionQueries:
             return transaction2
         else:
             raise Exception
-
 
 
 #################################################################################
@@ -77,7 +83,8 @@ req_body_bad = {
     "time_of_purchase": "2022-10-20T02:20:39.222Z"
 }
 
-response1 = {'detail': [{'loc': ['body', 'username'], 'msg': 'field required', 'type': 'value_error.missing'}]}
+response1 = {'detail': [{'loc': ['body', 'username'],
+                         'msg': 'field required', 'type': 'value_error.missing'}]}
 
 transaction2 = {
     "id": 2,
@@ -111,7 +118,6 @@ def test_get_transaction_empty():
     app.dependency_overrides = {}
 
 
-
 # test function; returns mock transaction; checks that the API route works
 def test_get_transaction():
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
@@ -125,9 +131,7 @@ def test_get_transaction():
     app.dependency_overrides = {}
 
 
-
-
-def test_create_transaction_good():        #if no transaction_id, raise an error
+def test_create_transaction_good():  # if no transaction_id, raise an error
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
 
@@ -139,8 +143,7 @@ def test_create_transaction_good():        #if no transaction_id, raise an error
     app.dependency_overrides = {}
 
 
-
-def test_create_transaction_bad():        #if no transaction_id, raise an error
+def test_create_transaction_bad():  # if no transaction_id, raise an error
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
 
@@ -149,5 +152,19 @@ def test_create_transaction_bad():        #if no transaction_id, raise an error
     assert response.status_code == 422
     assert response.json() == response1
 
-    app.dependency_overrides = {}# imports 
+    app.dependency_overrides = {}  # imports
 
+
+#####################GET ALL POSITIONS############################################
+
+def test_get_position_empty():
+    app.dependency_overrides[PositionRepository] = MockEmptyPositionsQueries
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+    response = client.get('/positions?username=bruh1')
+
+    assert response.status_code == 200
+    assert response.json() == []
+
+    app.dependency_overrides = {}
+
+##############CREATE POSITION###################################################
