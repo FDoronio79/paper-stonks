@@ -29,7 +29,7 @@ export const ThemeContext = createContext(null);
 
 function App() {
     const domain = /https:\/\/[^/]+/;
-    const basename = process.env.PUBLIC_URL.replace(domain, "");
+    const basename = process.env.PUBLIC_URL.replace(domain, "/paper-stonks");
     console.log("basename: ", basename);
     const [symbol, setSymbol] = useState("");
     const [theme, setTheme] = useState("light");

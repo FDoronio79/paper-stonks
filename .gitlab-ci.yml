@@ -35,6 +35,7 @@ build-fastapi-api-image-job: # RENAME THIS
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
         - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
         - docker push ${CI_REGISTRY_IMAGE}/fastapi_api:latest
+    script:
         - cd accounts_service
         - docker build -t ${CI_REGISTRY_IMAGE}/fastapi_api:latest .
         - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
