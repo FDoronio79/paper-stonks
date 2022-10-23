@@ -39,7 +39,7 @@ function StockDetail({ search }) {
             }
 
             //check to see if they have a position
-            const checkPositionsUrl = `http://localhost:8090/positions/${stockSymbol}?username=${usernameAcc}`;
+            const checkPositionsUrl = `${process.env.REACT_APP_TRADING_HOST}/positions/${stockSymbol}?username=${usernameAcc}`;
 
             const checkOptions = {
                 method: "GET",

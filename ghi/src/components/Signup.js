@@ -43,7 +43,7 @@ class SignupForm extends React.Component {
         const data = { ...this.state };
         console.log("data:", data);
         //create development and deployment variables for url
-        const registrationUrl = "http://localhost:8080/api/accounts";
+        const registrationUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`;
         console.log(registrationUrl);
         const fetchConfig = {
             method: "post",
@@ -63,7 +63,7 @@ class SignupForm extends React.Component {
                 full_name: "",
             });
             // upon creating a new account the system will create an accountsvo with the same name
-            const registrationVOUrl = "http://localhost:8090/api/accountsvo";
+            const registrationVOUrl = `${process.env.REACT_APP_TRADING_HOST}/api/accountsvo`;
             console.log(registrationVOUrl);
             const fetchConfigvo = {
                 method: "post",
@@ -88,7 +88,12 @@ class SignupForm extends React.Component {
 
     render() {
         if (this.state.hasSignedUp) {
-            return <Navigate to="/dashboard" replace={true} />;
+            return (
+                <Navigate
+                    to="/dashboard"
+                    replace={true}
+                />
+            );
         }
         return (
             <div className="my-5 containerw">
@@ -112,7 +117,12 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
-                            <label className="text-left" htmlFor="username">Username: </label>
+                            <label
+                                className="text-left"
+                                htmlFor="username"
+                            >
+                                Username:{" "}
+                            </label>
                             <div className="form-floating mb-3">
                                 <input
                                     onChange={this.handleChangeUsername}

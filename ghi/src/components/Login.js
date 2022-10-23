@@ -21,7 +21,7 @@ const Login = () => {
         };
 
         const response = await fetch(
-            "http://localhost:8080/token",
+            `${process.env.REACT_APP_ACCOUNTS_HOST}/token`,
             requestOptions
         );
         const data = await response.json();
@@ -31,15 +31,14 @@ const Login = () => {
         } else {
             localStorage.setItem("Username", username);
             setToken(data.access_token);
-            navigate("/dashboard")
+            navigate("/dashboard");
         }
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
         console.log("logged in!");
-        
     };
 
     if (!fastapi_token) {
@@ -48,7 +47,10 @@ const Login = () => {
                 <div className="offset-3 col-6">
                     <div className="shadow p-4 mt-4">
                         <h2 className="text-center">Login</h2>
-                        <form className="box" onSubmit={handleSubmit}>
+                        <form
+                            className="box"
+                            onSubmit={handleSubmit}
+                        >
                             <div className="form-floating mb-3">
                                 <div className="field">
                                     <label className="label">Username</label>
@@ -57,9 +59,7 @@ const Login = () => {
                                             type="text"
                                             placeholder="Enter username"
                                             value={username}
-                                            onChange={(e) =>
-                                                setUserName(e.target.value)
-                                            }
+                                            onChange={(e) => setUserName(e.target.value)}
                                             className="input"
                                             required
                                         />
@@ -74,9 +74,7 @@ const Login = () => {
                                             type="password"
                                             placeholder="Enter password"
                                             value={password}
-                                            onChange={(e) =>
-                                                setPassword(e.target.value)
-                                            }
+                                            onChange={(e) => setPassword(e.target.value)}
                                             className="input"
                                             required
                                         />

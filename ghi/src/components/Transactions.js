@@ -21,7 +21,10 @@ const Transactions = () => {
                 },
                 credentials: "include",
             };
-            const response = await fetch(`http://localhost:8090/transactions`, requestOptions);
+            const response = await fetch(
+                `${process.env.REACT_APP_TRADING_HOST}/transactions`,
+                requestOptions
+            );
             console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();

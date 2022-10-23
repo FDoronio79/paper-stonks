@@ -40,7 +40,10 @@ const Dashboard = () => {
                 },
                 credentials: "include",
             };
-            const response = await fetch(`http://localhost:8080/api/accounts`, requestOptions);
+            const response = await fetch(
+                `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`,
+                requestOptions
+            );
             if (response.ok) {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
@@ -61,7 +64,7 @@ const Dashboard = () => {
                 credentials: "include",
             };
             const response = await fetch(
-                `http://localhost:8090/positions?username=${username}`,
+                `${process.env.REACT_APP_TRADING_HOST}/positions?username=${username}`,
                 requestOptions
             );
             // console.log("RESPONSE", response);
@@ -127,7 +130,7 @@ const Dashboard = () => {
             credentials: "include",
         };
         const response = await fetch(
-            `http://localhost:8080/api/accounts?bp_change=${buyingPower}`,
+            `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${buyingPower}`,
             requestOptions
         );
         const data = await response.json();

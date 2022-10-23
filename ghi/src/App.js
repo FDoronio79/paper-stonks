@@ -28,6 +28,8 @@ import HomePage from "./components/HomePage";
 export const ThemeContext = createContext(null);
 
 function App() {
+    const domain = /https:\/\/[^/]+/;
+    const basename = process.env.PUBLIC_URL.replace(domain, "");
     const [symbol, setSymbol] = useState("");
     const [theme, setTheme] = useState("light");
 
@@ -57,8 +59,6 @@ function App() {
     // }, [])
 
     return (
-        // <AuthProvider>
-        // <GetToken />
         <>
             <div className="switch">
                 <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
@@ -73,7 +73,7 @@ function App() {
                     id={theme}
                 >
                     <MainPage />
-                    <BrowserRouter>
+                    <BrowserRouter basename={basename}>
                         <SearchContext.Provider value={symbol}>
                             <Nav
                                 setSymbol={setSymbol}
@@ -82,8 +82,6 @@ function App() {
 
                             <div className="container">
                                 <Routes>
-                                    {/* <ErrorNotification error={error} />
-            <Construct info={launch_info} /> */}
                                     <Route
                                         path="/"
                                         element={<HomePage />}
@@ -123,7 +121,6 @@ function App() {
                 </div>
             </ThemeContext.Provider>
         </>
-        /* </AuthProvider> */
     );
 }
 

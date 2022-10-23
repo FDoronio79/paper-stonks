@@ -10,7 +10,7 @@ function Nav({ setSymbol, symbol }) {
     const navigate = useNavigate();
 
     const logout = async () => {
-        await fetch(`http://localhost:8080/token`, {
+        await fetch(`${process.env.REACT_APP_ACCOUNTS_HOST}/token`, {
             method: "DELETE",
             credentials: "include",
         });

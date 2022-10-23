@@ -62,7 +62,7 @@ export default function BuyForm({ price, symbol, name }) {
                 credentials: "include",
             };
             const response = await fetch(
-                `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+                `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`,
                 requestOptions
             );
             if (response.ok) {
@@ -86,7 +86,7 @@ export default function BuyForm({ price, symbol, name }) {
             credentials: "include",
         };
         const responseGet = await fetch(
-            `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+            `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`,
             requestOptionsGet
         );
         const data = await responseGet.json();
@@ -102,7 +102,7 @@ export default function BuyForm({ price, symbol, name }) {
                 credentials: "include",
             };
             const responseUpdateP = await fetch(
-                `http://localhost:8090/positions/${symbolStock}`,
+                `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}`,
                 requestOptionsUpdateP
             );
             const dataUpdateP = await responseUpdateP.json();
@@ -121,7 +121,10 @@ export default function BuyForm({ price, symbol, name }) {
                     body: JSON.stringify(transactionDict),
                 };
 
-                const response = await fetch("http://localhost:8090/transactions", requestOptions);
+                const response = await fetch(
+                    `${process.env.REACT_APP_TRADING_HOST}/transactions`,
+                    requestOptions
+                );
                 const data = await response.json();
 
                 console.log("TRANSACTION MADE", data);
@@ -133,7 +136,7 @@ export default function BuyForm({ price, symbol, name }) {
                     credentials: "include",
                 };
                 const responseBp = await fetch(
-                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
@@ -150,7 +153,10 @@ export default function BuyForm({ price, symbol, name }) {
                 body: JSON.stringify(positionDict),
             };
 
-            const response = await fetch("http://localhost:8090/positions", requestOptions);
+            const response = await fetch(
+                `${process.env.REACT_APP_TRADING_HOST}/positions`,
+                requestOptions
+            );
             const data = await response.json();
 
             console.log(data);
@@ -163,7 +169,10 @@ export default function BuyForm({ price, symbol, name }) {
                     body: JSON.stringify(transactionDict),
                 };
 
-                const response = await fetch("http://localhost:8090/transactions", requestOptions);
+                const response = await fetch(
+                    `${process.env.REACT_APP_TRADING_HOST}/transactions`,
+                    requestOptions
+                );
                 const data = await response.json();
 
                 console.log("TRANSACTION MADE", data);
@@ -175,7 +184,7 @@ export default function BuyForm({ price, symbol, name }) {
                     credentials: "include",
                 };
                 const responseBp = await fetch(
-                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
