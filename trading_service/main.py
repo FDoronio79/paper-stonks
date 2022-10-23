@@ -14,6 +14,7 @@ app.include_router(accountsvo.router)
 
 origins = [
     "http://localhost:3000",
+    "https://apex-legends1.gitlab.io/"
 ]
 
 app.add_middleware(
