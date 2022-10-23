@@ -9,11 +9,9 @@ app.include_router(positions.router)
 app.include_router(accountsvo.router)
 
 
-
-
-
 origins = [
     "http://localhost:3000",
+    "https://paper-stonks.herokuapp.com",
 ]
 
 app.add_middleware(
