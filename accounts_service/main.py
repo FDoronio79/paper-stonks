@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from authenticator import authenticator
 from routers import accounts
@@ -10,7 +11,7 @@ app.include_router(accounts.router)
 
 origins = [
     "http://localhost:3000",
-    "https://paper-stonks.herokuapp.com",
+    os.environ.get("REACT_APP_API_HOST", None)
 ]
 
 app.add_middleware(

@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from routers import transactions, positions, accountsvo
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,7 +12,7 @@ app.include_router(accountsvo.router)
 
 origins = [
     "http://localhost:3000",
-    "https://paper-stonks.herokuapp.com",
+    os.environ.get("REACT_APP_API_HOST", None)
 ]
 
 app.add_middleware(
