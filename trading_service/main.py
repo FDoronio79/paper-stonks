@@ -11,7 +11,6 @@ app.include_router(accountsvo.router)
 
 origins = [
     "http://localhost:3000",
-    "https://apex-legends1.gitlab.io/",
     "https://paper-stonks.herokuapp.com",
 ]
 
