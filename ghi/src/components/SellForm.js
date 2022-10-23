@@ -144,7 +144,16 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
-    }, []);
+    }, [
+        currentQuantity,
+        estimatedPrice,
+        nameStock,
+        price,
+        quantity1,
+        symbol,
+        symbolStock,
+        usernameAcc,
+    ]);
 
     useEffect(() => {
         async function getCurrentQuantity() {
