@@ -6,7 +6,7 @@ function StockDetail({ search }) {
     // const search = useContext(SearchContext);
     const { stockSymbol } = useParams();
     // const [symbol, setSymbol] = useState(search.toUpperCase());
-    const [symbol, setSymbol] = useState(stockSymbol);
+    // const [symbol, setSymbol] = useState(stockSymbol);
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
@@ -17,7 +17,7 @@ function StockDetail({ search }) {
 
     useEffect(() => {
         async function getStockData() {
-            setSymbol(stockSymbol);
+            // setSymbol(stockSymbol);
             // console.log("HELLO", process.env.REACT_APP_ALPHA_VANTAGE);
             const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
             const nameUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stockSymbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
@@ -56,7 +56,7 @@ function StockDetail({ search }) {
         }
 
         getStockData();
-    }, [stockSymbol, setNameStock, setSharesOwned]);
+    }, [stockSymbol, setNameStock, setSharesOwned, usernameAcc]);
 
     return (
         <>

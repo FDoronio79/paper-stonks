@@ -9,8 +9,8 @@ export default function BuyForm({ price, symbol, name }) {
 
     const usernameAcc = localStorage.getItem("Username");
     const symbolStock = symbol;
-    const [buyingPower, setBuyingPower] = useState("");
-    const [updateQuantity, setUpdateQuantity] = useState("");
+    // const [buyingPower, setBuyingPower] = useState("");
+    // const [updateQuantity, setUpdateQuantity] = useState("");
     const [quantity1, setQuantity] = useState("");
     const [currentQuantity, setCurrentQuantity] = useState("");
     let currDateTime = Date.now();
@@ -73,7 +73,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
-    }, [setCurrentQuantity]);
+    }, [setCurrentQuantity, symbolStock, usernameAcc]);
 
     // this function will take care off all edge cases when buying a stock
     const submitTransaction = async () => {
@@ -110,7 +110,7 @@ export default function BuyForm({ price, symbol, name }) {
             console.log("CURRENT QUANTITY1", currentQuantity);
             console.log("QUANTITYTOADD", quantity1);
             console.log("NEW QUANTITY", newQuantity);
-            setUpdateQuantity(dataUpdateP);
+            // setUpdateQuantity(dataUpdateP);
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 currDateTime = Date.now();
@@ -138,7 +138,7 @@ export default function BuyForm({ price, symbol, name }) {
                 );
                 const dataBp = await responseBp.json();
                 console.log(dataBp);
-                setBuyingPower(dataBp);
+                // setBuyingPower(dataBp);
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             }
         } else {
@@ -180,7 +180,7 @@ export default function BuyForm({ price, symbol, name }) {
                 );
                 const dataBp = await responseBp.json();
                 console.log(dataBp);
-                setBuyingPower(dataBp);
+                // setBuyingPower(dataBp);
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             } else {
                 alert("Could not process request. Please try again later");

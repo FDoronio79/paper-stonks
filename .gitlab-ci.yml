@@ -11,6 +11,7 @@ build-front-end-job:
         # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
         PUBLIC_URL: https://apex-legends1.gitlab.io/paper-stonks
         REACT_APP_API_HOST: https://paper-stonks.herokuapp.com
+        REACT_APP_ALPHA_VANTAGE: $REACT_APP_ALPHA_VANTAGE
     script:
         - cd ghi
         - npm install
@@ -28,7 +29,7 @@ build-fastapi-api-image-job: # RENAME THIS
     services:
         - docker:20.10.16-dind
     script:
-        - cd sample_service
+        - cd trading_service
         - docker build -t ${CI_REGISTRY_IMAGE}/fastapi_api:latest .
         - docker tag ${CI_REGISTRY_IMAGE}/fastapi_api:latest ${CI_REGISTRY_IMAGE}/fastapi_api:$CI_JOB_ID
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY

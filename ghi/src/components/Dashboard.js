@@ -4,14 +4,14 @@ import { UserContext } from "../context/UserContext";
 // import StockInfo from "./StockInfo";
 // import CryptoInfo from "./CryptoInfo";
 
-const Dashboard = ({}) => {
+const Dashboard = () => {
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useContext(UserContext);
     const [portfolioValue, setPortfolioValue] = useState([]);
-    const [seeValue, setSeeValue] = useState(false);
+    // const [seeValue, setSeeValue] = useState(false);
 
     localStorage.setItem("Username", username);
     console.log("user", username);
@@ -74,43 +74,44 @@ const Dashboard = ({}) => {
             }
         }
         getPositions();
-    }, []);
-
-    let getStockPrice = async () => {
-        let stockPrices;
-        let idx = 0;
-        let count = 0;
-        await Promise.all(
-            positions.map(async (position) => {
-                const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
-                const response = await fetch(priceUrl);
-                if (response.ok) {
-                    const data = await response.json();
-                    return data;
-                } else {
-                    console.log("ayoo");
-                }
-            })
-        ).then((responses) => {
-            stockPrices = positions.map((position) => {
-                if (idx < positions.length) {
-                    let stockPrice =
-                        responses[idx]["Global Quote"]["05. price"] * position["quantity"];
-                    idx++;
-                    console.log("Stock Price", typeof stockPrice, stockPrice);
-                    count += stockPrice;
-                    return { ...position, value: stockPrice.toFixed(2) };
-                }
-            });
-            console.log("The Prices", stockPrices);
-            setPortfolioValue(count.toFixed(2));
-        });
-        console.log("i hate promises", stockPrices);
-        setPositions(stockPrices);
-        return stockPrices;
-    };
+    }, [username]);
 
     useEffect(() => {
+        let getStockPrice = async () => {
+            let stockPrices;
+            let idx = 0;
+            let count = 0;
+            await Promise.all(
+                positions.map(async (position) => {
+                    const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${position.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
+                    const response = await fetch(priceUrl);
+                    if (response.ok) {
+                        const data = await response.json();
+                        return data;
+                    } else {
+                        console.log("ayoo");
+                    }
+                })
+            ).then((responses) => {
+                stockPrices = positions.map((position) => {
+                    if (idx < positions.length) {
+                        let stockPrice =
+                            responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                        idx++;
+                        console.log("Stock Price", typeof stockPrice, stockPrice);
+                        count += stockPrice;
+                        return { ...position, value: stockPrice.toFixed(2) };
+                    }
+                    return [];
+                });
+                console.log("The Prices", stockPrices);
+                setPortfolioValue(count.toFixed(2));
+            });
+            console.log("i hate promises", stockPrices);
+            setPositions(stockPrices);
+            return stockPrices;
+        };
+
         if (positions.length > 0 && !positions[0]?.value) {
             getStockPrice();
         }
@@ -144,10 +145,6 @@ const Dashboard = ({}) => {
         updateBuyingPower();
         console.log("updated buying power");
     };
-
-    function seeValueToggle() {
-        setSeeValue(true);
-    }
 
     if (!fastapi_token) {
         return (

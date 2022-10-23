@@ -9,12 +9,10 @@ app.include_router(positions.router)
 app.include_router(accountsvo.router)
 
 
-
-
-
 origins = [
     "http://localhost:3000",
-    "https://apex-legends1.gitlab.io/"
+    "https://apex-legends1.gitlab.io/",
+    "https://paper-stonks.herokuapp.com",
 ]
 
 app.add_middleware(
