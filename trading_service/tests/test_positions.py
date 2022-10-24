@@ -88,7 +88,7 @@ class MockPositionQueries:
 
 def test_get_positions_empty():
     app.dependency_overrides[PositionRepository] = MockEmptyPositionQueries
-    app.dependency_overrides[authenticator.get_curret_account_data] =MockAuth
+    app.dependency_overrides[authenticator.get_current_account_data] =MockAuth
     response = client.get('/positions', json=req_body_good)
 
     assert response.status_code == 200
@@ -100,7 +100,7 @@ def test_get_positions_empty():
 
 def test_create_positions_good():
     app.dependency_overrides[PositionRepository] = MockPositionQueries
-    app.dependency_overrides[authenticator.get_curret_account_data] =MockAuth
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
     response = client.post('/positions', json=req_body_good)
 
     assert response.status_code == 200
@@ -110,7 +110,7 @@ def test_create_positions_good():
 
 
 
-def test_create_position_bad():  # if no transaction_id, raise an error
+def test_create_position_bad():  # if no position_id, raise an error
     app.dependency_overrides[PositionRepository] = MockPositionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
 
