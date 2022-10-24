@@ -64,8 +64,8 @@ deploy-accounts-service-image-job:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
         - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
         - docker pull ${CI_REGISTRY_IMAGE}/accounts_service:latest
-        - docker tag ${CI_REGISTRY_IMAGE}/accounts_service:latest registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
-        - docker push registry.heroku.com/$HEROKU_FASTAPI_APP/web:latest
+        - docker tag ${CI_REGISTRY_IMAGE}/accounts_service:latest registry.heroku.com/$HEROKU_ACCOUNT_API_APP/web:latest
+        - docker push registry.heroku.com/$HEROKU_ACCOUNT_API_APP/web:latest
 
 deploy-trading-service-image-job:
     rules:
