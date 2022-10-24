@@ -15,7 +15,7 @@ export const UserProvider = (props) => {
                 },
             };
 
-            const response = await fetch("/api/accounts", requestOptions);
+            const response = await fetch(`${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`, requestOptions);
 
             if (!response.ok) {
                 setToken(null);

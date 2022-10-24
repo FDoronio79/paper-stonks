@@ -13,8 +13,6 @@ origins = [
     "http://localhost:3000",
     os.environ.get("CORS_HOST", None)
 ]
-print("CORS_HOST: ", os.environ.get("CORS_HOST"))
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

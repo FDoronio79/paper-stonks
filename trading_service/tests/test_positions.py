@@ -93,7 +93,7 @@ def test_create_positions_good():
 
 
 
-def test_create_position_bad():  # if no transaction_id, raise an error
+def test_create_position_bad():  # if no position_id, raise an error
     app.dependency_overrides[PositionRepository] = MockPositionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
 
