@@ -157,36 +157,3 @@ def test_create_transaction_bad():  # if no transaction_id, raise an error
     assert response.json() == response1
 
     app.dependency_overrides = {}  # imports
-
-
-#####################GET ALL POSITIONS############################################
-# This test, tests the functionality of the endpoint
-def test_get_position_empty():
-    app.dependency_overrides[PositionRepository] = MockEmptyPositionsQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-    response = client.get('/positions?username=bruh1')
-
-    assert response.status_code == 200
-    assert response.json() == []
-
-    app.dependency_overrides = {}
-
-##############CREATE POSITION###################################################
-position =   {
-    "id": 2,
-    "username": "bruh1",
-    "symbol": "NVDA",
-    "name": "NVIDIA Corporation",
-    "quantity": 100,
-    "type_of": "stock"
-}
-
-def test_delete_position():
-    app.dependency_overrides[PositionRepository] = MockPositionQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-    response = client.delete('/positions/NVDA?username=bruh1')
-
-    assert response.status_code == 200
-    assert response.json() == True
-
-    app.dependency_overrides = {}
