@@ -43,8 +43,7 @@ class SignupForm extends React.Component {
         const data = { ...this.state };
         console.log("data:", data);
         //create development and deployment variables for url
-        const registrationUrl = "http://localhost:8080/api/accounts";
-        console.log(registrationUrl);
+        const registrationUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`;
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -63,7 +62,7 @@ class SignupForm extends React.Component {
                 full_name: "",
             });
             // upon creating a new account the system will create an accountsvo with the same name
-            const registrationVOUrl = "http://localhost:8090/api/accountsvo";
+            const registrationVOUrl = `${process.env.REACT_APP_TRADING_HOST}/api/accountsvo`;
             console.log(registrationVOUrl);
             const fetchConfigvo = {
                 method: "post",
@@ -88,7 +87,12 @@ class SignupForm extends React.Component {
 
     render() {
         if (this.state.hasSignedUp) {
-            return <Navigate to="/dashboard" replace={true} />;
+            return (
+                <Navigate
+                    to="/dashboard"
+                    replace={true}
+                />
+            );
         }
         return (
             <div className="my-5 containerw">
@@ -99,8 +103,8 @@ class SignupForm extends React.Component {
                             onSubmit={this.handleSubmit}
                             id="create-appointment-form"
                         >
+                            <label htmlFor="Email">Email: </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="Email">Email: </label>
                                 <input
                                     onChange={this.handleChangeEmail}
                                     value={this.state.email}
@@ -112,8 +116,13 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
+                            <label
+                                className="text-left"
+                                htmlFor="username"
+                            >
+                                Username:{" "}
+                            </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="username">Username: </label>
                                 <input
                                     onChange={this.handleChangeUsername}
                                     value={this.state.username}
@@ -125,8 +134,8 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
+                            <label htmlFor="password">Password: </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="password">Password: </label>
                                 <input
                                     onChange={this.handleChangePassword}
                                     value={this.state.password}
@@ -138,8 +147,8 @@ class SignupForm extends React.Component {
                                     className="form-control"
                                 />
                             </div>
+                            <label htmlFor="fullName">Full Name: </label>
                             <div className="form-floating mb-3">
-                                <label htmlFor="fullName">Full Name: </label>
                                 <input
                                     onChange={this.handleChangeFullName}
                                     value={this.state.full_name}

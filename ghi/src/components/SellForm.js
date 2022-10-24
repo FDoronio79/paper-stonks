@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BuyForm({ price, symbol, name }) {
@@ -11,12 +11,12 @@ export default function BuyForm({ price, symbol, name }) {
     const nameStock = name;
 
     const estimatedPrice = (quantity1 * price).toFixed(2);
-    const withoutDollarSign = buyingPow.replace("$", "");
-    const removedCommas = withoutDollarSign.replaceAll(",", "");
-    const buyingp = parseFloat(removedCommas);
-    const maxQuantity = Math.floor(buyingp / price);
+    // const withoutDollarSign = buyingPow.replace("$", "");
+    // const removedCommas = withoutDollarSign.replaceAll(",", "");
+    // const buyingp = parseFloat(removedCommas);
+    // const maxQuantity = Math.floor(buyingp / price);
 
-    const submitTransaction = async () => {
+    const submitTransaction = useCallback(async () => {
         const quantityDelta = parseInt(quantity1);
         if (quantityDelta === currentQuantity) {
             //delete position
@@ -68,7 +68,7 @@ export default function BuyForm({ price, symbol, name }) {
                     credentials: "include",
                 };
                 const responseBp = await fetch(
-                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
@@ -136,7 +136,7 @@ export default function BuyForm({ price, symbol, name }) {
                     credentials: "include",
                 };
                 const responseBp = await fetch(
-                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
@@ -144,7 +144,16 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
-    };
+    }, [
+        currentQuantity,
+        estimatedPrice,
+        nameStock,
+        price,
+        quantity1,
+        symbol,
+        symbolStock,
+        usernameAcc,
+    ]);
 
     useEffect(() => {
         async function getCurrentQuantity() {
@@ -156,7 +165,7 @@ export default function BuyForm({ price, symbol, name }) {
                 credentials: "include",
             };
             const response = await fetch(
-                `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+                `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`,
                 requestOptions
             );
             if (response.ok) {
@@ -168,7 +177,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
-    }, [setCurrentQuantity, submitTransaction]);
+    }, [setCurrentQuantity, submitTransaction, symbolStock, usernameAcc]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -1,8 +1,8 @@
+import os
 from fastapi import FastAPI
-from authenticator import authenticator 
+from authenticator import authenticator
 from routers import accounts
 from fastapi.middleware.cors import CORSMiddleware
-
 
 
 app = FastAPI()
@@ -11,7 +11,9 @@ app.include_router(accounts.router)
 
 origins = [
     "http://localhost:3000",
+    os.environ.get("CORS_HOST", None)
 ]
+print("CORS_HOST: ", os.environ.get("CORS_HOST"))
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,4 +22,3 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-

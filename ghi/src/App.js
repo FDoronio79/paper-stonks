@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 // import Construct from './Construct.js'
 // import ErrorNotification from './ErrorNotification';
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import MainPage from "./MainPage";
 import SignupForm from "./components/Signup";
@@ -11,12 +11,12 @@ import Transactions from "./components/Transactions";
 import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
-import { useState, useContext, createContext } from "react";
-import { UserContext } from "./context/UserContext";
+import { useState, createContext } from "react";
+// import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
-import HomePage from "./components/HomePage"
+import HomePage from "./components/HomePage";
 
 // import Header from "./components/Header";
 // import { UserContext } from "./context/UserContext";
@@ -28,6 +28,9 @@ import HomePage from "./components/HomePage"
 export const ThemeContext = createContext(null);
 
 function App() {
+    const domain = /https:\/\/[^/]+/;
+    const basename = process.env.PUBLIC_URL.replace(domain, "");
+    console.log("basename: ", basename);
     const [symbol, setSymbol] = useState("");
     const [theme, setTheme] = useState("light");
 
@@ -57,66 +60,68 @@ function App() {
     // }, [])
 
     return (
-        // <AuthProvider>
-        // <GetToken />
         <>
             <div className="switch">
-                <label>
-                    {" "}
-                    {theme === "light" ? "Light Mode" : "Dark Mode"}{" "}
-                </label>
+                <label> {theme === "light" ? "Light Mode" : "Dark Mode"} </label>
                 <ReactSwitch
                     onChange={toggleTheme}
                     checked={theme === "dark"}
                 />
             </div>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                <div className="App" id={theme}>
+                <div
+                    className="App"
+                    id={theme}
+                >
                     <MainPage />
-                    <BrowserRouter>
+                    <BrowserRouter basename={basename}>
                         <SearchContext.Provider value={symbol}>
-                            <Nav setSymbol={setSymbol} symbol={symbol} />
+                            <Nav
+                                setSymbol={setSymbol}
+                                symbol={symbol}
+                            />
+
+                            <div className="container">
+                                <Routes>
+                                    <Route
+                                        path="/"
+                                        element={<HomePage />}
+                                    />
+                                    <Route
+                                        path="/dashboard"
+                                        element={<Dashboard />}
+                                    />
+                                    <Route
+                                        path="/Transactions"
+                                        element={<Transactions />}
+                                    />
+                                    <Route
+                                        path="/login"
+                                        element={<LoginForm />}
+                                    />
+                                    <Route
+                                        path="/signup"
+                                        element={<SignupForm />}
+                                    />
+                                    <Route
+                                        path="/stock/:stockSymbol"
+                                        element={<StockDetail search={symbol} />}
+                                    />
+                                    <Route
+                                        path="/position/buy"
+                                        element={<BuyForm />}
+                                    />
+                                    <Route
+                                        path="/position/sell"
+                                        element={<SellForm />}
+                                    />
+                                </Routes>
+                            </div>
                         </SearchContext.Provider>
-                        <div className="container">
-                            <Routes>
-                                {/* <ErrorNotification error={error} />
-            <Construct info={launch_info} /> */}
-                                <Route
-                                    path="/"
-                                    element={<HomePage />}
-                                />
-                                <Route
-                                    path="/dashboard"
-                                    element={<Dashboard />}
-                                />
-                                <Route
-                                    path="/Transactions"
-                                    element={<Transactions />}
-                                />
-                                <Route path="/login" element={<LoginForm />} />
-                                <Route
-                                    path="/signup"
-                                    element={<SignupForm />}
-                                />
-                                <Route
-                                    path="/stock"
-                                    element={<StockDetail search={symbol} />}
-                                />
-                                <Route
-                                    path="/position/buy"
-                                    element={<BuyForm />}
-                                />
-                                <Route
-                                    path="/position/sell"
-                                    element={<SellForm />}
-                                />
-                            </Routes>
-                        </div>
                     </BrowserRouter>
                 </div>
             </ThemeContext.Provider>
         </>
-        /* </AuthProvider> */
     );
 }
 

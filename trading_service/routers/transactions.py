@@ -22,18 +22,3 @@ def get_all(
     repo: TransactionRepository = Depends()
 ):
     return repo.get_all(account_data["username"])
-
-
-@router.get("/transactions/{transaction_id}", response_model=Optional[TransactionOut])
-def get_one_transaction(
-
-    transaction_id: int,
-    account_data: dict = Depends(authenticator.get_current_account_data),
-    repo: TransactionRepository = Depends()
-) -> TransactionOut:
-    return repo.get_one(transaction_id)
-
-
-# case where you buy and have no position
-# case where you're selling but not all
-# case where you're selling all, delete

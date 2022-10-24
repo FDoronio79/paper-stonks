@@ -2,14 +2,14 @@ import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { Navigate } from "react-router-dom";
 
-const Transactions = ({}) => {
+const Transactions = () => {
     const [fastapi_token] = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
-    const [username, setUserName] = useContext(UserContext);
-    localStorage.setItem("Username", username);
-    console.log("user", username);
+    // const [username, setUserName] = useContext(UserContext);
+    // localStorage.setItem("Username", username);
+    // console.log("user", username);
     localStorage.setItem("transactions", transactions);
-    console.log("transactions", transactions);
+    // console.log("transactions", transactions);
 
     // Use Effect function to get all transactions and assigned it to useState
     useEffect(() => {
@@ -22,7 +22,7 @@ const Transactions = ({}) => {
                 credentials: "include",
             };
             const response = await fetch(
-                `http://localhost:8090/transactions`,
+                `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                 requestOptions
             );
             console.log("RESPONSE", response);
@@ -31,14 +31,18 @@ const Transactions = ({}) => {
                 setTransactions(data);
                 console.log("TRANSACTION DATA", data);
             } else {
-                console.log("WTF");
             }
         }
         getTransactions();
     }, [setTransactions]);
 
     if (!fastapi_token) {
-        return <Navigate replace to="/login" />;
+        return (
+            <Navigate
+                replace
+                to="/login"
+            />
+        );
     } else {
         return (
             <>

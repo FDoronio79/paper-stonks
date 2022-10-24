@@ -9,8 +9,8 @@ export default function BuyForm({ price, symbol, name }) {
 
     const usernameAcc = localStorage.getItem("Username");
     const symbolStock = symbol;
-    const [buyingPower, setBuyingPower] = useState("");
-    const [updateQuantity, setUpdateQuantity] = useState("");
+    // const [buyingPower, setBuyingPower] = useState("");
+    // const [updateQuantity, setUpdateQuantity] = useState("");
     const [quantity1, setQuantity] = useState("");
     const [currentQuantity, setCurrentQuantity] = useState("");
     let currDateTime = Date.now();
@@ -62,7 +62,7 @@ export default function BuyForm({ price, symbol, name }) {
                 credentials: "include",
             };
             const response = await fetch(
-                `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+                `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`,
                 requestOptions
             );
             if (response.ok) {
@@ -73,7 +73,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
-    }, [setCurrentQuantity]);
+    }, [setCurrentQuantity, symbolStock, usernameAcc]);
 
     // this function will take care off all edge cases when buying a stock
     const submitTransaction = async () => {
@@ -86,7 +86,7 @@ export default function BuyForm({ price, symbol, name }) {
             credentials: "include",
         };
         const responseGet = await fetch(
-            `http://localhost:8090/positions/${symbolStock}?username=${usernameAcc}`,
+            `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`,
             requestOptionsGet
         );
         const data = await responseGet.json();
@@ -102,7 +102,7 @@ export default function BuyForm({ price, symbol, name }) {
                 credentials: "include",
             };
             const responseUpdateP = await fetch(
-                `http://localhost:8090/positions/${symbolStock}`,
+                `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}`,
                 requestOptionsUpdateP
             );
             const dataUpdateP = await responseUpdateP.json();
@@ -110,7 +110,7 @@ export default function BuyForm({ price, symbol, name }) {
             console.log("CURRENT QUANTITY1", currentQuantity);
             console.log("QUANTITYTOADD", quantity1);
             console.log("NEW QUANTITY", newQuantity);
-            setUpdateQuantity(dataUpdateP);
+            // setUpdateQuantity(dataUpdateP);
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 currDateTime = Date.now();
@@ -121,7 +121,10 @@ export default function BuyForm({ price, symbol, name }) {
                     body: JSON.stringify(transactionDict),
                 };
 
-                const response = await fetch("http://localhost:8090/transactions", requestOptions);
+                const response = await fetch(
+                    `${process.env.REACT_APP_TRADING_HOST}/transactions`,
+                    requestOptions
+                );
                 const data = await response.json();
 
                 console.log("TRANSACTION MADE", data);
@@ -133,12 +136,12 @@ export default function BuyForm({ price, symbol, name }) {
                     credentials: "include",
                 };
                 const responseBp = await fetch(
-                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
                 console.log(dataBp);
-                setBuyingPower(dataBp);
+                // setBuyingPower(dataBp);
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             }
         } else {
@@ -150,7 +153,10 @@ export default function BuyForm({ price, symbol, name }) {
                 body: JSON.stringify(positionDict),
             };
 
-            const response = await fetch("http://localhost:8090/positions", requestOptions);
+            const response = await fetch(
+                `${process.env.REACT_APP_TRADING_HOST}/positions`,
+                requestOptions
+            );
             const data = await response.json();
 
             console.log(data);
@@ -163,7 +169,10 @@ export default function BuyForm({ price, symbol, name }) {
                     body: JSON.stringify(transactionDict),
                 };
 
-                const response = await fetch("http://localhost:8090/transactions", requestOptions);
+                const response = await fetch(
+                    `${process.env.REACT_APP_TRADING_HOST}/transactions`,
+                    requestOptions
+                );
                 const data = await response.json();
 
                 console.log("TRANSACTION MADE", data);
@@ -175,12 +184,12 @@ export default function BuyForm({ price, symbol, name }) {
                     credentials: "include",
                 };
                 const responseBp = await fetch(
-                    `http://localhost:8080/api/accounts?bp_change=${bpchange}`,
+                    `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
                 console.log(dataBp);
-                setBuyingPower(dataBp);
+                // setBuyingPower(dataBp);
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             } else {
                 alert("Could not process request. Please try again later");
