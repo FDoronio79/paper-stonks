@@ -11,8 +11,8 @@ build-front-end-job:
         # PUBLIC_URL: https://dgb-galv.gitlab.io/apis-with-sql
         PUBLIC_URL: https://apex-legends1.gitlab.io/paper-stonks
         REACT_APP_ALPHA_VANTAGE: $REACT_APP_ALPHA_VANTAGE
-        REACT_APP_ACCOUNTS_HOST: https://paper-stonks-accounts-api.herokuapp.com/
-        REACT_APP_TRADING_HOST: https://paper-stonks.herokuapp.com/
+        REACT_APP_ACCOUNTS_HOST: https://paper-stonks-accounts-api.herokuapp.com
+        REACT_APP_TRADING_HOST: https://paper-stonks.herokuapp.com
     script:
         - cd ghi
         - npm install
