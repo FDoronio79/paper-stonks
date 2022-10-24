@@ -75,6 +75,7 @@ class SignupForm extends React.Component {
             console.log("response console.log", responsevo);
             if (responsevo.ok) {
                 const newAccountVO = await responsevo.json();
+                console.log("AccountVO", newAccountVO);
                 this.setState({
                     username: "",
                     hasSignedUp: true,
