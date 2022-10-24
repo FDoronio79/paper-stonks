@@ -66,4 +66,13 @@
 #### 10/14/22
     -Collaborated with Matt and Leo to figure out our log in/out issues 
         -Turned out to be an issue with tokens
-    -Collaborated on debugging issues related to 
+    -Collaborated on debugging issues related to the front end authentication 
+
+#### 10/17/22
+    -Found out that the portfolio page was not defined prooperly in terms of 
+#### 10/20/22 - 10/21/22
+    -Struggled with bugs related to getting the homepage to display
+    -
+#### 10/22/22
+    -Collaborated with Matt to debug the depoyment issues we were having 
+    -Did more work on the Homepage
