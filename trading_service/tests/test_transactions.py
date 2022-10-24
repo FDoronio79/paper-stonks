@@ -26,7 +26,7 @@ client=TestClient(app)
 
 class MockEmptyTransactionQueries:
     def get_all(self):
-        return []
+        return [transaction2]
 
 
 # mock queries
@@ -90,7 +90,7 @@ transaction2 = {
 class MockAuth:
     def get_current_account_data(self):
         return []
-
+    
 
 #################################################################################
 
@@ -99,10 +99,11 @@ class MockAuth:
 def test_get_transaction_empty():
     app.dependency_overrides[TransactionRepository] = MockEmptyTransactionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+
     response = client.get('/transactions')
 
     assert response.status_code == 200
-    assert response.json() == []
+    assert response.json() == [transaction2]
 
     app.dependency_overrides = {}
 
@@ -112,7 +113,7 @@ def test_get_transaction_empty():
 def test_get_transaction():
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-
+    app.dependency_overrides[account_data["username"]]
     response = client.get('/transactions')
 
     assert response.status_code == 200

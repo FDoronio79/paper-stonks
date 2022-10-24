@@ -7,11 +7,11 @@ router = APIRouter()
 
 @router.post("/transactions", response_model=Union[TransactionOut, Error])
 def create_transaction(transaction: TransactionIn,
-                       response: Response,
-                       account_data: dict = Depends(
-                           authenticator.get_current_account_data),
-                       repo: TransactionRepository = Depends()
-                       ):
+                    response: Response,
+                    account_data: dict = Depends(
+                        authenticator.get_current_account_data),
+                    repo: TransactionRepository = Depends()
+                    ):
 
     return repo.create(transaction)
 
