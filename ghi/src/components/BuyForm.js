@@ -14,8 +14,6 @@ export default function BuyForm({ price, symbol, name }) {
     const [quantity1, setQuantity] = useState("");
     const [currentQuantity, setCurrentQuantity] = useState("");
     let currDateTime = Date.now();
-    console.log("DATETIME", currDateTime);
-    // const currTime = new Date().toLocaleTimeString();
     const typeOfItem = "stock";
     const nameStock = name;
     const navigate = useNavigate();
@@ -107,9 +105,6 @@ export default function BuyForm({ price, symbol, name }) {
             );
             const dataUpdateP = await responseUpdateP.json();
             console.log(dataUpdateP);
-            console.log("CURRENT QUANTITY1", currentQuantity);
-            console.log("QUANTITYTOADD", quantity1);
-            console.log("NEW QUANTITY", newQuantity);
             // setUpdateQuantity(dataUpdateP);
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
@@ -141,7 +136,6 @@ export default function BuyForm({ price, symbol, name }) {
                 );
                 const dataBp = await responseBp.json();
                 console.log(dataBp);
-                // setBuyingPower(dataBp);
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             }
         } else {

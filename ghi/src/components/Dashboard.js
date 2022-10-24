@@ -92,7 +92,7 @@ const Dashboard = () => {
                         const data = await response.json();
                         return data;
                     } else {
-                        console.log("ayoo");
+                        return { message: "stock data unavailable" };
                     }
                 })
             ).then((responses) => {
@@ -101,16 +101,13 @@ const Dashboard = () => {
                         let stockPrice =
                             responses[idx]["Global Quote"]["05. price"] * position["quantity"];
                         idx++;
-                        console.log("Stock Price", typeof stockPrice, stockPrice);
                         count += stockPrice;
                         return { ...position, value: stockPrice.toFixed(2) };
                     }
                     return [];
                 });
-                console.log("The Prices", stockPrices);
                 setPortfolioValue(count.toFixed(2));
             });
-            console.log("i hate promises", stockPrices);
             setPositions(stockPrices);
             return stockPrices;
         };
@@ -134,7 +131,7 @@ const Dashboard = () => {
             requestOptions
         );
         const data = await response.json();
-        // console.log(response);
+        console.log(response);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
