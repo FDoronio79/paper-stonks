@@ -11,7 +11,7 @@ sys.path.append(abs_dir)
 
 from main import app
 from queries.positions import PositionRepository
-from jwtdown_fastapi.authentication import Authenticator
+
 from authenticator import authenticator
 
 req_body_good = {
@@ -31,32 +31,14 @@ req_body_bad = {
     "time_of_purchase": "2022-10-20T02:20:39.222Z"
 }
 
-position2 = [
-  {
+position2 = {
     "id": 14,
     "username": "leo",
     "symbol": "AAPL",
     "name": "Apple Inc",
     "quantity": 50,
     "type_of": "stock"
-  },
-  {
-    "id": 15,
-    "username": "leo",
-    "symbol": "LMT",
-    "name": "Lockheed Martin Corporation",
-    "quantity": 60,
-    "type_of": "stock"
-  },
-  {
-    "id": 19,
-    "username": "leo",
-    "symbol": "NVDA",
-    "name": "NVIDIA Corporation",
-    "quantity": 30,
-    "type_of": "stock"
   }
-]
 
 response1 = {'detail': [{'loc': ['body', 'username'], 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ['body', 'name'], 'msg': 'field required', 'type': 'value_error.missing'}]}
 
@@ -76,8 +58,9 @@ class MockAuth:
         return []
 
 class MockEmptyPositionQueries:
-    def get_all(self, username: str):
-        return []
+    def get_all(self, username):
+      self.username = username
+      return [position2]
 
 class MockPositionQueries:
     def create(self, item):
@@ -88,11 +71,11 @@ class MockPositionQueries:
 
 def test_get_positions_empty():
     app.dependency_overrides[PositionRepository] = MockEmptyPositionQueries
-    app.dependency_overrides[authenticator.get_curret_account_data] =MockAuth
-    response = client.get('/positions', json=req_body_good)
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+    response = client.get('/positions?username=leo')
 
     assert response.status_code == 200
-    assert response.json() == position2
+    assert response.json() == [position2]
 
     app.dependency_overrides = {}
 
@@ -100,7 +83,7 @@ def test_get_positions_empty():
 
 def test_create_positions_good():
     app.dependency_overrides[PositionRepository] = MockPositionQueries
-    app.dependency_overrides[authenticator.get_curret_account_data] =MockAuth
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
     response = client.post('/positions', json=req_body_good)
 
     assert response.status_code == 200

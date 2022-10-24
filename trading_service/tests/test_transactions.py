@@ -14,7 +14,8 @@ from main import app
 
 from queries.positions import PositionRepository
 from queries.transactions import TransactionRepository
-from jwtdown_fastapi.authentication import Authenticator
+from queries.positions import PositionRepository
+
 from authenticator import authenticator
 
 
@@ -41,6 +42,9 @@ class MockEmptyPositionsQueries:
 class MockPositionQueries:
     def get_all(self, username):
         return [position]
+    
+    def delete(self, username, position_symbol):
+        return True
 
 # mock queries
 
@@ -112,10 +116,10 @@ class MockAuth:
 
 def test_get_transaction_empty():
     app.dependency_overrides[TransactionRepository] = MockEmptyTransactionQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth.get_current_account_data
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
     response = client.get('/transactions')
 
-    assert response.json() == [transaction1]
+    assert response.json() == []
     assert response.status_code == 200
     
 
@@ -125,7 +129,7 @@ def test_get_transaction_empty():
 # test function; returns mock transaction; checks that the API route works
 def test_get_transaction():
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
-    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth.get_current_account_data
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
 
     response = client.get('/transactions')
     assert response.json() == [transaction1]
@@ -190,3 +194,7 @@ def test_delete_position():
     assert response.json() == True
 
     app.dependency_overrides = {}
+
+
+
+
