@@ -1,8 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-// import StockInfo from "./StockInfo";
-// import CryptoInfo from "./CryptoInfo";
 
 const Dashboard = () => {
     const [fastapi_token] = useContext(UserContext);
@@ -11,26 +9,12 @@ const Dashboard = () => {
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useContext(UserContext);
     const [portfolioValue, setPortfolioValue] = useState([]);
-    // const [seeValue, setSeeValue] = useState(false);
 
     localStorage.setItem("Username", username);
     console.log("user", username);
-    // localStorage.setItem("position", positions);
-    // console.log("positions", positions);
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
 
-    /* MATT'S SUGGESTION FOR THE TABLE (MAY NOT WORK)
-    1. Create a positions_dict{}
-    2. for each position
-        - create a position{}
-        - add symbol, name, quantity
-        - fetch the price, add it to the dictionary
-        - append position{} to position_dict{}
-    3. map positions_dict into a table?
-    */
-
-    // function to get current buying power of the user and setting it to a variable
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -224,19 +208,6 @@ const Dashboard = () => {
                         className="container-fluid container-max-widths:(sm)"
                         style={{}}
                     >
-                        {/* <div className="row gx-5">
-                    <div className="col"> 
-                        <StockInfo /> 
-                    </div>
-                
-                    <div className="col"> 
-                            <CryptoInfo /> 
-                    </div>
-
-                <div className="col"> 
-                </div>
-
-                </div> */}
                     </div>
                 </div>
             </>

@@ -44,7 +44,6 @@ class SignupForm extends React.Component {
         console.log("data:", data);
         //create development and deployment variables for url
         const registrationUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`;
-        console.log(registrationUrl);
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -62,7 +61,6 @@ class SignupForm extends React.Component {
                 password: "",
                 full_name: "",
             });
-            // upon creating a new account the system will create an accountsvo with the same name
             const registrationVOUrl = `${process.env.REACT_APP_TRADING_HOST}/api/accountsvo`;
             console.log(registrationVOUrl);
             const fetchConfigvo = {
@@ -77,7 +75,6 @@ class SignupForm extends React.Component {
             console.log("response console.log", responsevo);
             if (responsevo.ok) {
                 const newAccountVO = await responsevo.json();
-                console.log("new accountvo:", newAccountVO);
                 this.setState({
                     username: "",
                     hasSignedUp: true,
