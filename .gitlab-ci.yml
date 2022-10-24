@@ -87,7 +87,7 @@ release-accounts-service-job:
     stage: deploy
     image: node:10.17-alpine
     needs:
-        - deploy-accounts-service-job
+        - deploy-accounts-service-image-job
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     before_script:
@@ -100,7 +100,7 @@ release-trading_service-job:
     stage: deploy
     image: node:10.17-alpine
     needs:
-        - deploy-trading_service-job
+        - deploy-trading-service-image-job
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     before_script:
