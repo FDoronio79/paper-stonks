@@ -45,7 +45,6 @@ class SignupForm extends React.Component {
         //create development and deployment variables for url
         // const registrationUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`;
         const registrationUrl = `/api/accounts`;
-        console.log(registrationUrl);
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
