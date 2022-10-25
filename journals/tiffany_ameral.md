@@ -76,3 +76,10 @@
 #### 10/22/22
     -Collaborated with Matt to debug the depoyment issues we were having 
     -Did more work on the Homepage
+
+#### 10/23/22
+    -Finished up main page to an MVP state, still needs some work to be prettier
+    -Still needs the theme to take up the entire page
+
+#### 10/24/22
+    -
