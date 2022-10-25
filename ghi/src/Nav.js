@@ -16,7 +16,6 @@ function Nav({ setSymbol, symbol }) {
             credentials: "include",
         });
         setToken(null);
-        console.log("DELETED!");
     };
 
     if (!fastapi_token) {

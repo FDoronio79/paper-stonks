@@ -13,11 +13,6 @@ export default function BuyForm({ price, symbol, name }) {
     const nameStock = name;
 
     const estimatedPrice = (quantity1 * price).toFixed(2);
-    // const withoutDollarSign = buyingPow.replace("$", "");
-    // const removedCommas = withoutDollarSign.replaceAll(",", "");
-    // const buyingp = parseFloat(removedCommas);
-    // const maxQuantity = Math.floor(buyingp / price);
-
     const submitTransaction = useCallback(async () => {
         const quantityDelta = parseInt(quantity1);
         if (quantityDelta === currentQuantity) {
@@ -33,7 +28,6 @@ export default function BuyForm({ price, symbol, name }) {
             };
             const response = await fetch(deleteURL, deleteOptions);
             const data = await response.json();
-            console.log(data);
             if (!response.ok) {
                 alert("Could not process request. Please try again later");
             } else {
@@ -62,7 +56,7 @@ export default function BuyForm({ price, symbol, name }) {
                 );
                 const data = await response.json();
 
-                console.log("TRANSACTION MADE", data);
+
 
                 // FOR LATER UPDATE BUYING POWER
                 const bpchange = estimatedPrice;
@@ -79,7 +73,6 @@ export default function BuyForm({ price, symbol, name }) {
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
-                console.log("NEW BUYING POWER", dataBp);
                 alert(`Sold all shares of ${symbol}!`);
             }
         } else {
@@ -106,7 +99,6 @@ export default function BuyForm({ price, symbol, name }) {
             };
             const response = await fetch(putURL, putOptions);
             const data = await response.json();
-            console.log(data);
             if (!response.ok) {
                 alert("Could not process request. Please try again later");
             } else {
@@ -135,7 +127,6 @@ export default function BuyForm({ price, symbol, name }) {
                 );
                 const data = await response.json();
 
-                console.log("TRANSACTION MADE", data);
 
                 // FOR LATER UPDATE BUYING POWER
                 const bpchange = estimatedPrice;
@@ -152,7 +143,6 @@ export default function BuyForm({ price, symbol, name }) {
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
-                console.log("NEW BUYING POWER", dataBp);
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
@@ -185,7 +175,6 @@ export default function BuyForm({ price, symbol, name }) {
             if (response.ok) {
                 const data = await response.json();
                 setCurrentQuantity(data["quantity"]);
-                console.log(data);
             } else {
                 setCurrentQuantity(0);
             }
@@ -197,7 +186,6 @@ export default function BuyForm({ price, symbol, name }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitTransaction();
-        console.log("Transaction Submitted");
         setTimeout(() => {
             window.location.reload();
         }, 500);
