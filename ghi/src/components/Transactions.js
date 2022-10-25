@@ -5,13 +5,8 @@ import { Navigate } from "react-router-dom";
 const Transactions = () => {
     const [fastapi_token] = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
-    // const [username, setUserName] = useContext(UserContext);
-    // localStorage.setItem("Username", username);
-    // console.log("user", username);
     localStorage.setItem("transactions", transactions);
-    // console.log("transactions", transactions);
 
-    // Use Effect function to get all transactions and assigned it to useState
     useEffect(() => {
         async function getTransactions() {
             const requestOptions = {
@@ -26,11 +21,9 @@ const Transactions = () => {
                 `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                 requestOptions
             );
-            console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setTransactions(data);
-                console.log("TRANSACTION DATA", data);
             } else {
             }
         }

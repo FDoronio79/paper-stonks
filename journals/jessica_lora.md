@@ -105,3 +105,25 @@ Following the video of James making unit tests, I was able to create 4 unit test
 Today: I reconvened with my team and set a plan for finishing up our project.
 
 We made a plan to start transitioning to getting ready to submit the project. We want to be able to deploy the project this weekend or Monday. I made plans to help my teammates make unit tests tomorrow or on the weekend. Additionally, I will focus on CI/CD documentation. We need to figure out how to clean up the code to finally submit it.
+
+
+## October 21, 2022
+
+Today: I helped my teammates create unit tests. 
+
+We ran into some issues with authentication, but were able to figure it out! Overall, it actually took a while, about 3-4 hours to get some unit tests works for everyone. 
+
+
+## October 24, 2022
+
+Today: I helped Tiffany make a unit test for AccountsVO.
+
+Overall, today we had issues with CI/CD deployment. There is still alot to fix for that, but I'm confident we'll be able to get it done by Wednesday. In the evening, I helped Tiffany make a unit test for AccountsVO. Surprisingly, we ran into some issues but it ended up being an easy fix. There was an extra / at the end of the router path.
+
+
+## October 2022
+
+Today: We finally got the application deployed!
+
+With the website deployed, today we focused on the final touches: cleaning up the code, completing the unit tests, and finalizing our merges. 
+

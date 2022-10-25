@@ -5,10 +5,7 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 function StockDetail({ search }) {
-    // const search = useContext(SearchContext);
     const { stockSymbol } = useParams();
-    // const [symbol, setSymbol] = useState(search.toUpperCase());
-    // const [symbol, setSymbol] = useState(stockSymbol);
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
@@ -20,8 +17,6 @@ function StockDetail({ search }) {
 
     useEffect(() => {
         async function getStockData() {
-            // setSymbol(stockSymbol);
-            // console.log("HELLO", process.env.REACT_APP_ALPHA_VANTAGE);
             const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
             const nameUrl = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stockSymbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
             const responseName = await fetch(nameUrl);
@@ -35,10 +30,8 @@ function StockDetail({ search }) {
                 setPrice(parseFloat(data["Global Quote"]["05. price"]));
                 setChange(parseFloat(data["Global Quote"]["09. change"]));
                 let tempPercent = data["Global Quote"]["10. change percent"].substring(-1);
-                console.log(`tempPercent: ${tempPercent}`);
                 let roundedPercent = parseFloat(tempPercent).toFixed(2);
                 setPercent(roundedPercent);
-                console.log(data);
             }
 
             //check to see if they have a position
@@ -56,7 +49,6 @@ function StockDetail({ search }) {
 
             if (positionCheckResponse.ok) {
                 const checkData = await positionCheckResponse.json();
-                console.log("\n\n\n\n\nPosition Check data", checkData);
                 setSharesOwned(checkData["quantity"]);
             }
         }

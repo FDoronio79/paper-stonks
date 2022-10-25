@@ -1,5 +1,6 @@
 import os
-from fastapi.testclient import TestClient 
+from fastapi.testclient import TestClient
+
 
 import sys
 import pathlib
@@ -10,10 +11,14 @@ abs_dir = os.path.abspath(fastapi_dir)
 sys.path.append(abs_dir)
 
 from main import app
+
+from queries.positions import PositionRepository
 from queries.transactions import TransactionRepository
 from queries.positions import PositionRepository
 
 from authenticator import authenticator
+
+
 
 #################################################################################
 # testing client
@@ -29,15 +34,15 @@ class MockEmptyTransactionQueries:
         return []
 
 
+
 class MockEmptyPositionsQueries:
     def get_all(self, username):
         return []
 
-
 class MockPositionQueries:
     def get_all(self, username):
         return [position]
-
+    
     def delete(self, username, position_symbol):
         return True
 
@@ -46,7 +51,8 @@ class MockPositionQueries:
 
 class MockTransactionQueries:
     def get_all(self, username):
-        return [transaction1, transaction2]
+        self.username = username
+        return [transaction1]
 
     def create(self, item):
         if item.username != None:
@@ -59,7 +65,7 @@ class MockTransactionQueries:
 # creating a sample transaction to put into the mock query (test_get_transaction)
 transaction1 = {
     "id": 1,
-    "username": "example",
+    "username": "leo",
     "symbol": "AAPL",
     "price": 100,
     "type_of": "stock",
@@ -101,9 +107,9 @@ transaction2 = {
 
 
 class MockAuth:
-    def get_current_account_data(self):
-        return {"username": "example"}
-
+    def get_current_account_data(self, list):
+        return {}
+    
 
 #################################################################################
 
@@ -116,6 +122,7 @@ class MockAuth:
 
 #     assert response.json() == []
 #     assert response.status_code == 200
+    
 
 #     app.dependency_overrides = {}
 
@@ -125,9 +132,10 @@ class MockAuth:
 #     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
 #     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
 
-#     response = client.get('/transactions')
+#     response = client.get('/transactions?username=leo')
 #     assert response.json() == [transaction1]
 #     assert response.status_code == 200
+    
 
 #     app.dependency_overrides = {}
 
@@ -154,3 +162,40 @@ def test_create_transaction_bad():  # if no transaction_id, raise an error
     assert response.json() == response1
 
     app.dependency_overrides = {}  # imports
+
+
+#####################GET ALL POSITIONS############################################
+# This test, tests the functionality of the endpoint
+def test_get_position_empty():
+    app.dependency_overrides[PositionRepository] = MockEmptyPositionsQueries
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+    response = client.get('/positions?username=bruh1')
+
+    assert response.status_code == 200
+    assert response.json() == []
+
+    app.dependency_overrides = {}
+
+##############CREATE POSITION###################################################
+position =   {
+    "id": 2,
+    "username": "bruh1",
+    "symbol": "NVDA",
+    "name": "NVIDIA Corporation",
+    "quantity": 100,
+    "type_of": "stock"
+}
+
+def test_delete_position():
+    app.dependency_overrides[PositionRepository] = MockPositionQueries
+    app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
+    response = client.delete('/positions/NVDA?username=bruh1')
+
+    assert response.status_code == 200
+    assert response.json() == True
+
+    app.dependency_overrides = {}
+
+
+
+

@@ -13,13 +13,6 @@ import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
 import HomePage from "./components/HomePage";
-// import { AuthProvider, useToken } from './Auth'
-
-// function GetToken() {
-//     // Get token from JWT cookie (if already logged in)
-//     useToken();
-//     return null;
-// }
 
 
 export const ThemeContext = createContext(null);
@@ -27,7 +20,6 @@ export const ThemeContext = createContext(null);
 function App() {
     const domain = /https:\/\/[^/]+/;
     const basename = process.env.PUBLIC_URL.replace(domain, "");
-    console.log("basename: ", basename);
     const [symbol, setSymbol] = useState("");
     const [theme, setTheme] = useState("light");
 
