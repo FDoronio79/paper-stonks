@@ -38,7 +38,8 @@ const Dashboard = () => {
             }
         }
         getBuyingPower();
-    }, [setCurrentBuyingPower], [setUserName]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [setCurrentBuyingPower, setUserName]);
 
     useEffect(() => {
         async function getPositions() {
