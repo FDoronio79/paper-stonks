@@ -66,3 +66,15 @@
 
 -   made a transactions page
 -   displayed total portforlio value in dashboard page
+
+10/21
+
+-   wrote unit tests for creat positions good and create positions bad
+
+10/24
+
+-   troubleshooting authentication when deployed on heroku. Apparently "credentials include" doesnt work but adding another header including the token fixed the issue
+
+10/25
+
+-   wrote the test jobs in the gitlab yaml file
