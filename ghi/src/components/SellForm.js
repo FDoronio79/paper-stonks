@@ -27,6 +27,7 @@ export default function BuyForm({ price, symbol, name }) {
                 credentials: "include",
             };
             const response = await fetch(deleteURL, deleteOptions);
+            // eslint-disable-next-line
             const data = await response.json();
             if (!response.ok) {
                 alert("Could not process request. Please try again later");
@@ -54,9 +55,8 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     transactionOptions
                 );
+                // eslint-disable-next-line
                 const data = await response.json();
-                `${data}`
-
 
                 // FOR LATER UPDATE BUYING POWER
                 const bpchange = estimatedPrice;
@@ -72,8 +72,8 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line
                 const dataBp = await responseBp.json();
-                `${dataBp}`
 
                 alert(`Sold all shares of ${symbol}!`);
             }
@@ -100,8 +100,8 @@ export default function BuyForm({ price, symbol, name }) {
                 credentials: "include",
             };
             const response = await fetch(putURL, putOptions);
+            // eslint-disable-next-line
             const data = await response.json();
-            `${data}`
 
             if (!response.ok) {
                 alert("Could not process request. Please try again later");
@@ -129,8 +129,8 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     transactionOptions
                 );
+                // eslint-disable-next-line
                 const data = await response.json();
-                `${data}`
 
 
                 // FOR LATER UPDATE BUYING POWER
@@ -147,9 +147,9 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line
                 const dataBp = await responseBp.json();
-                `${dataBp}`
-                
+
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }

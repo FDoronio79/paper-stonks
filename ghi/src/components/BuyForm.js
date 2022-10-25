@@ -87,8 +87,9 @@ export default function BuyForm({ price, symbol, name }) {
             `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`,
             requestOptionsGet
         );
+        // eslint-disable-next-line
         const data = await responseGet.json();
-        `${data}`
+        
 
         if (!data["message"]) {
             // if the user does have it then it will update their position with a PUT method
@@ -105,8 +106,9 @@ export default function BuyForm({ price, symbol, name }) {
                 `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}`,
                 requestOptionsUpdateP
             );
+            // eslint-disable-next-line
             const dataUpdateP = await responseUpdateP.json();
-            `${dataUpdateP}`
+            
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 currDateTime = Date.now();
@@ -124,8 +126,8 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     requestOptions
                 );
+                // eslint-disable-next-line
                 const data = await response.json();
-                `${data}`
 
                 const requestOptionsBp = {
                     method: "PUT",
@@ -139,8 +141,8 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line
                 const dataBp = await responseBp.json();
-                `${dataBp}`
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             }
         } else {
@@ -159,8 +161,8 @@ export default function BuyForm({ price, symbol, name }) {
                 `${process.env.REACT_APP_TRADING_HOST}/positions`,
                 requestOptions
             );
+            // eslint-disable-next-line
             const data = await response.json();
-            `${data}`
 
             if (response.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
@@ -178,8 +180,8 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     requestOptions
                 );
+                // eslint-disable-next-line
                 const data = await response.json();
-                `${data}`
 
                 const requestOptionsBp = {
                     method: "PUT",
@@ -193,9 +195,8 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line
                 const dataBp = await responseBp.json();
-                `${dataBp}`
-                
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             } else {
                 alert("Could not process request. Please try again later");
