@@ -4,105 +4,197 @@
 
 ##### Create Account
 
--   Endpoint path: /accounts
--   Endpoint method: POST
+-   Endpoint path: `/api/accounts`
+-   Endpoint method: <span style="color:green">POST</span>
 
 -   Headers:
-
+    ```json
+    {
+        "Content-type": "application/json",
+    }
+    ```
 -   Request body:
 
     ```json
     {
-      "account": [
-        {
-          "email": string,
-          "username": string,
-          "password": string,
+        "email": "string",
+        "username": "string",
+        "password": "string",
+        "full_name": "string"
+    }
+    ```
+
+-   Response: JSON web access token + newly created account's details
+-   Response shape:
+    ```json
+    {
+        "access_token": "string",
+        "token_type": "Bearer",
+        "account": {
+            "id": "string",
+            "email": "string",
+            "username": "string",
+            "full_name": "string",
+            "hashed_password": "string"
         }
-      ]
     }
     ```
 
--   Response: the email and username for the account + success message
--   Response shape:
-    ```json
-    {
-        "message": string,
-        "email": string,
-        "username": string
-    }
-    ```
+##### Retrieve Account Details
 
-##### Retrieve Account
-
--   Endpoint path: /accounts/<str:username>
--   Endpoint method: GET
+-   Endpoint path: `/api/accounts/`
+-   Endpoint method: <span style="color:blue">GET</span>
 
 -   Headers:
-
--   Request body:
-
     ```json
     {
-      "username": string
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
     }
     ```
-
--   Response: the email, username, and buying power for the account
+-   Request body:
+    ```json
+    {}
+    ```
+-   Response: the account id, email, username, full_name, buying_power
 -   Response shape:
 
     ```json
     {
-        "email": string,
-        "username": string,
-        "buying_power": number
-    }
-
+        "id": "int",
+        "email": "string",
+        "username": "string",
+        "full_name": "string",
+        "buying_power": "string"
     }
     ```
 
+##### Get Token
+
+- Endpoint path: `/token`
+- Endpoint method: <span style="color:blue">GET</span>
+  
+-   Headers:
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
+-   Request body: 
+    ```json
+    {}
+    ```
+-   Response: JSON web token, account details
+-   Response shape:
+
+    ```json
+    {
+        "access_token": "string",
+        "token_type": "Bearer",
+        "account": {
+            "id": "string",
+            "email": "string",
+            "username": "string",
+            "full_name": "string",
+            "hashed_password": "string"
+        }
+    }
+    ```
+
+##### Login
+- Endpoint path: `/token`
+- Endpoint method: <span style="color:green">POST</span>
+  
+-   Headers:
+    ```json
+    {
+        "Content-type": "application/json",
+    }
+    ```
+-   Request body: 
+    ```json
+    {
+        "username": "string",
+        "password": "string"
+    }
+    ```
+-   Response: JSON web token, account details
+-   Response shape:
+
+    ```json
+    {
+        "access_token": "string",
+        "token_type": "Bearer"
+    }
+    ```
+
+    ##### Logout
+- Endpoint path: `/token`
+- Endpoint method: <span style="color:red">DELETE</span>
+  
+-   Headers:
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
+-   Request body: 
+    ```json
+    {}
+    ```
+-   Response: JSON web token, account details
+-   Response shape: `boolean`
 ##### Change Account buying power
 
--   Endpoint path: /accounts/<str:username>
--   Endpoint method: PUT
+-   Endpoint path: `/api/accounts?bp_change=<float:bp_change>/`
+-   Endpoint method: <span style="color:orange">PUT</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
 
 -   Request body:
 
     ```json
     {
-      "username": string,
-      "transaction_amount": number,
+      "bp_change": "number",
     }
     ```
 
--   Response: new buying power + success message
+-   Response: new buying power
 -   Response shape:
     ```json
-    {   "message": string,
+    {   
         "buying_power": number
     }
     ```
+
+
 
 ## Trading Service
 
-##### Get Position
-
--   Endpoint path: /positions/<str:symbol>
--   Endpoint method: GET
+##### Create AccountVO
+-   Endpoint path: `/api/accountsvo`
+-   Endpoint method: <span style="color:green">POST</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+    }
+    ```
 
 -   Request body:
 
     ```json
-    { "username": string,
-      "symbol": string,
+    { 
+        "username": "string",
     }
     ```
 
@@ -110,89 +202,137 @@
 -   Response shape:
     ```json
     {
-        "symbol": string,
-        "name": string,
-        "quantity": number,
-        "type": string,
+         "username": "string"
+    }
+    ```
+##### Get Position
+
+-   Endpoint path: `/positions/<str:symbol>`
+-   Endpoint method: <span style="color:blue">GET</span>
+
+-   Headers:
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
+
+-   Request body:
+
+    ```json
+    { "username": "string",
+      "symbol": "string",
+    }
+    ```
+
+-   Response: the position's details: name, symbol, quantity and type (_stock/crypto_)
+-   Response shape:
+    ```json
+    {
+        "symbol": "string",
+        "name": "string",
+        "quantity": "number",
+        "type": "string",
     }
     ```
 
 ##### Update Position
 
 -   Endpoint path: /positions/<str:symbol>
--   Endpoint method: PUT
+-   Endpoint method: <span style="color:orange">PUT</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
 
 -   Request body:
 
     ```json
-    { "username": string,
-      "symbol": string,
-      "quantity_change": number
+    {
+        "username": "string",
+        "symbol": "string",
+        "name": "string",
+        "quantity": 0,
+        "type_of": "string"
     }
     ```
 
--   Response: the position's details: name, symbol, quantity and type (_stock/crypto_) + success message
+-   Response: the position's details: name, symbol, quantity and type
 -   Response shape:
 
     ```json
     {
-        "message": string,
-        "symbol": string,
-        "name": string,
-        "quantity": number,
-        "type": string,
+        "id": 0,
+        "username": "string",
+        "symbol": "string",
+        "name": "string",
+        "quantity": "int",
+        "type_of": "string"
     }
     ```
 
 ##### Create Position
 
--   Endpoint path: /positions/<str:symbol>
--   Endpoint method: POST
+-   Endpoint path: `/positions/<str:symbol>`
+-   Endpoint method: <span style="color:green">POST</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
 
 -   Request body:
 
     ```json
-    { "username": string,
-      "symbol": string,
-      "quantity_change": number
+    {
+        "username": "string",
+        "symbol": "AAPL",
+        "name": "stock",
+        "quantity": 10,
+        "type_of": "stock"
     }
     ```
 
--   Response: the position's details: name, symbol, quantity and type (_stock/crypto_) + success message
+-   Response: the position's details: name, symbol, quantity and type
 -   Response shape:
 
     ```json
     {
-        "message": string,
-        "symbol": string,
-        "name": string,
-        "quantity": number,
-        "type": string,
+        "id": "int",
+        "username": "string",
+        "symbol": "string",
+        "name": "string",
+        "quantity": "int",
+        "type_of": "string"
     }
     ```
 
 ##### Delete Position
 
--   Endpoint path: /positions/<str:symbol>
--   Endpoint method: DELETE
+-   Endpoint path: `/positions/<str:symbol>?username=<str:username>`
+-   Endpoint method: <span style="color:red">DELETE</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
 
 -   Request body:
 
     ```json
-    { "username": string,
-      "symbol": string,
+    { "username": "string",
+      "symbol": "string",
     }
     ```
 
@@ -200,24 +340,28 @@
 -   Response shape:
     ```json
     {
-        "message": string,
+        "message": "boolean",
     }
     ```
 
-##### List Positions
+##### Get all positions
 
--   Endpoint path: /positions
--   Endpoint method: GET
+-   Endpoint path: `/positions`
+-   Endpoint method: <span style="color:blue">GET</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
 
 -   Request body:
 
     ```json
     {
-      "username": string,
+      "username": "string",
     }
     ```
 
@@ -225,101 +369,119 @@
 -   Response shape:
 
     ```json
-    { "positions": [
+    [
         {
-            "symbol": string,
-            "name": string,
-            "quantity": number,
-            "type": string,
+            "id": "int",
+            "username": "string",
+            "symbol": "string",
+            "name": "string",
+            "quantity": "int",
+            "type_of": "string"
         },
         {
-            "symbol": string,
-            "name": string,
-            "quantity": number,
-            "type": string,
-        },
-        ...
-        ]
-    }
+            "id": "int",
+            "username": "string",
+            "symbol": "string",
+            "name": "string",
+            "quantity": "int",
+            "type_of": "string"
+        }
+    ]
     ```
 
 ##### Create Transaction
 
--   Endpoint path: /transactions
--   Endpoint method: POST
+-   Endpoint path: `/transactions`
+-   Endpoint method: <span style="color:orange">POST</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
 
 -   Request body:
 
     ```json
-    { "username": string,
-      "symbol": string,
-      "price": number,
-      "type": string,
-      "quantity": number,
-      "time_of_purchase": string
+    {
+        "username": "string",
+        "symbol": "string",
+        "price": 0,
+        "type_of": "string",
+        "quantity": "int",
+        "time_of_purchase": "2022-10-25T19:05:37.524Z"
     }
     ```
 
--   Response: the position's details: success message
+-   Response: the transaction's details
 -   Response shape:
 
     ```json
     {
-      "message": string,
-      "username": string,
-      "symbol": string,
-      "price": number,
-      "type": string,
-      "quantity": number,
-      "time_of_purchase": string
+        "id": "int",
+        "username": "string",
+        "symbol": "string",
+        "price": "int",
+        "type_of": "string",
+        "quantity": "int",
+        "time_of_purchase": "2022-10-25T19:05:37.524Z"
     }
     ```
 
 ##### List Transactions
 
--   Endpoint path: /transactions
--   Endpoint method: GET
+-   Endpoint path: `/transactions`
+-   Endpoint method: <span style="color:blue">GET</span>
 
 -   Headers:
-
-    -   Authorization: Bearer token
+    ```json
+    {
+        "Content-type": "application/json",
+        "Authorization": "Bearer ${fastapi_token}"
+    }
+    ```
 
 -   Request body:
 
     ```json
     {
-      "username": string,
+      "username": "string",
     }
     ```
 
--   Response: a list of all positions for the user
+-   Response: a list of all transactions for the user
 -   Response shape:
 
     ```json
-    { "positions": [
+    [
         {
-        "message": string,
-        "username": string,
-        "symbol": string,
-        "price": number,
-        "type": string,
-        "quantity": number,
-        "time_of_purchase": string
+            "id": "int",
+            "username": "string",
+            "symbol": "string",
+            "price": "int",
+            "type_of": "string",
+            "quantity": "int",
+            "time_of_purchase": "2022-10-25T19:05:37.524Z"
         },
         {
-        "message": string,
-        "username": string,
-        "symbol": string,
-        "price": number,
-        "type": string,
-        "quantity": number,
-        "time_of_purchase": string
+            "id": "int",
+            "username": "string",
+            "symbol": "string",
+            "price": "int",
+            "type_of": "string",
+            "quantity": "int",
+            "time_of_purchase": "2022-10-25T19:05:37.524Z"
         },
-        ...
+        {
+            "id": "int",
+            "username": "string",
+            "symbol": "string",
+            "price": "int",
+            "type_of": "string",
+            "quantity": "int",
+            "time_of_purchase": "2022-10-25T19:05:37.524Z"
+        }
     ]
-    }
     ```
