@@ -51,7 +51,7 @@ class SignupForm extends React.Component {
         };
         const response = await fetch(registrationUrl, fetchConfig);
         if (response.ok) {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line
             const newAccount = await response.json();
             this.setState({
                 email: "",
@@ -68,7 +68,7 @@ class SignupForm extends React.Component {
             };
             const responsevo = await fetch(registrationVOUrl, fetchConfigvo);
             if (responsevo.ok) {
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // eslint-disable-next-line
                 const newAccountVO = await responsevo.json();
                 this.setState({
                     username: "",
