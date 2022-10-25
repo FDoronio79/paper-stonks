@@ -7,7 +7,7 @@ const Dashboard = () => {
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
-    const [username, setUserName] = useContext(UserContext);
+    const [username, setUserName] = useState("");
     const [portfolioValue, setPortfolioValue] = useState([]);
 
     localStorage.setItem("Username", username);
@@ -15,6 +15,7 @@ const Dashboard = () => {
     localStorage.setItem("buyingPower", currentbuyingPower);
     console.log(currentbuyingPower);
 
+    console.log(fastapi_token)
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -32,11 +33,11 @@ const Dashboard = () => {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
                 setUserName(data["username"]);
-                // console.log("work", data);
+                console.log("work", data["username"]);
             }
         }
         getBuyingPower();
-    }, [setCurrentBuyingPower, setUserName]);
+    }, [setCurrentBuyingPower], [setUserName]);
 
     useEffect(() => {
         async function getPositions() {
