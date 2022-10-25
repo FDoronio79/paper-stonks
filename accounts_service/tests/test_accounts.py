@@ -31,19 +31,18 @@ class MockAccountQueries:
         #     return {}
 
 
-
 mock_new_account_good = {
     "email": "bruh10@gmail.com",
     "username": "bruh10",
     "password": "password",
-    "full_name": "bruh 10th"
+    "full_name": "bruh 10th",
 }
 
 
 mock_new_account_bad = {
     "email": "bruh1@gmail.com",
     "password": "password",
-    "full_name": "bruh 10th"
+    "full_name": "bruh 10th",
 }
 
 good_response_signup = {
@@ -54,18 +53,15 @@ good_response_signup = {
         "email": "bruh1@gmail.com",
         "username": "bruh10",
         "full_name": "bruh 10th",
-        "hashed_password": "$2b$12$plchujY4vOgGSFS8mT/xYus7t4J4RWWa1YwFvJ5c1zvVvUoiFSSD2"
-    }
+        "hashed_password": "$2b$12$plchujY4vOgGSFS8mT/xYus7t4J4RWWa1YwFvJ5c1zvVvUoiFSSD2",
+    },
 }
 
 
 def test_signup():
     app.dependency_overrides[AccountQueries] = MockAccountQueries
 
-    response = client.post(
-        '/api/accounts',
-        json=mock_new_account_good
-    )
+    response = client.post("/api/accounts", json=mock_new_account_good)
 
     assert response.status_code == 200
     assert response.json() == good_response_signup

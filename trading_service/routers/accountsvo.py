@@ -6,8 +6,7 @@ router = APIRouter()
 
 
 @router.post("/api/accountsvo", response_model=Union[AccountVOOut, Error])
-def create_accountvo(accountvo: AccountVOIn, 
-    response: Response,
-    repo: AccountVORepository = Depends()
+def create_accountvo(
+    accountvo: AccountVOIn, response: Response, repo: AccountVORepository = Depends()
 ):
     return repo.create(accountvo)

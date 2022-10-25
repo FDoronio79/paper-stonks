@@ -19,7 +19,7 @@ from queries.accounts import (
     AccountQueries,
     DuplicateAccountError,
     BuyingPowerOut,
-    AccountOutWithBP
+    AccountOutWithBP,
 )
 
 
@@ -46,7 +46,6 @@ async def get_protected(
     return True
 
 
-
 @router.post("/api/accounts", response_model=AccountToken | HttpError)
 async def create_account(
     info: AccountIn,
@@ -70,16 +69,14 @@ async def create_account(
 async def get_account_bp(username):
 
     if username:
-        result = AccountQueries.get_buying_power(
-            username=username)
+        result = AccountQueries.get_buying_power(username=username)
         return result.buying_power
     return {"message": "couldn't get data"}
 
 
 @router.get("/api/accounts")
 async def get_things(
-    account_data: dict = Depends(
-        authenticator.try_get_current_account_data),
+    account_data: dict = Depends(authenticator.try_get_current_account_data),
 ):
     print(account_data)
     if account_data:
@@ -91,16 +88,17 @@ async def get_things(
 
 
 @router.put("/api/accounts", response_model=BuyingPowerOut)
-async def update_buying_power(bp_change, account_data: dict = Depends(
-        authenticator.try_get_current_account_data)):
+async def update_buying_power(
+    bp_change, account_data: dict = Depends(authenticator.try_get_current_account_data)
+):
     print(bp_change)
     print("HUH?!", account_data)
     account_data_with_bp = await get_things(account_data)
     print(account_data_with_bp)
     current_bp = account_data_with_bp["buying_power"]
     print(current_bp)
-    current_bp = current_bp.replace(',', '')
-    current_bp = current_bp.replace('$', '')
+    current_bp = current_bp.replace(",", "")
+    current_bp = current_bp.replace("$", "")
     after_bp = float(current_bp) + float(bp_change)
     after_bp = str(after_bp)
     print(after_bp)
@@ -109,10 +107,11 @@ async def update_buying_power(bp_change, account_data: dict = Depends(
 
     return AccountQueries.change_buying_power(buying_power=after_bp, username=username)
 
+
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: Optional[dict] = Depends(authenticator.try_get_current_account_data)
+    account: Optional[dict] = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     print(account)
     accountwithhash = AccountQueries.getHashedPass(account["username"])

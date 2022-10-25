@@ -29,7 +29,6 @@ class TransactionOut(BaseModel):
 
 
 class TransactionRepository:
-    
     def get_all(self, username) -> Union[Error, List[TransactionOut]]:
         try:
             # connect the database
@@ -43,7 +42,8 @@ class TransactionRepository:
                         FROM transactions
                         WHERE username = %s
                         ORDER BY time_of_purchase;
-                        """, [username]
+                        """,
+                        [username],
                     )
                     result = []  # can rewrite at list comprehension
                     for record in db:
@@ -85,8 +85,8 @@ class TransactionRepository:
                             transaction.type_of,
                             transaction.time_of_purchase,
                             transaction.quantity,
-                            transaction.price
-                        ]
+                            transaction.price,
+                        ],
                     )
                     id = result.fetchone()[0]
                     # Return new data

@@ -35,7 +35,7 @@ class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
 
-class AccountQueries():
+class AccountQueries:
     def get_buying_power(username: str) -> Optional[BuyingPowerOut]:
         try:
             with pool.connection() as conn:
@@ -45,7 +45,7 @@ class AccountQueries():
                         SELECT buying_power FROM accounts
                         WHERE username = %s
                         """,
-                        [username]
+                        [username],
                     )
                     record = result.fetchone()
                     return BuyingPowerOut(username=username, buying_power=record[0])
@@ -53,7 +53,9 @@ class AccountQueries():
             print(e)
             return {"message": "Could not update buying power"}
 
-    def change_buying_power(buying_power: float, username: str) -> Optional[BuyingPowerOut]:
+    def change_buying_power(
+        buying_power: float, username: str
+    ) -> Optional[BuyingPowerOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -63,10 +65,7 @@ class AccountQueries():
                         SET buying_power = %s
                         WHERE username = %s
                         """,
-                        [
-                            buying_power,
-                            username
-                        ]
+                        [buying_power, username],
                     )
                     return BuyingPowerOut(username=username, buying_power=buying_power)
         except Exception as e:
@@ -82,7 +81,7 @@ class AccountQueries():
                     FROM accounts
                     WHERE username = %s;
                     """,
-                    [username]
+                    [username],
                 )
                 account = result.fetchone()
                 print("ACCOUNT: ", account)
@@ -94,7 +93,7 @@ class AccountQueries():
                         email=account[1],
                         full_name=account[2],
                         username=account[3],
-                        hashed_password=account[4]
+                        hashed_password=account[4],
                     )
 
     def getHashedPass(username: str):
@@ -106,7 +105,7 @@ class AccountQueries():
                     FROM accounts
                     WHERE username = %s;
                     """,
-                    [username]
+                    [username],
                 )
                 account = result.fetchone()
                 if account == None:
@@ -132,10 +131,12 @@ class AccountQueries():
                         account.username,
                         hashed_pass,
                         "$0.00",
-                    ]
+                    ],
                 )
                 id = result.fetchone()[0]
                 print("id", id)
                 # return new data
                 old_data = account.dict()
-                return AccountOutWithPassword(id=id, hashed_password=hashed_pass, **old_data)
+                return AccountOutWithPassword(
+                    id=id, hashed_password=hashed_pass, **old_data
+                )

@@ -7,12 +7,12 @@ router = APIRouter()
 
 
 @router.post("/positions", response_model=Union[PositionsOut, Error])
-def create_position(position: PositionsIn,
-                    response: Response,
-                    account_data: dict = Depends(
-                        authenticator.get_current_account_data),
-                    repo: PositionRepository = Depends()
-                    ):
+def create_position(
+    position: PositionsIn,
+    response: Response,
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: PositionRepository = Depends(),
+):
 
     position_response = repo.create(position)
     if isinstance(position_response, Error):
@@ -28,8 +28,7 @@ def get_one_position(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: PositionRepository = Depends(),
 ) -> PositionsOut:
-    position_response = repo.get_one(
-        username=username, position_symbol=position_symbol)
+    position_response = repo.get_one(username=username, position_symbol=position_symbol)
     if isinstance(position_response, Error):
         response.status_code = 200
     return position_response

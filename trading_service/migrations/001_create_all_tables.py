@@ -10,9 +10,8 @@ steps = [
         # "Down" SQL statement
         """
         DROP TABLE accounts;
-        """
+        """,
     ],
-
     [
         # "Up" SQL statement; Create table
         """
@@ -29,7 +28,7 @@ steps = [
         # "Down" SQL statement; Drop table
         """
         DROP TABLE transactions;
-        """
+        """,
     ],
     [
         # "Up" SQL statement; Create table
@@ -46,10 +45,9 @@ steps = [
         # "Down" SQL statement; Drop table
         """
         DROP TABLE positions;
-        """
-    ]
+        """,
+    ],
 ]
 
 # python -m migrations up (will build the table)
 # python -m migrations down (will remove table)
-

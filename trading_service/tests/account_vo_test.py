@@ -1,5 +1,5 @@
 import os
-from fastapi.testclient import TestClient 
+from fastapi.testclient import TestClient
 
 import sys
 import pathlib
@@ -10,8 +10,6 @@ abs_dir = os.path.abspath(fastapi_dir)
 sys.path.append(abs_dir)
 
 from main import app
-
-
 
 
 from queries.accountsvo import AccountVORepository
@@ -41,12 +39,12 @@ output = {"username": "Tiffany"}
 
 def test_accountVO():
     app.dependency_overrides[AccountVORepository] = MockCreateAllAccountsVO
-    response = client.post('/api/accountsvo', json=account1)
+    response = client.post("/api/accountsvo", json=account1)
     assert response.status_code == 200
     assert response.json() == output
 
 
 def test_accountVObad():
     app.dependency_overrides[AccountVORepository] = MockCreateAllAccountsVO
-    response = client.post('/api/accountsvo', json=account2)
+    response = client.post("/api/accountsvo", json=account2)
     assert response.status_code == 422

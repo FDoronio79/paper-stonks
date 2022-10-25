@@ -2,6 +2,7 @@ from unicodedata import numeric
 from pydantic import BaseModel
 from queries.pool import pool
 
+
 class Error(BaseModel):
     message: str
 
@@ -12,6 +13,7 @@ class AccountVOIn(BaseModel):
 
 class AccountVOOut(BaseModel):
     username: str
+
 
 class AccountVORepository(BaseModel):
     def create(self, accountvo: AccountVOIn) -> AccountVOOut:
@@ -26,9 +28,7 @@ class AccountVORepository(BaseModel):
                             (%s)
                         RETURNING id;
                         """,
-                        [
-                            accountvo.username
-                        ]
+                        [accountvo.username],
                     )
                     id = result.fetchone()[0]
                     old_data = accountvo.dict()
@@ -36,6 +36,3 @@ class AccountVORepository(BaseModel):
         except Exception as e:
             print(e)
             return {"message": "Could not create accountvo"}
-
-
-
