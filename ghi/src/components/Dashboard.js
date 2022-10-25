@@ -22,6 +22,7 @@ const Dashboard = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 credentials: "include",
             };

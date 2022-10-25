@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 
 export default function BuyForm({ price, symbol, name }) {
     // transaction: username, symbol, quantity, type_of, time_of_purchase, price
