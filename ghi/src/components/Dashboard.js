@@ -11,11 +11,8 @@ const Dashboard = () => {
     const [portfolioValue, setPortfolioValue] = useState([]);
 
     localStorage.setItem("Username", username);
-    console.log("user", username);
     localStorage.setItem("buyingPower", currentbuyingPower);
-    console.log(currentbuyingPower);
 
-    console.log(fastapi_token)
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
@@ -34,7 +31,6 @@ const Dashboard = () => {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
                 setUserName(data["username"]);
-                console.log("work", data["username"]);
             }
         }
         getBuyingPower();
@@ -55,13 +51,10 @@ const Dashboard = () => {
                 `${process.env.REACT_APP_TRADING_HOST}/positions?username=${username}`,
                 requestOptions
             );
-            // console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                // console.log("bruhhhh", data);
             } else {
-                // console.log("WTF");
             }
         }
         getPositions();
@@ -121,7 +114,6 @@ const Dashboard = () => {
             requestOptions
         );
         const data = await response.json();
-        console.log(response);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
@@ -133,7 +125,6 @@ const Dashboard = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         updateBuyingPower();
-        console.log("updated buying power");
     };
 
     if (!fastapi_token) {
