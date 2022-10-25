@@ -1,6 +1,5 @@
-from urllib.robotparser import RobotFileParser
 from pydantic import BaseModel
-from typing import Optional, List, Union
+from typing import Optional
 from queries.pool import pool
 
 
@@ -61,7 +60,7 @@ class AccountQueries:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result = db.execute(
+                    db.execute(
                         """
                         UPDATE accounts
                         SET buying_power = %s
@@ -69,6 +68,7 @@ class AccountQueries:
                         """,
                         [buying_power, username],
                     )
+
                     return BuyingPowerOut(
                         username=username, buying_power=buying_power
                     )
@@ -89,7 +89,7 @@ class AccountQueries:
                 )
                 account = result.fetchone()
                 print("ACCOUNT: ", account)
-                if account == None:
+                if account is None:
                     return None
                 else:
                     return AccountOutWithPassword(
@@ -112,7 +112,7 @@ class AccountQueries:
                     [username],
                 )
                 account = result.fetchone()
-                if account == None:
+                if account is None:
                     return None
                 else:
                     return account[0]
@@ -129,7 +129,7 @@ class AccountQueries:
                         (email, full_name, username, hashed_pass, buying_power)
                     VALUES
                         (%s, %s, %s, %s, %s)
-                    RETURNING id;                       
+                    RETURNING id;
                     """,
                     [
                         account.email,

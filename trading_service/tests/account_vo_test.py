@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 
 import sys
 import pathlib
-import os
 
 fastapi_dir = pathlib.Path(__file__).parent.parent.resolve()
 abs_dir = os.path.abspath(fastapi_dir)
@@ -26,7 +25,7 @@ client = TestClient(app)
 
 class MockCreateAllAccountsVO:
     def create(self, item):
-        if item.username != None:
+        if item.username is not None:
             return output
 
 

@@ -4,7 +4,6 @@ from fastapi.testclient import TestClient
 
 import sys
 import pathlib
-import os
 
 fastapi_dir = pathlib.Path(__file__).parent.parent.resolve()
 abs_dir = os.path.abspath(fastapi_dir)
@@ -19,12 +18,11 @@ from queries.positions import PositionRepository
 from authenticator import authenticator
 
 
-#################################################################################
 # testing client
 
 client = TestClient(app)
 
-#################################################################################
+
 # mock queries
 
 
@@ -55,13 +53,12 @@ class MockTransactionQueries:
         return [transaction1]
 
     def create(self, item):
-        if item.username != None:
+        if item.username is not None:
             return transaction2
         else:
             raise Exception
 
 
-#################################################################################
 # creating a sample transaction to put into the mock query (test_get_transaction)
 transaction1 = {
     "id": 1,
@@ -118,35 +115,6 @@ class MockAuth:
         return {}
 
 
-#################################################################################
-
-# test function; returns empty output; checks that the API route works
-
-# def test_get_transaction_empty():
-#     app.dependency_overrides[TransactionRepository] = MockEmptyTransactionQueries
-#     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-#     response = client.get('/transactions')
-
-#     assert response.json() == []
-#     assert response.status_code == 200
-
-
-#     app.dependency_overrides = {}
-
-
-# # test function; returns mock transaction; checks that the API route works
-# def test_get_transaction():
-#     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
-#     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-
-#     response = client.get('/transactions?username=leo')
-#     assert response.json() == [transaction1]
-#     assert response.status_code == 200
-
-
-#     app.dependency_overrides = {}
-
-
 def test_create_transaction_good():  # if no transaction_id, raise an error
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
@@ -171,7 +139,7 @@ def test_create_transaction_bad():  # if no transaction_id, raise an error
     app.dependency_overrides = {}  # imports
 
 
-#####################GET ALL POSITIONS############################################
+# GET ALL POSITIONS
 # This test, tests the functionality of the endpoint
 def test_get_position_empty():
     app.dependency_overrides[PositionRepository] = MockEmptyPositionsQueries
@@ -184,7 +152,7 @@ def test_get_position_empty():
     app.dependency_overrides = {}
 
 
-##############CREATE POSITION###################################################
+# CREATE POSITION
 position = {
     "id": 2,
     "username": "bruh1",

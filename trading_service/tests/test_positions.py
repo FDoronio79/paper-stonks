@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 
 import sys
 import pathlib
-import os
 
 fastapi_dir = pathlib.Path(__file__).parent.parent.resolve()
 abs_dir = os.path.abspath(fastapi_dir)
@@ -80,7 +79,7 @@ class MockEmptyPositionQueries:
 
 class MockPositionQueries:
     def create(self, item):
-        if item.username != None:
+        if item.username is not None:
             return createposition2
         else:
             raise Exception

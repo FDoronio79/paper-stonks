@@ -1,8 +1,7 @@
-from unicodedata import numeric
 from pydantic import BaseModel
 from datetime import datetime
 from queries.pool import pool
-from typing import List, Union, Optional
+from typing import List, Union
 
 
 class Error(BaseModel):
