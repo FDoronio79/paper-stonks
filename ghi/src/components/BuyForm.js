@@ -104,6 +104,7 @@ export default function BuyForm({ price, symbol, name }) {
                 `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}`,
                 requestOptionsUpdateP
             );
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             const dataUpdateP = await responseUpdateP.json();
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
@@ -122,6 +123,7 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     requestOptions
                 );
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 const data = await response.json();
 
                 const requestOptionsBp = {
@@ -136,6 +138,7 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 const dataBp = await responseBp.json();
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             }
@@ -155,6 +158,7 @@ export default function BuyForm({ price, symbol, name }) {
                 `${process.env.REACT_APP_TRADING_HOST}/positions`,
                 requestOptions
             );
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             const data = await response.json();
 
             if (response.ok) {
@@ -173,6 +177,7 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     requestOptions
                 );
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 const data = await response.json();
 
                 const requestOptionsBp = {
@@ -187,6 +192,7 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 const dataBp = await responseBp.json();
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             } else {
