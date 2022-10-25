@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom"; 
+import { UserContext } from "../context/UserContext";
 
 export default function BuyForm({ price, symbol, name }) {
     // transaction: username, symbol, quantity, type_of, time_of_purchase, price
     // position: username, symbol, quantity, type_of, name
+    const [fastapi_token] = useContext(UserContext);
 
     const buyingPow = localStorage.getItem("buyingPower");
 
@@ -56,6 +58,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 credentials: "include",
             };
@@ -71,6 +74,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCurrentQuantity, symbolStock, usernameAcc]);
 
     // this function will take care off all edge cases when buying a stock
@@ -80,6 +84,7 @@ export default function BuyForm({ price, symbol, name }) {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${fastapi_token}`
             },
             credentials: "include",
         };
@@ -95,6 +100,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 body: JSON.stringify(updatePositionDict),
                 credentials: "include",
@@ -111,7 +117,10 @@ export default function BuyForm({ price, symbol, name }) {
                 currDateTime = Date.now();
                 const requestOptions = {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}`
+                    },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
                 };
@@ -127,6 +136,7 @@ export default function BuyForm({ price, symbol, name }) {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}`
                     },
                     credentials: "include",
                 };
@@ -142,7 +152,10 @@ export default function BuyForm({ price, symbol, name }) {
             // if user doesn't have that specific stock then it will create a new position
             const requestOptions = {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
+                },
                 credentials: "include",
                 body: JSON.stringify(positionDict),
             };
@@ -158,7 +171,10 @@ export default function BuyForm({ price, symbol, name }) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 const requestOptions = {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}`
+                    },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
                 };
@@ -174,6 +190,7 @@ export default function BuyForm({ price, symbol, name }) {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}`
                     },
                     credentials: "include",
                 };

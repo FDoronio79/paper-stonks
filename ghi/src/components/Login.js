@@ -13,7 +13,10 @@ const Login = () => {
     const submitLogin = async () => {
         const requestOptions = {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: { 
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": `Bearer ${fastapi_token}`
+            },
             credentials: "include",
             body: JSON.stringify(
                 `grant_type=&username=${username}&password=${password}&scope=&client_id=&client_secret=`

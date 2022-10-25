@@ -18,6 +18,7 @@ const Transactions = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 credentials: "include",
             };
@@ -34,6 +35,7 @@ const Transactions = () => {
             }
         }
         getTransactions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setTransactions]);
 
     if (!fastapi_token) {

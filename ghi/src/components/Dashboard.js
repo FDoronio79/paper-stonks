@@ -11,17 +11,15 @@ const Dashboard = () => {
     const [portfolioValue, setPortfolioValue] = useState([]);
 
     localStorage.setItem("Username", username);
-    console.log("user", username);
     localStorage.setItem("buyingPower", currentbuyingPower);
-    console.log(currentbuyingPower);
 
-    console.log(fastapi_token)
     useEffect(() => {
         async function getBuyingPower() {
             const requestOptions = {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 credentials: "include",
             };
@@ -33,11 +31,11 @@ const Dashboard = () => {
                 const data = await response.json();
                 setCurrentBuyingPower(data["buying_power"]);
                 setUserName(data["username"]);
-                console.log("work", data["username"]);
             }
         }
         getBuyingPower();
-    }, [setCurrentBuyingPower], [setUserName]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [setCurrentBuyingPower, setUserName]);
 
     useEffect(() => {
         async function getPositions() {
@@ -45,6 +43,7 @@ const Dashboard = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 credentials: "include",
             };
@@ -52,16 +51,14 @@ const Dashboard = () => {
                 `${process.env.REACT_APP_TRADING_HOST}/positions?username=${username}`,
                 requestOptions
             );
-            // console.log("RESPONSE", response);
             if (response.ok) {
                 const data = await response.json();
                 setPositions(data);
-                // console.log("bruhhhh", data);
             } else {
-                // console.log("WTF");
             }
         }
         getPositions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username]);
 
     useEffect(() => {
@@ -108,6 +105,7 @@ const Dashboard = () => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${fastapi_token}`
             },
             credentials: "include",
         };
@@ -116,7 +114,6 @@ const Dashboard = () => {
             requestOptions
         );
         const data = await response.json();
-        console.log(response);
         if (response.ok) {
             setBuyingPower(data);
             setTimeout(() => {
@@ -128,7 +125,6 @@ const Dashboard = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         updateBuyingPower();
-        console.log("updated buying power");
     };
 
     if (!fastapi_token) {
