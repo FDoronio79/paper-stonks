@@ -37,7 +37,7 @@ class TransactionRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, username, symbol, type_of, 
+                        SELECT id, username, symbol, type_of,
                         time_of_purchase, quantity, price
                         FROM transactions
                         WHERE username = %s

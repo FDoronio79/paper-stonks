@@ -170,6 +170,6 @@ def test_delete_position():
     response = client.delete("/positions/NVDA?username=bruh1")
 
     assert response.status_code == 200
-    assert response.json() == True
+    assert response.json() is True
 
     app.dependency_overrides = {}
