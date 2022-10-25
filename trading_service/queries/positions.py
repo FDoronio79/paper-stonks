@@ -94,7 +94,8 @@ class PositionRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                            SELECT id, username, symbol, name, quantity, type_of
+                            SELECT id, username, symbol,
+                            name, quantity, type_of
                             FROM positions
                             WHERE username = %s
                             ORDER BY id;

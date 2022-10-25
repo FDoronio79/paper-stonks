@@ -13,7 +13,6 @@ from main import app
 
 from queries.positions import PositionRepository
 from queries.transactions import TransactionRepository
-from queries.positions import PositionRepository
 
 from authenticator import authenticator
 
@@ -59,7 +58,8 @@ class MockTransactionQueries:
             raise Exception
 
 
-# creating a sample transaction to put into the mock query (test_get_transaction)
+# creating a sample transaction to put into the
+#  mock query (test_get_transaction)
 transaction1 = {
     "id": 1,
     "username": "leo",
@@ -71,7 +71,8 @@ transaction1 = {
 }
 
 
-# creating a good and bad transaction to pass into the test_create function (test_create_transaction)
+# creating a good and bad transaction to pass into
+# the test_create function (test_create_transaction)
 req_body_good = {
     "username": "example",
     "symbol": "GOOG",

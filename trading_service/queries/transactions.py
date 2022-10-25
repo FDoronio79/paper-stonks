@@ -37,7 +37,8 @@ class TransactionRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, username, symbol, type_of, time_of_purchase, quantity, price
+                        SELECT id, username, symbol, type_of, 
+                        time_of_purchase, quantity, price
                         FROM transactions
                         WHERE username = %s
                         ORDER BY time_of_purchase;
@@ -73,7 +74,8 @@ class TransactionRepository:
                     result = db.execute(
                         """
                         INSERT INTO transactions
-                            (username, symbol, type_of, time_of_purchase, quantity, price)
+                            (username, symbol, type_of,
+                            time_of_purchase, quantity, price)
                         VALUES
                             (%s, %s, %s, %s, %s, %s)
                         RETURNING id;
