@@ -28,7 +28,6 @@ const Login = () => {
             requestOptions
         );
         const data = await response.json();
-        console.log(data);
         if (!response.ok) {
             setErrorMessage(data.detail);
         } else {
@@ -41,7 +40,6 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
-        console.log("logged in!");
     };
 
     if (!fastapi_token) {

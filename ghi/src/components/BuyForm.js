@@ -3,16 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 export default function BuyForm({ price, symbol, name }) {
-    // transaction: username, symbol, quantity, type_of, time_of_purchase, price
-    // position: username, symbol, quantity, type_of, name
     const [fastapi_token] = useContext(UserContext);
 
     const buyingPow = localStorage.getItem("buyingPower");
 
     const usernameAcc = localStorage.getItem("Username");
     const symbolStock = symbol;
-    // const [buyingPower, setBuyingPower] = useState("");
-    // const [updateQuantity, setUpdateQuantity] = useState("");
     const [quantity1, setQuantity] = useState("");
     const [currentQuantity, setCurrentQuantity] = useState("");
     let currDateTime = Date.now();
@@ -69,7 +65,6 @@ export default function BuyForm({ price, symbol, name }) {
             if (response.ok) {
                 const data = await response.json();
                 setCurrentQuantity(data["quantity"]);
-                console.log(data);
             } else {
             }
         }
@@ -110,8 +105,6 @@ export default function BuyForm({ price, symbol, name }) {
                 requestOptionsUpdateP
             );
             const dataUpdateP = await responseUpdateP.json();
-            console.log(dataUpdateP);
-            // setUpdateQuantity(dataUpdateP);
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 currDateTime = Date.now();
@@ -131,7 +124,6 @@ export default function BuyForm({ price, symbol, name }) {
                 );
                 const data = await response.json();
 
-                console.log("TRANSACTION MADE", data);
                 const requestOptionsBp = {
                     method: "PUT",
                     headers: {
@@ -145,7 +137,6 @@ export default function BuyForm({ price, symbol, name }) {
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
-                console.log(dataBp);
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             }
         } else {
@@ -166,7 +157,6 @@ export default function BuyForm({ price, symbol, name }) {
             );
             const data = await response.json();
 
-            console.log(data);
             if (response.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 const requestOptions = {
@@ -185,7 +175,6 @@ export default function BuyForm({ price, symbol, name }) {
                 );
                 const data = await response.json();
 
-                console.log("TRANSACTION MADE", data);
                 const requestOptionsBp = {
                     method: "PUT",
                     headers: {
@@ -199,8 +188,6 @@ export default function BuyForm({ price, symbol, name }) {
                     requestOptionsBp
                 );
                 const dataBp = await responseBp.json();
-                console.log(dataBp);
-                // setBuyingPower(dataBp);
                 alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
             } else {
                 alert("Could not process request. Please try again later");
@@ -212,7 +199,6 @@ export default function BuyForm({ price, symbol, name }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         submitTransaction();
-        console.log("Transaction Submitted");
         setTimeout(() => {
             window.location.reload();
         }, 500);

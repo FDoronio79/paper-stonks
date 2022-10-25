@@ -41,8 +41,6 @@ class SignupForm extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const data = { ...this.state };
-        console.log("data:", data);
-        //create development and deployment variables for url
         const registrationUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`;
         const fetchConfig = {
             method: "post",
@@ -52,17 +50,14 @@ class SignupForm extends React.Component {
             },
         };
         const response = await fetch(registrationUrl, fetchConfig);
-        console.log("response console.log", response);
         if (response.ok) {
             const newAccount = await response.json();
-            console.log("new account:", newAccount);
             this.setState({
                 email: "",
                 password: "",
                 full_name: "",
             });
             const registrationVOUrl = `${process.env.REACT_APP_TRADING_HOST}/api/accountsvo`;
-            console.log(registrationVOUrl);
             const fetchConfigvo = {
                 method: "post",
                 body: JSON.stringify({ username: data.username }),
@@ -70,12 +65,9 @@ class SignupForm extends React.Component {
                     "Content-type": "application/json",
                 },
             };
-            console.log("fetchCOnfigvo", fetchConfigvo);
             const responsevo = await fetch(registrationVOUrl, fetchConfigvo);
-            console.log("response console.log", responsevo);
             if (responsevo.ok) {
                 const newAccountVO = await responsevo.json();
-                console.log("AccountVO", newAccountVO);
                 this.setState({
                     username: "",
                     hasSignedUp: true,
