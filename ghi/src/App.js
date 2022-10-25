@@ -1,6 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import Construct from './Construct.js'
-// import ErrorNotification from './ErrorNotification';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import MainPage from "./MainPage";
@@ -12,18 +9,18 @@ import Dashboard from "./components/Dashboard";
 import StockDetail from "./components/StockDetail";
 import { SearchContext } from "./SearchContext";
 import { useState, createContext } from "react";
-// import { UserContext } from "./context/UserContext";
 import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
 import HomePage from "./components/HomePage";
+// import { AuthProvider, useToken } from './Auth'
 
-// import Header from "./components/Header";
-// import { UserContext } from "./context/UserContext";
 // function GetToken() {
+//     // Get token from JWT cookie (if already logged in)
 //     useToken();
 //     return null;
 // }
+
 
 export const ThemeContext = createContext(null);
 

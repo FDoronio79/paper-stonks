@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 export default function BuyForm({ price, symbol, name }) {
     const buyingPow = localStorage.getItem("buyingPower");
@@ -8,6 +9,7 @@ export default function BuyForm({ price, symbol, name }) {
     const symbolStock = symbol;
     const [quantity1, setQuantity] = useState(1);
     const [currentQuantity, setCurrentQuantity] = useState("");
+    const [fastapi_token] = useContext(UserContext);
     const nameStock = name;
 
     const estimatedPrice = (quantity1 * price).toFixed(2);
@@ -25,6 +27,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -45,7 +48,10 @@ export default function BuyForm({ price, symbol, name }) {
                 };
                 const transactionOptions = {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}`
+                    },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
                 };
@@ -64,6 +70,7 @@ export default function BuyForm({ price, symbol, name }) {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}`
                     },
                     credentials: "include",
                 };
@@ -92,6 +99,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 body: JSON.stringify(positionDict),
                 credentials: "include",
@@ -113,7 +121,10 @@ export default function BuyForm({ price, symbol, name }) {
                 };
                 const transactionOptions = {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}` 
+                    },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
                 };
@@ -132,6 +143,7 @@ export default function BuyForm({ price, symbol, name }) {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${fastapi_token}`
                     },
                     credentials: "include",
                 };
@@ -144,6 +156,7 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         currentQuantity,
         estimatedPrice,
@@ -161,6 +174,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
                 },
                 credentials: "include",
             };
@@ -177,6 +191,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCurrentQuantity, submitTransaction, symbolStock, usernameAcc]);
 
     const handleSubmit = (e) => {

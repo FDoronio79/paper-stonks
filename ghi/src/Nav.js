@@ -12,6 +12,7 @@ function Nav({ setSymbol, symbol }) {
     const logout = async () => {
         await fetch(`${process.env.REACT_APP_ACCOUNTS_HOST}/token`, {
             method: "DELETE",
+            headers: {"Authorization": `Bearer ${fastapi_token}`,},
             credentials: "include",
         });
         setToken(null);

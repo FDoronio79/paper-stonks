@@ -11,6 +11,7 @@ export const UserProvider = (props) => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    credentials: "include",
                     Authorization: "Bearer " + fastapi_token,
                 },
             };
