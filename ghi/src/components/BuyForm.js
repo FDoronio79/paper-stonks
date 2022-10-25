@@ -74,6 +74,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCurrentQuantity, symbolStock, usernameAcc]);
 
     // this function will take care off all edge cases when buying a stock

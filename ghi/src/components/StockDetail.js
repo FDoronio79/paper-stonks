@@ -62,6 +62,7 @@ function StockDetail({ search }) {
         }
 
         getStockData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stockSymbol, setNameStock, setSharesOwned, usernameAcc]);
 
     return (

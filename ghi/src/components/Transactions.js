@@ -35,6 +35,7 @@ const Transactions = () => {
             }
         }
         getTransactions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setTransactions]);
 
     if (!fastapi_token) {

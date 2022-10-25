@@ -156,6 +156,7 @@ export default function BuyForm({ price, symbol, name }) {
                 alert(`Sold ${quantityDelta} shares of ${symbol}!`);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         currentQuantity,
         estimatedPrice,
@@ -190,6 +191,7 @@ export default function BuyForm({ price, symbol, name }) {
             }
         }
         getCurrentQuantity();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCurrentQuantity, submitTransaction, symbolStock, usernameAcc]);
 
     const handleSubmit = (e) => {
