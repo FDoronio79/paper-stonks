@@ -13,13 +13,13 @@ import ReactSwitch from "react-switch";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
 import HomePage from "./components/HomePage";
-import { AuthProvider, useToken } from './Auth'
+// import { AuthProvider, useToken } from './Auth'
 
-function GetToken() {
-    // Get token from JWT cookie (if already logged in)
-    useToken();
-    return null;
-}
+// function GetToken() {
+//     // Get token from JWT cookie (if already logged in)
+//     useToken();
+//     return null;
+// }
 
 
 export const ThemeContext = createContext(null);
