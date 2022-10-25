@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useContext} from "react";
 import BuyForm from "./BuyForm";
 import SellForm from "./SellForm";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+
 function StockDetail({ search }) {
     // const search = useContext(SearchContext);
     const { stockSymbol } = useParams();
@@ -14,6 +16,7 @@ function StockDetail({ search }) {
     const [name, setNameStock] = useState("");
     const [shares_owned, setSharesOwned] = useState("");
     const usernameAcc = localStorage.getItem("Username");
+    const [fastapi_token] = useContext(UserContext);
 
     useEffect(() => {
         async function getStockData() {

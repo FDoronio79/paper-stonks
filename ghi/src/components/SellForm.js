@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 export default function BuyForm({ price, symbol, name }) {
     const buyingPow = localStorage.getItem("buyingPower");
@@ -8,6 +9,7 @@ export default function BuyForm({ price, symbol, name }) {
     const symbolStock = symbol;
     const [quantity1, setQuantity] = useState(1);
     const [currentQuantity, setCurrentQuantity] = useState("");
+    const [fastapi_token] = useContext(UserContext);
     const nameStock = name;
 
     const estimatedPrice = (quantity1 * price).toFixed(2);
