@@ -120,3 +120,10 @@ Today: I helped Tiffany make a unit test for AccountsVO.
 
 Overall, today we had issues with CI/CD deployment. There is still alot to fix for that, but I'm confident we'll be able to get it done by Wednesday. In the evening, I helped Tiffany make a unit test for AccountsVO. Surprisingly, we ran into some issues but it ended up being an easy fix. There was an extra / at the end of the router path.
 
+
+## October 2022
+
+Today: We finally got the application deployed!
+
+With the website deployed, today we focused on the final touches: cleaning up the code, completing the unit tests, and finalizing our merges. 
+
