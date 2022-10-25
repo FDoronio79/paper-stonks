@@ -59,7 +59,8 @@ class MockAuth:
 
 class MockEmptyPositionQueries:
     def get_all(self, username):
-        return []
+      self.username = username
+      return [position2]
 
 class MockPositionQueries:
     def create(self, item):
@@ -67,29 +68,18 @@ class MockPositionQueries:
             return createposition2
         else:
             raise Exception
-            
-#####################GET ALL POSITIONS############################################
+
 def test_get_positions_empty():
     app.dependency_overrides[PositionRepository] = MockEmptyPositionQueries
-    app.dependency_overrides[authenticator.get_current_account_data] =MockAuth
-    response = client.get('/positions?username=bruh1')
-
-    assert response.status_code == 200
-    assert response.json() == []
-
-    app.dependency_overrides = {}
-
-##############DELETE POSITION####################################################
-
-def test_delete_position():
-    app.dependency_overrides[PositionRepository] = MockPositionQueries
     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-    response = client.delete('/positions/NVDA?username=bruh1')
+    response = client.get('/positions?username=leo')
 
     assert response.status_code == 200
-    assert response.json() == True
+    assert response.json() == [position2]
 
     app.dependency_overrides = {}
+
+
 
 def test_create_positions_good():
     app.dependency_overrides[PositionRepository] = MockPositionQueries
@@ -97,7 +87,7 @@ def test_create_positions_good():
     response = client.post('/positions', json=req_body_good)
 
     assert response.status_code == 200
-    assert response.json() == []
+    assert response.json() == createposition2
 
     app.dependency_overrides = {}
 

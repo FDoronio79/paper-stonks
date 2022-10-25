@@ -11,6 +11,9 @@ sys.path.append(abs_dir)
 
 from main import app
 
+
+
+
 from queries.accountsvo import AccountVORepository
 #not sure what I actually need to import here
 #come from routers somehow
@@ -18,20 +21,20 @@ from queries.accountsvo import AccountVORepository
 
 # accounts_vo_list = [accountvorep] #or whatever replaces accountvoin above
 
-
-
-class MockCreateAllAccountsVO:
-    def create(self):
-        return []
-
 client = TestClient(app)
 
+class MockCreateAllAccountsVO:
+    def create(self, item):
+        if item.username != None:
+            return output
 
+
+account1 = { "username": "Tiffany" }
+output = { "username": "Tiffany" }
 
 
 def test_accountVO():
     app.dependency_overrides[AccountVORepository] = MockCreateAllAccountsVO
-    response = client.post("/api/accountsvo/")
+    response = client.post('/api/accountsvo', json=account1)
     assert response.status_code == 200
-    assert response.json() == []
-
+    assert response.json() == output
