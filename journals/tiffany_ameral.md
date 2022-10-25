@@ -82,4 +82,7 @@
     -Still needs the theme to take up the entire page
 
 #### 10/24/22
+    -Worked on more of the homepage
+    -Started writing a unit test(finally)
+    -Collaborated on debugging the front-end authentication for the deployed version of the app
     -

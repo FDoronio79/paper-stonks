@@ -1,24 +1,28 @@
 import os
-from urllib import response
-from fastapi.testclient import TestClient
-# from fastapi import TestClient
-from main import app
-
-from trading_service.queries.accountsvo import AccountVOIn
-#not sure what I actually need to import here
-#come from routers somehow
-
-
-accountvoin = AccountVOIn() #needs a list of some sort in the ()
-accounts_vo_list = [accountvoin] #or whatever replaces accountvoin above
+from fastapi.testclient import TestClient 
 
 import sys
 import pathlib
 import os
 
-class MockGetAllAccountsVO:
-    def get_all_accountVO(self):
-        return accounts_vo_list
+fastapi_dir = pathlib.Path(__file__).parent.parent.resolve()
+abs_dir = os.path.abspath(fastapi_dir)
+sys.path.append(abs_dir)
+
+from main import app
+
+from queries.accountsvo import AccountVORepository
+#not sure what I actually need to import here
+#come from routers somehow
+
+
+# accounts_vo_list = [accountvorep] #or whatever replaces accountvoin above
+
+
+
+class MockCreateAllAccountsVO:
+    def create(self):
+        return []
 
 client = TestClient(app)
 
@@ -26,8 +30,8 @@ client = TestClient(app)
 
 
 def test_accountVO():
-    app.dependency_overrides[AccountVOQueries] = MockGetAllAccountsVO
+    app.dependency_overrides[AccountVORepository] = MockCreateAllAccountsVO
     response = client.post("/api/accountsvo/")
     assert response.status_code == 200
-    assert response.json() == accounts_vo_list
+    assert response.json() == []
 
