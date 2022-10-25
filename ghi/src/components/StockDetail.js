@@ -43,7 +43,10 @@ function StockDetail({ search }) {
 
             const checkOptions = {
                 method: "GET",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${fastapi_token}`
+                },
                 credentials: "include",
             };
             const positionCheckResponse = await fetch(checkPositionsUrl, checkOptions);
