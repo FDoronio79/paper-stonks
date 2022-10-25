@@ -49,3 +49,24 @@
 #### 10/18
 - Worked on display positions on portfolio page
 - Positions are displaying on the portfolio page!
+
+#### 10/19 - 10/21
+- Worked on displaying value of current stock positions
+- Worked on displaying total current stock position values
+- Encountered issues where the function that set the values would enter an infinite loop
+  - Solved this issue by refactoring the function and setting it outside of the useEffect
+  - and calling the function in the useEffect instead of having it set in the useEffect
+
+#### 10/24
+- Worked on and completed unit test for getting positions from the end point
+- Worked with team to deploy project
+- Encountered issues with Authentication on the front end
+  - Fixed issue by adding '"Authorization": `Bearer ${fastapi_token}`' to the headers
+- Deployed project successfully
+
+#### 10/25
+- Cleaned up React files
+  - Removed console logs
+  - Cleaned up some linting issues
+- Working on styling and CSS
+
