@@ -48,7 +48,9 @@ class AccountQueries:
                         [username],
                     )
                     record = result.fetchone()
-                    return BuyingPowerOut(username=username, buying_power=record[0])
+                    return BuyingPowerOut(
+                        username=username, buying_power=record[0]
+                    )
         except Exception as e:
             print(e)
             return {"message": "Could not update buying power"}
@@ -67,7 +69,9 @@ class AccountQueries:
                         """,
                         [buying_power, username],
                     )
-                    return BuyingPowerOut(username=username, buying_power=buying_power)
+                    return BuyingPowerOut(
+                        username=username, buying_power=buying_power
+                    )
         except Exception as e:
             print(e)
             return {"message": "Could not update buying power"}
@@ -113,7 +117,9 @@ class AccountQueries:
                 else:
                     return account[0]
 
-    def create(self, account: AccountIn, hashed_pass) -> AccountOutWithPassword:
+    def create(
+        self, account: AccountIn, hashed_pass
+    ) -> AccountOutWithPassword:
         with pool.connection() as conn:
             #                 # get a cursor (something to run SQL with)
             with conn.cursor() as db:

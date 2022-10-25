@@ -14,12 +14,10 @@ from pydantic import BaseModel
 
 from queries.accounts import (
     AccountIn,
-    AccountOut,
     AccountOutWithPassword,
     AccountQueries,
     DuplicateAccountError,
     BuyingPowerOut,
-    AccountOutWithBP,
 )
 
 
@@ -89,7 +87,8 @@ async def get_things(
 
 @router.put("/api/accounts", response_model=BuyingPowerOut)
 async def update_buying_power(
-    bp_change, account_data: dict = Depends(authenticator.try_get_current_account_data)
+    bp_change,
+    account_data: dict = Depends(authenticator.try_get_current_account_data),
 ):
     print(bp_change)
     print("HUH?!", account_data)
@@ -105,13 +104,17 @@ async def update_buying_power(
     username = account_data_with_bp["username"]
     print(username)
 
-    return AccountQueries.change_buying_power(buying_power=after_bp, username=username)
+    return AccountQueries.change_buying_power(
+        buying_power=after_bp, username=username
+    )
 
 
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: Optional[dict] = Depends(authenticator.try_get_current_account_data),
+    account: Optional[dict] = Depends(
+        authenticator.try_get_current_account_data
+    ),
 ) -> AccountToken | None:
     print(account)
     accountwithhash = AccountQueries.getHashedPass(account["username"])

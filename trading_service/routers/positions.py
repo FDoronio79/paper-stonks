@@ -1,6 +1,11 @@
 from fastapi import APIRouter, Depends, Response
 from typing import Union, List, Optional
-from queries.positions import PositionsIn, PositionsOut, Error, PositionRepository
+from queries.positions import (
+    PositionsIn,
+    PositionsOut,
+    Error,
+    PositionRepository,
+)
 from authenticator import authenticator
 
 router = APIRouter()
@@ -20,7 +25,9 @@ def create_position(
     return position_response
 
 
-@router.get("/positions/{position_symbol}", response_model=Union[PositionsOut, Error])
+@router.get(
+    "/positions/{position_symbol}", response_model=Union[PositionsOut, Error]
+)
 def get_one_position(
     username: str,
     position_symbol: str,
@@ -28,7 +35,9 @@ def get_one_position(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: PositionRepository = Depends(),
 ) -> PositionsOut:
-    position_response = repo.get_one(username=username, position_symbol=position_symbol)
+    position_response = repo.get_one(
+        username=username, position_symbol=position_symbol
+    )
     if isinstance(position_response, Error):
         response.status_code = 200
     return position_response
@@ -53,7 +62,9 @@ def delete_position(
     return repo.delete(username=username, position_symbol=position_symbol)
 
 
-@router.put("/positions/{position_symbol}", response_model=Union[PositionsOut, Error])
+@router.put(
+    "/positions/{position_symbol}", response_model=Union[PositionsOut, Error]
+)
 def update_position(
     position: PositionsIn,
     account_data: dict = Depends(authenticator.get_current_account_data),
