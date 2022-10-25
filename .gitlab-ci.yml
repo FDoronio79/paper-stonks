@@ -12,14 +12,6 @@ trading-service-unit-test-job:
         - pip install -r requirements.txt
         - python -m pytest
 
-accounts-service-unit-test-job:
-    image: python:3-bullseye
-    stage: test
-    script:
-        - cd accounts_service
-        - pip install -r requirements.txt
-        - python -m pytest
-
 lint-test-job:
     image: python:3-bullseye
     stage: test
@@ -80,7 +72,6 @@ build-accounts-service-job:
         - docker push ${CI_REGISTRY_IMAGE}/accounts-service:latest
     needs:
         - lint-test-job
-        - accounts-service-unit-test-job
 
 deploy-accounts-service-image-job:
     rules:
