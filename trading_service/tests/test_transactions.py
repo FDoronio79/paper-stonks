@@ -113,32 +113,6 @@ class MockAuth:
 
 #################################################################################
 
-# test function; returns empty output; checks that the API route works
-
-# def test_get_transaction_empty():
-#     app.dependency_overrides[TransactionRepository] = MockEmptyTransactionQueries
-#     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-#     response = client.get('/transactions')
-
-#     assert response.json() == []
-#     assert response.status_code == 200
-    
-
-#     app.dependency_overrides = {}
-
-
-# # test function; returns mock transaction; checks that the API route works
-# def test_get_transaction():
-#     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
-#     app.dependency_overrides[authenticator.get_current_account_data] = MockAuth
-
-#     response = client.get('/transactions?username=leo')
-#     assert response.json() == [transaction1]
-#     assert response.status_code == 200
-    
-
-#     app.dependency_overrides = {}
-
 
 def test_create_transaction_good():  # if no transaction_id, raise an error
     app.dependency_overrides[TransactionRepository] = MockTransactionQueries
