@@ -37,6 +37,7 @@ const Dashboard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCurrentBuyingPower, setUserName]);
 
+    // this function gets the positions from the backend on page load
     useEffect(() => {
         async function getPositions() {
             const requestOptions = {
@@ -61,6 +62,9 @@ const Dashboard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username]);
 
+    /* This function gets the stock prices from our third party API and creates a 
+    key, value pair in the positions dictionary with the dollar value of your stock position
+    */
     useEffect(() => {
         let getStockPrice = async () => {
             let stockPrices;
