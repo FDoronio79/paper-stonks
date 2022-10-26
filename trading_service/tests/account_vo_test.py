@@ -12,16 +12,13 @@ sys.path.append(abs_dir)
 from main import app
 
 
-
-
 from queries.accountsvo import AccountVORepository
-#not sure what I actually need to import here
-#come from routers somehow
+#formatting the document seems to put parts of the unit test out of order
 
 
-# accounts_vo_list = [accountvorep] #or whatever replaces accountvoin above
 
 client = TestClient(app)
+
 
 class MockCreateAllAccountsVO:
     def create(self, item):
@@ -29,8 +26,8 @@ class MockCreateAllAccountsVO:
             return output
 
 
-account1 = { "username": "Tiffany" }
-output = { "username": "Tiffany" }
+account1 = {"username": "Tiffany"}
+output = {"username": "Tiffany"}
 
 
 def test_accountVO():
