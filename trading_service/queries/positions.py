@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from typing import List, Union, Optional
+from typing import List, Union
 
 
 class Error(BaseModel):
@@ -25,7 +25,9 @@ class PositionsOut(BaseModel):
 
 
 class PositionRepository:
-    def get_one(self, username: str, position_symbol: str) -> Union[PositionsOut, Error]:
+    def get_one(
+        self, username: str, position_symbol: str
+    ) -> Union[PositionsOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -35,7 +37,7 @@ class PositionRepository:
                         FROM positions
                         WHERE symbol = %s AND username = %s
                         """,
-                        [position_symbol, username]
+                        [position_symbol, username],
                     )
                     record = result.fetchone()
                     position = PositionsOut(
@@ -44,7 +46,7 @@ class PositionRepository:
                         symbol=record[2],
                         name=record[3],
                         quantity=record[4],
-                        type_of=record[5]
+                        type_of=record[5],
                     )
                 return position
         except Exception as e:
@@ -71,8 +73,8 @@ class PositionRepository:
                             position.symbol,
                             position.name,
                             position.quantity,
-                            position.type_of
-                        ]
+                            position.type_of,
+                        ],
                     )
                     id = result.fetchone()[0]
                     # Return new data
@@ -92,11 +94,13 @@ class PositionRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                            SELECT id, username, symbol, name, quantity, type_of
+                            SELECT id, username, symbol,
+                            name, quantity, type_of
                             FROM positions
                             WHERE username = %s
                             ORDER BY id;
-                            """, [username]
+                            """,
+                        [username],
                     )
                     result = []  # can rewrite at list comprehension
                     for record in db:
@@ -128,7 +132,7 @@ class PositionRepository:
                         DELETE FROM positions
                         WHERE symbol = %s AND username = %s
                         """,
-                        [position_symbol, username]
+                        [position_symbol, username],
                     )
                     return True
         except Exception as e:
@@ -151,7 +155,7 @@ class PositionRepository:
                             position.quantity,
                             position.symbol,
                             position.username,
-                        ]
+                        ],
                     )
                     record = result.fetchone()
                     print(record)

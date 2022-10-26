@@ -13,11 +13,11 @@ from main import app
 
 from queries.accountsvo import AccountVORepository
 
-
 # not sure what I actually need to import here
 # come from routers somehow
 
 
+# accounts_vo_list = [accountvorep] #or whatever replaces accountvoin above
 
 client = TestClient(app)
 
@@ -28,11 +28,8 @@ class MockCreateAllAccountsVO:
             return output
 
 
-account1 = {"username": "Tiffany"}
-output = {"username": "Tiffany"}
-
-account2 = {}
-output = {"username": "Tiffany"}
+account1 = {"username": "Lettuce"}
+output = {"username": "Lettuce"}
 
 
 def test_accountVO():
@@ -40,9 +37,3 @@ def test_accountVO():
     response = client.post("/api/accountsvo", json=account1)
     assert response.status_code == 200
     assert response.json() == output
-
-
-def test_accountVObad():
-    app.dependency_overrides[AccountVORepository] = MockCreateAllAccountsVO
-    response = client.post("/api/accountsvo", json=account2)
-    assert response.status_code == 422

@@ -32,4 +32,4 @@ class MyAuthenticator(Authenticator):
         return account.username, AccountVOOut(**account.dict())
 
 
-authenticator = MyAuthenticator(os.environ["SIGNING_KEY"])
+authenticator = MyAuthenticator(os.environ.get("SIGNING_KEY"))
