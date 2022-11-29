@@ -137,9 +137,26 @@ const Dashboard = () => {
     } else {
         return (
             <>
+            <div>
+                    <p>Welcome to your Dashboard</p>
+                    <div
+                        className="container-fluid container-max-widths:(sm)"
+                        style={{}}
+                    >
+                    </div>
+                </div>
+                <div class= "container">
+                <div>
+                    <label className="label">Current Positions Value:${portfolioValue}</label>
+                </div>
+                <div>
+                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
+                </div>
+                </div>
+            
                 <div>
                     <h3>Positions</h3>
-                    <table className="table table-striped">
+                    <table className="table table-dark table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">Symbol</th>
@@ -161,13 +178,6 @@ const Dashboard = () => {
                             })}
                         </tbody>
                     </table>
-                </div>
-                <div>
-                    <label className="label">Current Positions Value:${portfolioValue}</label>
-                </div>
-                <div></div>
-                <div>
-                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
                 </div>
                 <div>
                     <form
@@ -198,14 +208,6 @@ const Dashboard = () => {
                             </button>
                         </div>
                     </form>
-                </div>
-                <div>
-                    <p>Welcome to your Dashboard</p>
-                    <div
-                        className="container-fluid container-max-widths:(sm)"
-                        style={{}}
-                    >
-                    </div>
                 </div>
             </>
         );
