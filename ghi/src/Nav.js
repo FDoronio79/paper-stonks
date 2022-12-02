@@ -73,6 +73,7 @@ function Nav({ setSymbol, symbol }) {
                         <nav
                             id="sidebarMenu"
                             className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+
                             // style=""
                         >
                             <div className="position-sticky pt-3 sidebar-sticky">
@@ -279,7 +280,10 @@ function Nav({ setSymbol, symbol }) {
                     </form>
                     <div className="navbar-nav">
                         <div className="nav-item text-nowrap">
-                            <a className="nav-link px-3" onClick={logout}>
+                            <a
+                                className="nav-link px-3"
+                                onClick={logout}
+                            >
                                 {" "}
                                 Log Out
                             </a>

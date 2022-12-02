@@ -1,9 +1,11 @@
-import { useEffect, useState , useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import BuyForm from "./BuyForm";
 import SellForm from "./SellForm";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-
+import { Line } from "react-chartjs-2";
+import Chart from "chart.js/auto";
+// Chart.register(CategoryScale);
 function StockDetail({ search }) {
     const { stockSymbol } = useParams();
     const [price, setPrice] = useState("");
@@ -29,7 +31,8 @@ function StockDetail({ search }) {
                 const data = await response.json();
                 setPrice(parseFloat(data["Global Quote"]["05. price"]));
                 setChange(parseFloat(data["Global Quote"]["09. change"]));
-                let tempPercent = data["Global Quote"]["10. change percent"].substring(-1);
+                let tempPercent =
+                    data["Global Quote"]["10. change percent"].substring(-1);
                 let roundedPercent = parseFloat(tempPercent).toFixed(2);
                 setPercent(roundedPercent);
             }
@@ -39,13 +42,16 @@ function StockDetail({ search }) {
 
             const checkOptions = {
                 method: "GET",
-                headers: { 
+                headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
-            const positionCheckResponse = await fetch(checkPositionsUrl, checkOptions);
+            const positionCheckResponse = await fetch(
+                checkPositionsUrl,
+                checkOptions
+            );
 
             if (positionCheckResponse.ok) {
                 const checkData = await positionCheckResponse.json();
@@ -57,6 +63,32 @@ function StockDetail({ search }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stockSymbol, setNameStock, setSharesOwned, usernameAcc]);
 
+    const data = {
+        labels: ["January", "February", "March", "April", "May"],
+        datasets: [
+            {
+                label: "Rainfall",
+                fill: false,
+                lineTension: 0.5,
+                backgroundColor: "rgba(75,192,192,1)",
+                borderColor: "rgba(0,0,0,1)",
+                borderWidth: 2,
+                data: [65, 59, 80, 81, 56],
+            },
+        ],
+    };
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "top",
+            },
+            title: {
+                display: true,
+                text: "Chart.js Line Chart",
+            },
+        },
+    };
     return (
         <>
             <div>
@@ -82,6 +114,22 @@ function StockDetail({ search }) {
                 ) : (
                     <div className="col"></div>
                 )}
+            </div>
+            <div>
+                <Line
+                    data={data}
+                    options={{
+                        title: {
+                            display: true,
+                            text: "Average Rainfall per month",
+                            fontSize: 20,
+                        },
+                        legend: {
+                            display: true,
+                            position: "right",
+                        },
+                    }}
+                />
             </div>
 
             <button
