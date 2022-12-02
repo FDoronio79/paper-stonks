@@ -19,7 +19,7 @@ const Dashboard = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -81,7 +81,8 @@ const Dashboard = () => {
                 stockPrices = positions.map((position) => {
                     if (idx < positions.length) {
                         let stockPrice =
-                            responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                            responses[idx]["Global Quote"]["05. price"] *
+                            position["quantity"];
                         idx++;
                         count += stockPrice;
                         return { ...position, value: stockPrice.toFixed(2) };
@@ -105,7 +106,7 @@ const Dashboard = () => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${fastapi_token}`
+                Authorization: `Bearer ${fastapi_token}`,
             },
             credentials: "include",
         };
@@ -128,83 +129,86 @@ const Dashboard = () => {
     };
 
     if (!fastapi_token) {
-        return (
-            <Navigate
-                replace
-                to="/login"
-            />
-        );
+        return <Navigate replace to="/login" />;
     } else {
         return (
             <>
-                <div>
-                    <h3>Positions</h3>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Symbol</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {positions.map((position) => {
-                                return (
-                                    <tr key={position.id}>
-                                        <td>{position.symbol}</td>
-                                        <td>{position.name}</td>
-                                        <td>{position.quantity}</td>
-                                        <td>$ {position.value}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <label className="label">Current Positions Value:${portfolioValue}</label>
-                </div>
-                <div></div>
-                <div>
-                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
-                </div>
-                <div>
-                    <form
-                        className="box"
-                        onSubmit={handleSubmit}
-                    >
-                        <div className="form-floating mb-3">
-                            <div className="field">
-                                <label className="label">Update Buying Power</label>
-                                <div className="control">
-                                    <input
-                                        type="text"
-                                        placeholder="add or subtract buying power"
-                                        value={buyingPower}
-                                        onChange={(e) => setBuyingPower(e.target.value)}
-                                        className="input"
-                                        required
-                                    />
-                                </div>
-                            </div>
+                <div class="mdb-page-content text-center page-intro bg-light">
+                    <div>
+                        <p>Welcome to your Dashboard</p>
+                        <div
+                            className="container-fluid container-max-widths:(sm)"
+                            style={{}}
+                        ></div>
+                    </div>
+                    <div class="container">
+                        <div>
+                            <label className="label">
+                                Current Positions Value:${portfolioValue}
+                            </label>
                         </div>
                         <div>
-                            <button
-                                className="btn btn-primary"
-                                type="submit"
-                            >
-                                Update Buying Power
-                            </button>
+                            <label className="label">
+                                Current Buying Power:{currentbuyingPower}
+                            </label>
                         </div>
-                    </form>
-                </div>
-                <div>
-                    <p>Welcome to your Dashboard</p>
-                    <div
-                        className="container-fluid container-max-widths:(sm)"
-                        style={{}}
-                    >
+                    </div>
+
+                    <div>
+                        <h3>Positions</h3>
+                        <table className="table table-dark table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Symbol</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {positions.map((position) => {
+                                    return (
+                                        <tr key={position.id}>
+                                            <td>{position.symbol}</td>
+                                            <td>{position.name}</td>
+                                            <td>{position.quantity}</td>
+                                            <td>$ {position.value}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <form className="box" onSubmit={handleSubmit}>
+                            <div className="form-floating mb-3">
+                                <div className="field">
+                                    <label className="label">
+                                        Update Buying Power
+                                    </label>
+                                    <div className="control">
+                                        <input
+                                            type="text"
+                                            placeholder="add or subtract buying power"
+                                            value={buyingPower}
+                                            onChange={(e) =>
+                                                setBuyingPower(e.target.value)
+                                            }
+                                            className="input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button
+                                    className="btn btn-primary"
+                                    type="submit"
+                                >
+                                    Update Buying Power
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </>

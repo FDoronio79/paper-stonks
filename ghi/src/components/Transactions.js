@@ -13,7 +13,7 @@ const Transactions = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -32,19 +32,14 @@ const Transactions = () => {
     }, [setTransactions]);
 
     if (!fastapi_token) {
-        return (
-            <Navigate
-                replace
-                to="/login"
-            />
-        );
+        return <Navigate replace to="/login" />;
     } else {
         return (
             <>
                 <div>
-                    <table className="table table-striped">
+                    <h3>Transactions</h3>
+                    <table className="table table-dark table-striped">
                         <thead>
-                            <h3>Transactions</h3>
                             <tr>
                                 <th scope="col">Symbol</th>
                                 <th scope="col">Price</th>

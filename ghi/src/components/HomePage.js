@@ -67,7 +67,7 @@ function HomePage() {
                         <p>
                         <h5>Links</h5>
                             <a href="https://gitlab.com/apex-legends1/paper-stonks/">Paper Stonks Gitlab</a> <br />
-                            Extrenal API: <a href="https://www.alphavantage.co/">Alphavantage API</a> 
+                            External API: <a href="https://www.alphavantage.co/">Alphavantage API</a> 
                         </p>
                         <div>
                         </div>
