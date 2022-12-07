@@ -20,7 +20,7 @@ function Nav({ setSymbol, symbol }) {
 
     if (!fastapi_token) {
         return (
-            <body>
+            <>
                 <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
                     <a
                         className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6"
@@ -69,7 +69,7 @@ function Nav({ setSymbol, symbol }) {
                     </form>
                 </header>
                 <div className="container-fluid">
-                    <div classNameName="row">
+                    <div className="row">
                         <nav
                             id="sidebarMenu"
                             className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
@@ -91,9 +91,9 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                                 className="feather feather-home align-text-bottom"
                                                 aria-hidden="true"
                                             >
@@ -116,10 +116,10 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="feather feather-users align-text-bottom"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="feather feather-users align-text-bottom"
                                                 aria-hidden="true"
                                             >
                                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -147,10 +147,10 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="feather feather-users align-text-bottom"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="feather feather-users align-text-bottom"
                                                 aria-hidden="true"
                                             >
                                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -227,11 +227,11 @@ function Nav({ setSymbol, symbol }) {
                         </div>
                     </div>
                 </nav> */}
-            </body>
+            </>
         );
     } else {
         return (
-            <body>
+            <>
                 <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
                     <a
                         className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6"
@@ -291,7 +291,7 @@ function Nav({ setSymbol, symbol }) {
                     </div>
                 </header>
                 <div className="container-fluid">
-                    <div classNameName="row">
+                    <div className="row">
                         <nav
                             id="sidebarMenu"
                             className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
@@ -312,9 +312,9 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                                 className="feather feather-home align-text-bottom"
                                                 aria-hidden="true"
                                             >
@@ -337,10 +337,10 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="feather feather-file align-text-bottom"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="feather feather-file align-text-bottom"
                                                 aria-hidden="true"
                                             >
                                                 <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
@@ -367,18 +367,18 @@ function Nav({ setSymbol, symbol }) {
                 <script
                     src="/docs/5.2/dist/js/bootstrap.bundle.min.js"
                     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-                    crossorigin="anonymous"
+                    crossOrigin="anonymous"
                 ></script>
 
                 <script
                     src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
                     integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-                    crossorigin="anonymous"
+                    crossOrigin="anonymous"
                 ></script>
                 <script
                     src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
                     integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
-                    crossorigin="anonymous"
+                    crossOrigin="anonymous"
                 ></script>
                 <script src="Nav.js"></script>
 
@@ -449,7 +449,7 @@ function Nav({ setSymbol, symbol }) {
                         </div>
                     </div>
                 </nav> */}
-            </body>
+            </>
         );
     }
 }

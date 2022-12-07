@@ -133,11 +133,16 @@ const Dashboard = () => {
     };
 
     if (!fastapi_token) {
-        return <Navigate replace to="/login" />;
+        return (
+            <Navigate
+                replace
+                to="/login"
+            />
+        );
     } else {
         return (
             <>
-                <div class="mdb-page-content text-center page-intro bg-light">
+                <div className="mdb-page-content text-center page-intro bg-light">
                     <div>
                         <p>Welcome to your Dashboard</p>
                         <div
@@ -145,7 +150,7 @@ const Dashboard = () => {
                             style={{}}
                         ></div>
                     </div>
-                    <div class="container">
+                    <div className="container">
                         <div>
                             <label className="label">
                                 Current Positions Value:${portfolioValue}
@@ -184,7 +189,10 @@ const Dashboard = () => {
                         </table>
                     </div>
                     <div>
-                        <form className="box" onSubmit={handleSubmit}>
+                        <form
+                            className="box"
+                            onSubmit={handleSubmit}
+                        >
                             <div className="form-floating mb-3">
                                 <div className="field">
                                     <label className="label">
