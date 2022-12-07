@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 // import { SearchContext } from "./SearchContext";
 import { UserContext } from "./context/UserContext";
 // import { Navigate } from "react-router-dom";
