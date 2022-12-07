@@ -5,6 +5,7 @@
 input {
     background-color: #202329;
     color: white;
+    border-radius: 0.5em;
 }
 
 .App-header {
