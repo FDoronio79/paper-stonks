@@ -1,4 +1,3 @@
-import React from "react";
 function MainPage() {
     // return (
     //     <div className="px-4 py-1 my-2 text-center">
@@ -6,7 +5,6 @@ function MainPage() {
     //             color: "#198754"
     //         }}>Paper STONKS!!!!!</h1>
     //     </div>
-
     // );
 }
 

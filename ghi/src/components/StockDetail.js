@@ -4,6 +4,7 @@ import SellForm from "./SellForm";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { Line } from "react-chartjs-2";
+// eslint-disable-next-line no-use-before-define
 import Chart from "chart.js/auto";
 // Chart.register(CategoryScale);
 function StockDetail({ search }) {

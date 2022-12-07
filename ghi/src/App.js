@@ -20,7 +20,6 @@ function App() {
     const domain = /https:\/\/[^/]+/;
     const basename = process.env.PUBLIC_URL.replace(domain, "");
     const [symbol, setSymbol] = useState("");
-    const [theme, setTheme] = useState("light");
 
     // const toggleTheme = () => {
     //     setTheme((curr) => (curr === "light" ? "dark" : "light"));
@@ -39,10 +38,7 @@ function App() {
         //         />
         //     </div>
         //     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <div
-            className="App"
-            id={theme}
-        >
+        <div className="App">
             <MainPage />
             <BrowserRouter basename={basename}>
                 <SearchContext.Provider value={symbol}>
