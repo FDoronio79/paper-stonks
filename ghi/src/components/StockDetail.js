@@ -67,25 +67,59 @@ function StockDetail({ search }) {
         labels: ["January", "February", "March", "April", "May"],
         datasets: [
             {
-                label: "Rainfall",
+                label: " Rainfall",
                 fill: false,
                 lineTension: 0.5,
-                // backgroundColor: "rgba(75,192,192,1)",
-                borderColor: "rgba(0,0,0,1)",
-                borderWidth: 2,
+                backgroundColor: "gradientStroke",
+                borderColor: "#d048b6",
+                borderWidth: 4,
+                pointHoverBackgroundColor: "#d048b6",
+                pointBackgroundColor: "#d048b6",
+                pointBorderWidth: 4,
+                pointHoverRadius: 10,
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+
                 data: [65, 59, 80, 81, 56],
             },
         ],
     };
     const options = {
+        color: "#ffffff",
         responsive: true,
         plugins: {
             legend: {
-                position: "top",
+                display: false,
+                position: "right",
+                labels: {
+                    color: "#d048b6",
+                },
+                title: {
+                    color: "#ffffff",
+                },
             },
             title: {
                 display: true,
-                text: "Chart.js Line Chart",
+                text: "Average Rainfall per month",
+                color: "#ffffff",
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: "#ffffff",
+                },
+                grid: {
+                    color: "#8a8a8a",
+                },
+            },
+            y: {
+                ticks: {
+                    color: "#ffffff",
+                },
+                grid: {
+                    color: "#8a8a8a",
+                },
             },
         },
     };
@@ -118,17 +152,7 @@ function StockDetail({ search }) {
             <div>
                 <Line
                     data={data}
-                    options={{
-                        title: {
-                            display: true,
-                            text: "Average Rainfall per month",
-                            fontSize: 20,
-                        },
-                        legend: {
-                            display: true,
-                            position: "right",
-                        },
-                    }}
+                    options={options}
                 />
             </div>
 
