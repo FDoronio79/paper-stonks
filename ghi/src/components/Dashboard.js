@@ -142,7 +142,7 @@ const Dashboard = () => {
     } else {
         return (
             <>
-                <div className="mdb-page-content text-center page-intro bg-light">
+                <div className="mdb-page-content text-center page-intro">
                     <div>
                         <p>Welcome to your Dashboard</p>
                         <div

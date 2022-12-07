@@ -101,7 +101,7 @@ const Login = () => {
             <section className="vh-100 gradient-custom">
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
-                        <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div className="col-12 col-md-8 col-lg-8 col-xl-10">
                             <div
                                 className="card bg-dark text-white"
                                 style={{ borderRadius: "1rem" }}
@@ -119,11 +119,11 @@ const Login = () => {
                                             className="box"
                                             onSubmit={handleSubmit}
                                         >
-                                            <div className="form-outline form-white mb-4">
+                                            <div className="form-outline mb-4">
                                                 <input
                                                     type="text"
                                                     id="typeEmailX"
-                                                    className="form-control form-control-lg"
+                                                    className="form-control form-control-lg login"
                                                     onChange={(e) =>
                                                         setUserName(
                                                             e.target.value
@@ -140,11 +140,11 @@ const Login = () => {
                                                 </label>
                                             </div>
 
-                                            <div className="form-outline form-white mb-4">
+                                            <div className="form-outline mb-4">
                                                 <input
                                                     type="password"
                                                     id="typePasswordX"
-                                                    className="form-control form-control-lg"
+                                                    className="form-control form-control-lg login"
                                                     value={password}
                                                     onChange={(e) =>
                                                         setPassword(

@@ -2,8 +2,13 @@
     text-align: center;
 }
 
+input {
+    background-color: #202329;
+    color: white;
+}
+
 .App-header {
-    background-color: #fefefe;
+    /* background-color: #fefefe; */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -20,11 +25,11 @@
     padding-left: 280px;
 }
 
-#light {
+/* #light {
     background-color: #fefefe;
-}
+} */
 
-#dark {
+/* #dark {
     background-color: #00000095;
     background-color: #282c34;
     color: white;
@@ -32,11 +37,11 @@
 
 #light .shadow p-4 mt-4 {
     background-color: #00000095;
-}
+} */
 
-#dark .shadow p-4 mt-4 {
+/* #dark .shadow p-4 mt-4 {
     background-color: #f8f8f8;
-}
+} */
 
 .switch {
     display: flex;
@@ -57,6 +62,8 @@
 body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+    /* background-color: #282c34; */
+    color: rgba(255, 255, 255, 0.877);
 }
 
 html {

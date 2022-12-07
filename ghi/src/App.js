@@ -39,27 +39,51 @@ function App() {
         //         />
         //     </div>
         //     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <div className="App" id={theme}>
+        <div
+            className="App"
+            id={theme}
+        >
             <MainPage />
             <BrowserRouter basename={basename}>
                 <SearchContext.Provider value={symbol}>
-                    <Nav setSymbol={setSymbol} symbol={symbol} />
+                    <Nav
+                        setSymbol={setSymbol}
+                        symbol={symbol}
+                    />
 
-                    <div className="container">
+                    <div
+                        className="container"
+                        style={{ backgroundColor: "#282c34" }}
+                    >
                         <Routes>
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route
+                                path="/"
+                                element={<HomePage />}
+                            />
+                            <Route
+                                path="/dashboard"
+                                element={<Dashboard />}
+                            />
                             <Route
                                 path="/Transactions"
                                 element={<Transactions />}
                             />
-                            <Route path="/login" element={<LoginForm />} />
-                            <Route path="/signup" element={<SignupForm />} />
+                            <Route
+                                path="/login"
+                                element={<LoginForm />}
+                            />
+                            <Route
+                                path="/signup"
+                                element={<SignupForm />}
+                            />
                             <Route
                                 path="/stock/:stockSymbol"
                                 element={<StockDetail search={symbol} />}
                             />
-                            <Route path="/position/buy" element={<BuyForm />} />
+                            <Route
+                                path="/position/buy"
+                                element={<BuyForm />}
+                            />
                             <Route
                                 path="/position/sell"
                                 element={<SellForm />}

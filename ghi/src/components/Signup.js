@@ -87,77 +87,198 @@ class SignupForm extends React.Component {
                 />
             );
         }
+        // return (
+        //     <div className="my-5 containerw">
+        //         <div className="offset-3 col-6">
+        //             <div className="shadow p-4 mt-4">
+        //                 <h2 className="text-center">Signup</h2>
+        //                 <form
+        //                     onSubmit={this.handleSubmit}
+        //                     id="create-appointment-form"
+        //                 >
+        //                     <label htmlFor="Email">Email: </label>
+        //                     <div className="form-floating mb-3">
+        //                         <input
+        //                             onChange={this.handleChangeEmail}
+        //                             value={this.state.email}
+        //                             placeholder="Email"
+        //                             required
+        //                             type="text"
+        //                             name="email"
+        //                             id="email"
+        //                             className="form-control"
+        //                         />
+        //                     </div>
+        //                     <label
+        //                         className="text-left"
+        //                         htmlFor="username"
+        //                     >
+        //                         Username:{" "}
+        //                     </label>
+        //                     <div className="form-floating mb-3">
+        //                         <input
+        //                             onChange={this.handleChangeUsername}
+        //                             value={this.state.username}
+        //                             placeholder="Username"
+        //                             required
+        //                             type="text"
+        //                             name="username"
+        //                             id="username"
+        //                             className="form-control"
+        //                         />
+        //                     </div>
+        //                     <label htmlFor="password">Password: </label>
+        //                     <div className="form-floating mb-3">
+        //                         <input
+        //                             onChange={this.handleChangePassword}
+        //                             value={this.state.password}
+        //                             placeholder="Password"
+        //                             required
+        //                             type="password"
+        //                             name="password"
+        //                             id="password"
+        //                             className="form-control"
+        //                         />
+        //                     </div>
+        //                     <label htmlFor="fullName">Full Name: </label>
+        //                     <div className="form-floating mb-3">
+        //                         <input
+        //                             onChange={this.handleChangeFullName}
+        //                             value={this.state.full_name}
+        //                             placeholder="fullName"
+        //                             required
+        //                             type="text"
+        //                             name="fullName"
+        //                             id="fullName"
+        //                             className="form-control"
+        //                         />
+        //                     </div>
+        //                     <button className="btn btn-primary">Create</button>
+        //                 </form>
+        //             </div>
+        //         </div>
+        //     </div>
+        // );
         return (
-            <div className="my-5 containerw">
-                <div className="offset-3 col-6">
-                    <div className="shadow p-4 mt-4">
-                        <h2 className="text-center">Signup</h2>
-                        <form
-                            onSubmit={this.handleSubmit}
-                            id="create-appointment-form"
-                        >
-                            <label htmlFor="Email">Email: </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangeEmail}
-                                    value={this.state.email}
-                                    placeholder="Email"
-                                    required
-                                    type="text"
-                                    name="email"
-                                    id="email"
-                                    className="form-control"
-                                />
-                            </div>
-                            <label
-                                className="text-left"
-                                htmlFor="username"
+            <section className="vh-100 gradient-custom">
+                <div className="container py-5 h-100">
+                    <div className="row d-flex justify-content-center align-items-center h-100">
+                        <div className="col-12 col-md-8 col-lg-8 col-xl-10">
+                            <div
+                                className="card bg-dark text-white"
+                                style={{ borderRadius: "1rem" }}
                             >
-                                Username:{" "}
-                            </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangeUsername}
-                                    value={this.state.username}
-                                    placeholder="Username"
-                                    required
-                                    type="text"
-                                    name="username"
-                                    id="username"
-                                    className="form-control"
-                                />
+                                <div className="card-body p-5 text-center">
+                                    <div className="mb-md-5 mt-md-4 pb-5">
+                                        <h2 className="fw-bold mb-2 text-uppercase">
+                                            Signup
+                                        </h2>
+
+                                        <form
+                                            className="box"
+                                            onSubmit={this.handleSubmit}
+                                        >
+                                            <div className="form-outline mb-4">
+                                                <input
+                                                    type="text"
+                                                    id="typeEmailX"
+                                                    className="form-control form-control-lg login"
+                                                    onChange={
+                                                        this.handleChangeEmail
+                                                    }
+                                                    value={this.state.email}
+                                                    placeholder="Email"
+                                                    required
+                                                    name="email"
+                                                />
+                                                <label
+                                                    className="form-label"
+                                                    htmlFor="typeEmailX"
+                                                >
+                                                    Email
+                                                </label>
+                                            </div>
+
+                                            <div className="form-outline mb-4">
+                                                <input
+                                                    type="text"
+                                                    id="username"
+                                                    name="username"
+                                                    className="form-control form-control-lg login"
+                                                    onChange={
+                                                        this
+                                                            .handleChangeUsername
+                                                    }
+                                                    value={this.state.username}
+                                                    placeholder="Username"
+                                                    required
+                                                />
+                                                <label
+                                                    className="form-label"
+                                                    htmlFor="username"
+                                                >
+                                                    Username
+                                                </label>
+                                            </div>
+
+                                            <div className="form-outline mb-4">
+                                                <input
+                                                    type="password"
+                                                    name="password"
+                                                    id="typePasswordX"
+                                                    className="form-control form-control-lg login"
+                                                    onChange={
+                                                        this
+                                                            .handleChangePassword
+                                                    }
+                                                    value={this.state.password}
+                                                    placeholder="Password"
+                                                    required
+                                                />
+                                                <label
+                                                    className="form-label"
+                                                    htmlFor="typePasswordX"
+                                                >
+                                                    Password
+                                                </label>
+                                            </div>
+                                            {/* <ErrorMessage
+                                                message={errorMessage}
+                                            /> */}
+
+                                            <div className="form-outline mb-4">
+                                                <input
+                                                    type="text"
+                                                    id="fullName"
+                                                    name="fullName"
+                                                    className="form-control form-control-lg login"
+                                                    onChange={
+                                                        this
+                                                            .handleChangeFullName
+                                                    }
+                                                    value={this.state.full_name}
+                                                    placeholder="Full Name"
+                                                    required
+                                                />
+                                                <label htmlFor="fullName">
+                                                    Full Name:{" "}
+                                                </label>
+                                            </div>
+
+                                            <button
+                                                className="btn btn-outline-light btn-lg px-5"
+                                                type="submit"
+                                            >
+                                                Signup
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <label htmlFor="password">Password: </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangePassword}
-                                    value={this.state.password}
-                                    placeholder="Password"
-                                    required
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    className="form-control"
-                                />
-                            </div>
-                            <label htmlFor="fullName">Full Name: </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangeFullName}
-                                    value={this.state.full_name}
-                                    placeholder="fullName"
-                                    required
-                                    type="text"
-                                    name="fullName"
-                                    id="fullName"
-                                    className="form-control"
-                                />
-                            </div>
-                            <button className="btn btn-primary">Create</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
         );
     }
 }
