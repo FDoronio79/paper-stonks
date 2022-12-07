@@ -4,9 +4,8 @@ import SellForm from "./SellForm";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { Line } from "react-chartjs-2";
-// eslint-disable-next-line no-use-before-define
+// eslint-disable-next-line
 import Chart from "chart.js/auto";
-// Chart.register(CategoryScale);
 function StockDetail({ search }) {
     const { stockSymbol } = useParams();
     const [price, setPrice] = useState("");

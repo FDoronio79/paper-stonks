@@ -359,7 +359,7 @@ function Nav({ setSymbol, symbol }) {
                                     <a
                                         className="nav-link px-3"
                                         onClick={logout}
-                                        href="#"
+                                        href="/Login"
                                     >
                                         {" "}
                                         Log Out
