@@ -43,7 +43,7 @@ function Nav({ setSymbol, symbol }) {
 
     if (!fastapi_token) {
         return (
-            <body>
+            <>
                 <main className="d-flex flex-nowrap">
                     <div
                         className="h-100 d-flex flex-column flex-shrink-0 p-3 text-bg-dark position-fixed"
@@ -94,9 +94,9 @@ function Nav({ setSymbol, symbol }) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         className="feather feather-home align-text-bottom"
                                         aria-hidden="true"
                                     >
@@ -119,9 +119,9 @@ function Nav({ setSymbol, symbol }) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         className="feather feather-home align-text-bottom"
                                         aria-hidden="true"
                                     >
@@ -144,10 +144,10 @@ function Nav({ setSymbol, symbol }) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-users align-text-bottom"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-users align-text-bottom"
                                         aria-hidden="true"
                                     >
                                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -175,10 +175,10 @@ function Nav({ setSymbol, symbol }) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-users align-text-bottom"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-users align-text-bottom"
                                         aria-hidden="true"
                                     >
                                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -201,11 +201,11 @@ function Nav({ setSymbol, symbol }) {
                 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
                 <script src="sidebars.js"></script>
-            </body>
+            </>
         );
     } else {
         return (
-            <body>
+            <>
                 <main className="d-flex flex-nowrap">
                     <div
                         className="h-100 d-flex flex-column flex-shrink-0 p-3 text-bg-dark position-fixed"
@@ -256,9 +256,9 @@ function Nav({ setSymbol, symbol }) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         className="feather feather-home align-text-bottom"
                                         aria-hidden="true"
                                     >
@@ -281,9 +281,9 @@ function Nav({ setSymbol, symbol }) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         className="feather feather-home align-text-bottom"
                                         aria-hidden="true"
                                     >
@@ -306,10 +306,10 @@ function Nav({ setSymbol, symbol }) {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="feather feather-file align-text-bottom"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-file align-text-bottom"
                                         aria-hidden="true"
                                     >
                                         <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
@@ -372,7 +372,7 @@ function Nav({ setSymbol, symbol }) {
                 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
                 <script src="sidebars.js"></script>
-            </body>
+            </>
         );
     }
 }

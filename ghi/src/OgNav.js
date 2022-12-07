@@ -90,8 +90,8 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
                                                 stroke-linejoin="round"
                                                 className="feather feather-home align-text-bottom"
                                                 aria-hidden="true"
@@ -115,8 +115,8 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
                                                 stroke-linejoin="round"
                                                 class="feather feather-users align-text-bottom"
                                                 aria-hidden="true"
@@ -146,8 +146,8 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
                                                 stroke-linejoin="round"
                                                 class="feather feather-users align-text-bottom"
                                                 aria-hidden="true"
@@ -279,7 +279,10 @@ function Nav({ setSymbol, symbol }) {
                     </form>
                     <div className="navbar-nav">
                         <div className="nav-item text-nowrap">
-                            <a className="nav-link px-3" onClick={logout}>
+                            <a
+                                className="nav-link px-3"
+                                onClick={logout}
+                            >
                                 {" "}
                                 Log Out
                             </a>
@@ -309,8 +312,8 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
                                                 stroke-linejoin="round"
                                                 className="feather feather-home align-text-bottom"
                                                 aria-hidden="true"
@@ -334,8 +337,8 @@ function Nav({ setSymbol, symbol }) {
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
                                                 stroke-linejoin="round"
                                                 class="feather feather-file align-text-bottom"
                                                 aria-hidden="true"
