@@ -68,9 +68,10 @@ function StockDetail({ search }) {
         datasets: [
             {
                 label: " Rainfall",
-                fill: false,
+                // fillColor: "#d048b6",
+                fill: true,
                 lineTension: 0.5,
-                backgroundColor: "gradientStroke",
+                backgroundColor: "rgba(208,72,182,0.2)",
                 borderColor: "#d048b6",
                 borderWidth: 4,
                 pointHoverBackgroundColor: "#d048b6",
@@ -119,6 +120,7 @@ function StockDetail({ search }) {
                 },
                 grid: {
                     color: "#8a8a8a",
+                    display: false,
                 },
             },
         },
