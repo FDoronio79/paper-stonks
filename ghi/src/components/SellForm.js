@@ -22,7 +22,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`,
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -43,9 +43,9 @@ export default function BuyForm({ price, symbol, name }) {
                 };
                 const transactionOptions = {
                     method: "POST",
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
@@ -64,7 +64,7 @@ export default function BuyForm({ price, symbol, name }) {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                 };
@@ -94,7 +94,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 body: JSON.stringify(positionDict),
                 credentials: "include",
@@ -117,9 +117,9 @@ export default function BuyForm({ price, symbol, name }) {
                 };
                 const transactionOptions = {
                     method: "POST",
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}` 
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
@@ -132,14 +132,13 @@ export default function BuyForm({ price, symbol, name }) {
                 // eslint-disable-next-line
                 const data = await response.json();
 
-
                 // FOR LATER UPDATE BUYING POWER
                 const bpchange = estimatedPrice;
                 const requestOptionsBp = {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                 };
@@ -171,7 +170,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -270,7 +269,7 @@ export default function BuyForm({ price, symbol, name }) {
 
                 <button
                     type="submit"
-                    className="sumbit col-12 p-3 mb-2 bg-dark text-white"
+                    className="submit btn-danger col-12 p-3 mb-2 text-white"
                 >
                     SELL
                 </button>

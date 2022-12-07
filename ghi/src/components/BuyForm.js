@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 export default function BuyForm({ price, symbol, name }) {
@@ -54,7 +54,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -79,7 +79,7 @@ export default function BuyForm({ price, symbol, name }) {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${fastapi_token}`
+                Authorization: `Bearer ${fastapi_token}`,
             },
             credentials: "include",
         };
@@ -89,7 +89,6 @@ export default function BuyForm({ price, symbol, name }) {
         );
         // eslint-disable-next-line
         const data = await responseGet.json();
-        
 
         if (!data["message"]) {
             // if the user does have it then it will update their position with a PUT method
@@ -97,7 +96,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 body: JSON.stringify(updatePositionDict),
                 credentials: "include",
@@ -108,15 +107,15 @@ export default function BuyForm({ price, symbol, name }) {
             );
             // eslint-disable-next-line
             const dataUpdateP = await responseUpdateP.json();
-            
+
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 currDateTime = Date.now();
                 const requestOptions = {
                     method: "POST",
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
@@ -133,7 +132,7 @@ export default function BuyForm({ price, symbol, name }) {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                 };
@@ -149,9 +148,9 @@ export default function BuyForm({ price, symbol, name }) {
             // if user doesn't have that specific stock then it will create a new position
             const requestOptions = {
                 method: "POST",
-                headers: { 
+                headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
                 body: JSON.stringify(positionDict),
@@ -168,9 +167,9 @@ export default function BuyForm({ price, symbol, name }) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 const requestOptions = {
                     method: "POST",
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
@@ -187,7 +186,7 @@ export default function BuyForm({ price, symbol, name }) {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                 };
@@ -216,7 +215,7 @@ export default function BuyForm({ price, symbol, name }) {
 
     return (
         <div
-            className="container text-left border border-dark p-3 "
+            className="container text-left border border-dark bg-dark p-3 "
             onSubmit={handleSubmit}
         >
             <form>
@@ -285,7 +284,7 @@ export default function BuyForm({ price, symbol, name }) {
 
                 <button
                     type="submit"
-                    className="sumbit col-12 p-3 mb-2 bg-dark text-white"
+                    className="submit btn-success col-12 p-3 mb-2 text-white"
                 >
                     BUY
                 </button>

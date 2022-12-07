@@ -183,7 +183,7 @@ function StockDetail({ search }) {
                 id="offcanvasBUY"
                 aria-labelledby="offcanvasBUY"
             >
-                <div className="offcanvas-header">
+                <div className="offcanvas-header bg-dark">
                     <h5
                         className="offcanvas-title"
                         id="offcanvasBUY"
@@ -197,7 +197,7 @@ function StockDetail({ search }) {
                         aria-label="Close"
                     ></button>
                 </div>
-                <div className="offcanvas-body">
+                <div className="offcanvas-body bg-dark">
                     <BuyForm
                         price={price}
                         symbol={stockSymbol.toUpperCase()}
@@ -212,7 +212,7 @@ function StockDetail({ search }) {
                 id="offcanvasSELL"
                 aria-labelledby="offcanvasSELL"
             >
-                <div className="offcanvas-header">
+                <div className="offcanvas-header bg-dark">
                     <h5
                         className="offcanvas-title"
                         id="offcanvasSELL"
@@ -226,7 +226,7 @@ function StockDetail({ search }) {
                         aria-label="Close"
                     ></button>
                 </div>
-                <div className="offcanvas-body">
+                <div className="offcanvas-body bg-dark">
                     <SellForm
                         price={price}
                         symbol={stockSymbol.toUpperCase()}

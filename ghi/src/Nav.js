@@ -8,7 +8,7 @@ function Nav({ setSymbol, symbol }) {
     const [fastapi_token, setToken] = useContext(UserContext);
     // const search = useContext(SearchContext);
     const navigate = useNavigate();
-    const [username, setUserName] = useState("");
+    // const [username, setUserName] = useState("");
     const logout = async () => {
         await fetch(`${process.env.REACT_APP_ACCOUNTS_HOST}/token`, {
             method: "DELETE",
@@ -18,28 +18,28 @@ function Nav({ setSymbol, symbol }) {
         setToken(null);
     };
 
-    useEffect(() => {
-        async function getUserName() {
-            const requestOptions = {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${fastapi_token}`,
-                },
-                credentials: "include",
-            };
-            const response = await fetch(
-                `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`,
-                requestOptions
-            );
-            if (response.ok) {
-                const data = await response.json();
-                setUserName(data["username"]);
-            }
-        }
-        getUserName();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setUserName]);
+    // useEffect(() => {
+    //     async function getUserName() {
+    //         const requestOptions = {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${fastapi_token}`,
+    //             },
+    //             credentials: "include",
+    //         };
+    //         const response = await fetch(
+    //             `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`,
+    //             requestOptions
+    //         );
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             setUserName(data["username"]);
+    //         }
+    //     }
+    //     getUserName();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [setUserName]);
 
     if (!fastapi_token) {
         return (
