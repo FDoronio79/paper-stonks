@@ -320,7 +320,13 @@ function Nav({ setSymbol, symbol }) {
                             </li>
                         </ul>
                         <hr></hr>
-                        <div className="dropdown">
+                        <button
+                            className="btn btn-light"
+                            onClick={logout}
+                        >
+                            Log Out
+                        </button>
+                        {/* <div className="dropdown">
                             <a
                                 href="/"
                                 className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
@@ -336,37 +342,37 @@ function Nav({ setSymbol, symbol }) {
                                 ></img>
                                 <strong>{username}</strong>
                             </a>
+
                             <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-                                {/* <li>
-                                    <a className="dropdown-item" href="/">
+                                <li>
+                                    <a
+                                        className="dropdown-item"
+                                        href="/"
+                                    >
                                         New project...
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="/">
+                                    <a
+                                        className="dropdown-item"
+                                        href="/"
+                                    >
                                         Settings
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="/dashboard">
+                                    <a
+                                        className="dropdown-item"
+                                        href="/dashboard"
+                                    >
                                         Profile
                                     </a>
-                                </li> */}
+                                </li>
                                 <li>
                                     <hr className="dropdown-divider"></hr>
                                 </li>
-                                <li>
-                                    <a
-                                        className="nav-link px-3"
-                                        onClick={logout}
-                                        href="/Login"
-                                    >
-                                        {" "}
-                                        Log Out
-                                    </a>
-                                </li>
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
                 </main>
 
