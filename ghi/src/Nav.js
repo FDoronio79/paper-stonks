@@ -41,7 +41,7 @@ function Nav({ setSymbol, symbol }) {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [setUserName]);
 
-    if (!fastapi_token) {
+    if (!fastapi_token || fastapi_token === "null") {
         return (
             <>
                 <main className="d-flex flex-nowrap">
@@ -49,8 +49,8 @@ function Nav({ setSymbol, symbol }) {
                         className="h-100 d-flex flex-column flex-shrink-0 p-3 text-bg-dark position-fixed"
                         style={{ width: 280 }}
                     >
-                        <a
-                            href="/"
+                        <NavLink
+                            to="/"
                             className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
                         >
                             <svg
@@ -59,7 +59,7 @@ function Nav({ setSymbol, symbol }) {
                                 height="32"
                             ></svg>
                             <span className="fs-4">Paper Stonks</span>
-                        </a>
+                        </NavLink>
                         <hr></hr>
                         <form
                             className="form-control form-control-dark w-100 rounded-0 border-0"

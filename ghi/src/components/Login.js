@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import ErrorMessage from "./ErrorMessege";
 import { UserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [username, setUserName] = useState("");
@@ -42,7 +42,7 @@ const Login = () => {
         submitLogin();
     };
 
-    if (!fastapi_token) {
+    if (!fastapi_token || fastapi_token === "null") {
         // return (
         //     <div className="my-5 containerw">
         //         <div className="offset-3 col-6">
@@ -184,13 +184,16 @@ const Login = () => {
                                     <div>
                                         <p className="mb-0">
                                             Don't have an account?{" "}
-                                            <a
-                                                href="/Signup"
-                                                className="text-white-50 fw-bold"
+                                        </p>
+                                        <div>
+                                            <NavLink
+                                                aria-current="page"
+                                                to="/Signup"
+                                                className="nav-link text-white-50 fw-bold"
                                             >
                                                 Sign Up
-                                            </a>
-                                        </p>
+                                            </NavLink>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
