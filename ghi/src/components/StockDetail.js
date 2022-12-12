@@ -11,6 +11,7 @@ function StockDetail({ search }) {
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const buyingPow = localStorage.getItem("buyingPower");
     const [name, setNameStock] = useState("");
     const [shares_owned, setSharesOwned] = useState("");

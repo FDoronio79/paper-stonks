@@ -143,7 +143,7 @@ const Dashboard = () => {
         return (
             <>
                 <div className="mdb-page-content page-intro">
-                    <div>
+                    <div className="jumbotron-fluid">
                         <h1 className="text-center">Dashboard</h1>
                         <div
                             className="container-fluid container-max-widths:(sm)"

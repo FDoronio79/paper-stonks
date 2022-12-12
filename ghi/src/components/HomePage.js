@@ -5,7 +5,7 @@ function HomePage() {
     return (
         <>
             <div
-                className="p-5 text-center"
+                className="p-5 text-center jumbotron-fluid"
                 style={{ "margin-top": "58px" }}
             >
                 <h1 className="mb-3">Paper Stonks Paper Trading</h1>
