@@ -16,6 +16,7 @@ function StockDetail({ search }) {
     const [shares_owned, setSharesOwned] = useState("");
     const usernameAcc = localStorage.getItem("Username");
     const [fastapi_token] = useContext(UserContext);
+    const [graph_data, setGraphData] = useState("");
 
     useEffect(() => {
         async function getStockData() {
@@ -57,14 +58,34 @@ function StockDetail({ search }) {
                 const checkData = await positionCheckResponse.json();
                 setSharesOwned(checkData["quantity"]);
             }
+
+            const getGraphUrl = `${process.env.REACT_APP_TRADING_HOST}/stock`;
+            const getGraphReqOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    symbol: stockSymbol,
+                    interval: "DAILY",
+                }),
+            };
+
+            const graphResponse = await fetch(getGraphUrl, getGraphReqOptions);
+            const data = await graphResponse.json();
+            if (!response.ok) {
+                console.log("couldn't get graph data");
+            } else {
+                setGraphData(data);
+            }
         }
 
         getStockData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stockSymbol, setNameStock, setSharesOwned, usernameAcc]);
+    }, [stockSymbol, setNameStock, setSharesOwned, setGraphData, usernameAcc]);
 
     const data = {
-        labels: ["January", "February", "March", "April", "May"],
+        labels: graph_data["labels"],
         datasets: [
             {
                 label: " Rainfall",
@@ -81,7 +102,7 @@ function StockDetail({ search }) {
                 pointHoverBorderWidth: 2,
                 pointRadius: 4,
 
-                data: [65, 59, 80, 81, 56],
+                data: graph_data["points"],
             },
         ],
     };
@@ -101,12 +122,17 @@ function StockDetail({ search }) {
             },
             title: {
                 display: true,
-                text: "Average Rainfall per month",
+                text: "Stock Performance",
                 color: "#ffffff",
             },
         },
         scales: {
             x: {
+                title: {
+                    text: "date",
+                    display: true,
+                },
+
                 ticks: {
                     color: "#ffffff",
                 },
@@ -115,6 +141,10 @@ function StockDetail({ search }) {
                 },
             },
             y: {
+                title: {
+                    text: "price",
+                    display: true,
+                },
                 ticks: {
                     color: "#ffffff",
                 },
@@ -145,7 +175,10 @@ function StockDetail({ search }) {
                 {shares_owned > 0 ? (
                     <div className="col">
                         <h4>Your position</h4>
-                        <h5>{shares_owned}</h5>
+                        <h5>{shares_owned} shares</h5>
+                        <h5>
+                            Market Value: ${(shares_owned * price).toFixed(2)}
+                        </h5>
                     </div>
                 ) : (
                     <div className="col"></div>
