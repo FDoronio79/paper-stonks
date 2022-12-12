@@ -2,7 +2,7 @@ import requests
 import os
 from pydantic import BaseModel
 
-from typing import List, Union
+from typing import Union
 
 alpha_vantage = os.environ.get("REACT_APP_ALPHA_VANTAGE")
 
@@ -22,9 +22,12 @@ class StockDataOut(BaseModel):
 
 
 class StockDataRepository:
-    def get_data_points(self, stock: StockDataIn) -> Union[Error, StockDataOut]:
+    def get_data_points(
+        self, stock: StockDataIn
+    ) -> Union[Error, StockDataOut]:
         response = requests.get(
-            f"https://www.alphavantage.co/query?function=TIME_SERIES_{stock.interval}&symbol={stock.symbol}&apikey={alpha_vantage}")
+            f"https://www.alphavantage.co/query?function=TIME_SERIES_{stock.interval}&symbol={stock.symbol}&apikey={alpha_vantage}"
+        )
         data = response.json()
         if stock.interval == "DAILY":
             time_series = data.get("Time Series (Daily)")

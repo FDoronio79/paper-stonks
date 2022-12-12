@@ -4,7 +4,7 @@ from queries.alpha_vantage import (
     StockDataIn,
     StockDataOut,
     StockDataRepository,
-    Error
+    Error,
 )
 
 router = APIRouter()
