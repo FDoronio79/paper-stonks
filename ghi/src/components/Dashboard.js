@@ -142,28 +142,25 @@ const Dashboard = () => {
     } else {
         return (
             <>
-                <div className="mdb-page-content text-center page-intro">
+                <div className="mdb-page-content page-intro">
                     <div>
-                        <p>Welcome to your Dashboard</p>
+                        <h1 className="text-center">Dashboard</h1>
                         <div
                             className="container-fluid container-max-widths:(sm)"
                             style={{}}
                         ></div>
                     </div>
-                    <div className="container">
-                        <div>
-                            <label className="label">
-                                Current Positions Value:${portfolioValue}
-                            </label>
-                        </div>
-                        <div>
-                            <label className="label">
-                                Current Buying Power:{currentbuyingPower}
-                            </label>
-                        </div>
+                    <div className="container-fluid">
+                        <h4 className="label">
+                            Current Positions Value: ${portfolioValue}
+                        </h4>
+
+                        <h4 className="label">
+                            Current Buying Power: {currentbuyingPower}
+                        </h4>
                     </div>
 
-                    <div>
+                    <div className="container max-width: 40%">
                         <h3>Positions</h3>
                         <table className="table table-dark table-striped">
                             <thead>

@@ -1,5 +1,5 @@
 .App {
-    text-align: center;
+    /* text-align: center; */
 }
 
 input {
@@ -19,11 +19,15 @@ input {
     color: white;
 }
 
+a.nav-link {
+    text-align: center;
+}
+
 .container {
     align-items: right;
     justify-content: right;
-    text-align: center;
-    padding-left: 280px;
+    /* text-align: center; */
+    /* padding-left: 200px; */
 }
 
 /* #light {

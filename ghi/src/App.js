@@ -42,49 +42,53 @@ function App() {
             <MainPage />
             <BrowserRouter basename={basename}>
                 <SearchContext.Provider value={symbol}>
-                    <Nav
-                        setSymbol={setSymbol}
-                        symbol={symbol}
-                    />
+                    <div className="row flex-nowrap">
+                        <div className="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+                            <Nav
+                                setSymbol={setSymbol}
+                                symbol={symbol}
+                            />
+                        </div>
 
-                    <div
-                        className="container"
-                        style={{ backgroundColor: "#282c34" }}
-                    >
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={<HomePage />}
-                            />
-                            <Route
-                                path="/dashboard"
-                                element={<Dashboard />}
-                            />
-                            <Route
-                                path="/Transactions"
-                                element={<Transactions />}
-                            />
-                            <Route
-                                path="/login"
-                                element={<LoginForm />}
-                            />
-                            <Route
-                                path="/signup"
-                                element={<SignupForm />}
-                            />
-                            <Route
-                                path="/stock/:stockSymbol"
-                                element={<StockDetail search={symbol} />}
-                            />
-                            <Route
-                                path="/position/buy"
-                                element={<BuyForm />}
-                            />
-                            <Route
-                                path="/position/sell"
-                                element={<SellForm />}
-                            />
-                        </Routes>
+                        <div
+                            className="col py-3"
+                            style={{ backgroundColor: "#282c34" }}
+                        >
+                            <Routes>
+                                <Route
+                                    path="/"
+                                    element={<HomePage />}
+                                />
+                                <Route
+                                    path="/dashboard"
+                                    element={<Dashboard />}
+                                />
+                                <Route
+                                    path="/Transactions"
+                                    element={<Transactions />}
+                                />
+                                <Route
+                                    path="/login"
+                                    element={<LoginForm />}
+                                />
+                                <Route
+                                    path="/signup"
+                                    element={<SignupForm />}
+                                />
+                                <Route
+                                    path="/stock/:stockSymbol"
+                                    element={<StockDetail search={symbol} />}
+                                />
+                                <Route
+                                    path="/position/buy"
+                                    element={<BuyForm />}
+                                />
+                                <Route
+                                    path="/position/sell"
+                                    element={<SellForm />}
+                                />
+                            </Routes>
+                        </div>
                     </div>
                 </SearchContext.Provider>
             </BrowserRouter>

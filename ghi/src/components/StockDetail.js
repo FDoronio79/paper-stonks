@@ -76,6 +76,8 @@ function StockDetail({ search }) {
             if (!response.ok) {
                 console.log("couldn't get graph data");
             } else {
+                data["labels"].reverse();
+                data["points"].reverse();
                 setGraphData(data);
             }
         }
@@ -94,19 +96,23 @@ function StockDetail({ search }) {
                 lineTension: 0.5,
                 backgroundColor: "rgba(208,72,182,0.2)",
                 borderColor: "#d048b6",
-                borderWidth: 4,
+                borderWidth: 2,
                 pointHoverBackgroundColor: "#d048b6",
                 pointBackgroundColor: "#d048b6",
-                pointBorderWidth: 4,
-                pointHoverRadius: 10,
+                pointBorderWidth: 0,
+                pointHoverRadius: 6,
                 pointHoverBorderWidth: 2,
-                pointRadius: 4,
-
+                pointRadius: 3,
                 data: graph_data["points"],
             },
         ],
     };
     const options = {
+        interaction: {
+            mode: "nearest",
+            axis: "x",
+            intersect: false,
+        },
         color: "#ffffff",
         responsive: true,
         plugins: {
@@ -135,6 +141,7 @@ function StockDetail({ search }) {
 
                 ticks: {
                     color: "#ffffff",
+                    maxTicksLimit: 10,
                 },
                 grid: {
                     color: "#8a8a8a",
@@ -156,11 +163,7 @@ function StockDetail({ search }) {
         },
     };
     return (
-        <>
-            <div>
-                <h3>Buying Power</h3>
-                <h4>{buyingPow}</h4>
-            </div>
+        <div className="container mx-auto col-9">
             <div className="row my-4">
                 <div className="col">
                     <div className="container">
@@ -173,13 +176,20 @@ function StockDetail({ search }) {
                     </div>
                 </div>
                 {shares_owned > 0 ? (
-                    <div className="col">
-                        <h4>Your position</h4>
-                        <h5>{shares_owned} shares</h5>
-                        <h5>
-                            Market Value: ${(shares_owned * price).toFixed(2)}
-                        </h5>
-                    </div>
+                    <>
+                        <div className="col">
+                            <h4>Your position</h4>
+                            <h5>{shares_owned} shares</h5>
+                            <h5>
+                                Market Value: $
+                                {(shares_owned * price).toFixed(2)}
+                            </h5>
+                        </div>
+                        {/* <div className="col">
+                            <h3>Buying Power</h3>
+                            <h4>{buyingPow}</h4>
+                        </div> */}
+                    </>
                 ) : (
                     <div className="col"></div>
                 )}
@@ -267,7 +277,7 @@ function StockDetail({ search }) {
                     />
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
