@@ -26,7 +26,9 @@ class StockDataRepository:
         self, stock: StockDataIn
     ) -> Union[Error, StockDataOut]:
         response = requests.get(
-            f"https://www.alphavantage.co/query?function=TIME_SERIES_{stock.interval}&symbol={stock.symbol}&apikey={alpha_vantage}"
+            f"https://www.alphavantage.co/query?function=TIME_SERIES_"
+            f"{stock.interval}&symbol={stock.symbol}"
+            f"&apikey={alpha_vantage}"
         )
         data = response.json()
         if stock.interval == "DAILY":
