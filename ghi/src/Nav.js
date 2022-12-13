@@ -100,7 +100,7 @@ function Nav({ setSymbol, symbol }) {
                             className="nav-text nav-item"
                         >
                             <AiIcons.AiOutlineHome />
-                            <span className="fs-4">Home</span>
+                            <span>Home</span>
                         </Link>
 
                         <li className="nav-item">
@@ -175,7 +175,7 @@ function Nav({ setSymbol, symbol }) {
                             className="nav-text"
                         >
                             <AiIcons.AiOutlineHome />
-                            <span className="fs-4">Home</span>
+                            <span>Home</span>
                         </Link>
                         <li className="nav-item">
                             <Link
@@ -192,7 +192,7 @@ function Nav({ setSymbol, symbol }) {
                                 to="/transactions"
                             >
                                 <TfiIcons.TfiReceipt />
-                                <span className="fs-4">Transactions</span>
+                                <span>Transactions</span>
                             </Link>
                         </li>
                         <hr></hr>

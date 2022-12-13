@@ -90,24 +90,25 @@ function StockDetail({ search }) {
         labels: graph_data["labels"],
         datasets: [
             {
-                label: " Rainfall",
                 // fillColor: "#d048b6",
                 fill: true,
                 lineTension: 0.5,
                 backgroundColor: "rgba(208,72,182,0.2)",
                 borderColor: "#d048b6",
                 borderWidth: 2,
-                pointHoverBackgroundColor: "#d048b6",
+                // pointHoverBackgroundColor: "#d048b6",
                 pointBackgroundColor: "#d048b6",
                 pointBorderWidth: 0,
                 pointHoverRadius: 6,
                 pointHoverBorderWidth: 2,
-                pointRadius: 3,
+                pointRadius: 0,
                 data: graph_data["points"],
             },
         ],
     };
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
         interaction: {
             mode: "nearest",
             axis: "x",
@@ -141,9 +142,12 @@ function StockDetail({ search }) {
 
                 ticks: {
                     color: "#ffffff",
-                    maxTicksLimit: 10,
+                    maxTicksLimit: 5,
+                    display: false,
                 },
                 grid: {
+                    height: "calc(100vh - 2em)",
+                    width: "calc(100vh - 2em)",
                     color: "#8a8a8a",
                 },
             },
@@ -163,62 +167,71 @@ function StockDetail({ search }) {
         },
     };
     return (
-        <div className="container mx-auto col-9">
-            <div className="row my-4">
-                <div className="col">
-                    <div className="container">
-                        <h1>{stockSymbol.toUpperCase()}</h1>
-                        <h1>{name}</h1>
-                        <p>Price: ${price}</p>
-                        <p>
-                            PRICE CHANGE: {change} by {percent}%
-                        </p>
-                    </div>
-                </div>
+        <div className="stock d-flex row justify-content-around ">
+            <div className="d-flex flex-row justify-content-around">
+                <h1 className="display-4 p-3">{stockSymbol.toUpperCase()}</h1>
+                <h1 className="display-4 p-3">{name}</h1>
+            </div>
+            <div className="d-flex flex-row justify-content-around">
+                <p class="display-6">${price}</p>
+
+                <p
+                    class="display-6"
+                    style={{
+                        color: percent.startsWith("-") ? "red" : "#34eb49",
+                    }}
+                >
+                    {change} ({percent}%)
+                </p>
+            </div>
+            <div className="d-flex flex-row justify-content-center">
+                <button
+                    type="button"
+                    className="btn btn-dark"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasBUY"
+                    aria-controls="offcanvasBUY"
+                >
+                    Buy
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-dark"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasSELL"
+                    aria-controls="offcanvasSELL"
+                >
+                    Sell
+                </button>
+            </div>
+
+            <div className="d-flex row justify-content-end">
                 {shares_owned > 0 ? (
                     <>
-                        <div className="col">
-                            <h4>Your position</h4>
-                            <h5>{shares_owned} shares</h5>
-                            <h5>
-                                Market Value: $
-                                {(shares_owned * price).toFixed(2)}
-                            </h5>
-                        </div>
+                        <h4>Your position</h4>
+                        <h5>{shares_owned} shares</h5>
+                        <h5>
+                            Market Value: ${(shares_owned * price).toFixed(2)}
+                        </h5>
+
                         {/* <div className="col">
                             <h3>Buying Power</h3>
                             <h4>{buyingPow}</h4>
                         </div> */}
                     </>
                 ) : (
-                    <div className="col"></div>
+                    <div></div>
                 )}
             </div>
-            <div>
+            <div
+                class="chart-container col-lg-8"
+                style={{ height: "60vh" }}
+            >
                 <Line
                     data={data}
                     options={options}
                 />
             </div>
-
-            <button
-                type="button"
-                className="btn btn-dark"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasBUY"
-                aria-controls="offcanvasBUY"
-            >
-                Buy
-            </button>
-            <button
-                type="button"
-                className="btn btn-dark"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSELL"
-                aria-controls="offcanvasSELL"
-            >
-                Sell
-            </button>
 
             <div
                 className="offcanvas offcanvas-end offcanvas-size-lg"

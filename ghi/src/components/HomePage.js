@@ -6,7 +6,7 @@ function HomePage() {
         <>
             <div className="home">
                 <div
-                    className="p-5 text-center jumbotron-fluid"
+                    className="p-5 text-center jumbotron"
                     style={{ marginTop: "58px" }}
                 >
                     <h1 className="mb-3">Paper Stonks Paper Trading</h1>
