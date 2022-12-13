@@ -43,83 +43,29 @@ const Login = () => {
     };
 
     if (!fastapi_token || fastapi_token === "null") {
-        // return (
-        //     <div className="my-5 containerw">
-        //         <div className="offset-3 col-6">
-        //             <div className="shadow p-4 mt-4">
-        //                 <h2 className="text-center">Login</h2>
-        //                 <form
-        //                     className="box"
-        //                     onSubmit={handleSubmit}
-        //                 >
-        //                     <div className="form-floating mb-3">
-        //                         <div className="field">
-        //                             <label className="label">Username</label>
-        //                             <div className="control">
-        //                                 <input
-        //                                     type="text"
-        //                                     placeholder="Enter username"
-        //                                     value={username}
-        //                                     onChange={(e) => setUserName(e.target.value)}
-        //                                     className="input"
-        //                                     required
-        //                                 />
-        //                             </div>
-        //                         </div>
-        //                     </div>
-        //                     <div className="form-floating mb-3">
-        //                         <div className="field">
-        //                             <label className="label">Password</label>
-        //                             <div className="control">
-        //                                 <input
-        //                                     type="password"
-        //                                     placeholder="Enter password"
-        //                                     value={password}
-        //                                     onChange={(e) => setPassword(e.target.value)}
-        //                                     className="input"
-        //                                     required
-        //                                 />
-        //                             </div>
-        //                         </div>
-        //                     </div>
-        //                     <ErrorMessage message={errorMessage} />
-        //                     <br />
-        //                     <div>
-        //                         <button
-        //                             className="btn btn-primary"
-        //                             type="submit"
-        //                         >
-        //                             Login
-        //                         </button>
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     </div>
-        // );
         return (
-            <section className="vh-100 gradient-custom">
-                <div className="container py-5 h-100">
-                    <div className="row d-flex justify-content-center align-items-center h-100">
-                        <div className="col-12 col-md-8 col-lg-8 col-xl-10">
+            <>
+                <div className="login d-flex row justify-content-center">
+                    <div className="d-flex justify-content-around">
+                        <h1 className="display-4 p-3">Login</h1>
+                    </div>
+                    <div className="d-flex flex-row  col-sm-10 col-xl-6 justify-content-center">
+                        <div>
                             <div
-                                className="card bg-dark text-white"
+                                className="card bg-transparent
+                                "
                                 style={{ borderRadius: "1rem" }}
                             >
                                 <div className="card-body p-5 text-center">
                                     <div className="mb-md-5 mt-md-4 pb-5">
-                                        <h2 className="fw-bold mb-2 text-uppercase">
-                                            Login
-                                        </h2>
-                                        <p className="text-white-50 mb-5">
-                                            Please enter your username and
-                                            password!
-                                        </p>
-                                        <form
-                                            className="box"
-                                            onSubmit={handleSubmit}
-                                        >
-                                            <div className="form-outline mb-4">
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="form-group ">
+                                                <label
+                                                    className="form-label text-white"
+                                                    htmlFor="typeEmailX"
+                                                >
+                                                    Username
+                                                </label>
                                                 <input
                                                     type="text"
                                                     id="typeEmailX"
@@ -131,16 +77,15 @@ const Login = () => {
                                                     }
                                                     value={username}
                                                     required
+                                                    placeholder="username"
                                                 />
+
                                                 <label
                                                     className="form-label"
-                                                    htmlFor="typeEmailX"
+                                                    htmlFor="typePasswordX"
                                                 >
-                                                    Username
+                                                    Password
                                                 </label>
-                                            </div>
-
-                                            <div className="form-outline mb-4">
                                                 <input
                                                     type="password"
                                                     id="typePasswordX"
@@ -152,14 +97,10 @@ const Login = () => {
                                                         )
                                                     }
                                                     required
+                                                    placeholder="password"
                                                 />
-                                                <label
-                                                    className="form-label"
-                                                    htmlFor="typePasswordX"
-                                                >
-                                                    Password
-                                                </label>
                                             </div>
+
                                             <ErrorMessage
                                                 message={errorMessage}
                                             />
@@ -173,7 +114,7 @@ const Login = () => {
                                             </p> */}
 
                                             <button
-                                                className="btn btn-outline-light btn-lg px-5"
+                                                className="btn bg-dark btn-outline-light btn-md px-4"
                                                 type="submit"
                                             >
                                                 Login
@@ -181,26 +122,23 @@ const Login = () => {
                                         </form>
                                     </div>
 
-                                    <div>
-                                        <p className="mb-0">
-                                            Don't have an account?{" "}
-                                        </p>
-                                        <div>
-                                            <NavLink
-                                                aria-current="page"
-                                                to="/Signup"
-                                                className="nav-link text-white-50 fw-bold"
-                                            >
-                                                Sign Up
-                                            </NavLink>
-                                        </div>
-                                    </div>
+                                    <p className="mb-0">
+                                        Don't have an account?{" "}
+                                    </p>
+
+                                    <NavLink
+                                        aria-current="page"
+                                        to="/Signup"
+                                        className="nav-link fw-bold"
+                                    >
+                                        Sign Up
+                                    </NavLink>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </>
         );
     }
 };

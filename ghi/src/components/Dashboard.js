@@ -142,80 +142,88 @@ const Dashboard = () => {
     } else {
         return (
             <>
-                <div className="mdb-page-content page-intro">
-                    <div className="jumbotron-fluid">
-                        <h1 className="text-center">Dashboard</h1>
-                        <div
-                            className="container-fluid container-max-widths:(sm)"
-                            style={{}}
-                        ></div>
-                    </div>
-                    <div className="container-fluid">
-                        <h4 className="label">
-                            Current Positions Value: ${portfolioValue}
-                        </h4>
-
-                        <h4 className="label">
-                            Current Buying Power: {currentbuyingPower}
-                        </h4>
+                <div className="dashboard d-flex row justify-content-around">
+                    <div className="d-flex justify-content-around">
+                        <h1 className="display-4 p-3">Dashboard</h1>
                     </div>
 
-                    <div className="container max-width: 40%">
-                        <h3>Positions</h3>
-                        <table className="table table-dark table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Symbol</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {positions.map((position) => {
-                                    return (
-                                        <tr key={position.id}>
-                                            <td>{position.symbol}</td>
-                                            <td>{position.name}</td>
-                                            <td>{position.quantity}</td>
-                                            <td>$ {position.value}</td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
+                    <div className="d-flex flex-row-reverse p-5">
+                        <ul>
+                            <h4 className="display-6">
+                                Total Value: ${portfolioValue}
+                            </h4>
+
+                            <h4 className="display-6">
+                                Buying Power: {currentbuyingPower}
+                            </h4>
+                        </ul>
                     </div>
-                    <div>
+
+                    <div className="d-flex row justify-content-center">
+                        <div className="d-flex  justify-content-center ml-5 ">
+                            <h3 className="display-5">Positions</h3>
+                        </div>
+                        <div className="table-responsive col-xl-6 table-sm">
+                            <table className="table ">
+                                <thead className="thead-light">
+                                    <tr>
+                                        <th scope="col">Symbol</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {positions.map((position) => {
+                                        return (
+                                            <tr key={position.id}>
+                                                <td>{position.symbol}</td>
+                                                <td>{position.name}</td>
+                                                <td>{position.quantity}</td>
+                                                <td>$ {position.value}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div className="d-flex row justify-content-center">
                         <form
                             className="box"
                             onSubmit={handleSubmit}
                         >
-                            <div className="form-floating mb-3">
-                                <div className="field">
-                                    <label className="label">
-                                        Update Buying Power
-                                    </label>
-                                    <div className="control">
+                            <div className="form mb-3 d-flex justify-content-center">
+                                <div className="flex-row">
+                                    <h6 className="display-6">Add Funds</h6>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                $
+                                            </span>
+                                        </div>
+
                                         <input
                                             type="text"
-                                            placeholder="add or subtract buying power"
+                                            placeholder="0.00"
                                             value={buyingPower}
                                             onChange={(e) =>
                                                 setBuyingPower(e.target.value)
                                             }
-                                            className="input"
+                                            className="form-control"
                                             required
+                                            aria-label="Amount (to the nearest dollar)"
                                         />
                                     </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button
+                                            className="btn btn-primary"
+                                            type="submit"
+                                        >
+                                            Add Money
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <button
-                                    className="btn btn-primary"
-                                    type="submit"
-                                >
-                                    Update Buying Power
-                                </button>
                             </div>
                         </form>
                     </div>
