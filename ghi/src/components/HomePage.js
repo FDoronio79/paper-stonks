@@ -1,7 +1,5 @@
 import React from "react";
 // import ps_logo from "../ghi/src/ps_logo.png"
-import { Link } from "react-router-dom";
-
 function HomePage() {
     return (
         <>
@@ -14,6 +12,7 @@ function HomePage() {
                         className=""
                         src="images/logo-inverted-md.jpg"
                         width="200"
+                        alt="logo"
                     ></img>
                     <span>
                         <h4 className="mb-3 display-6">
@@ -27,6 +26,7 @@ function HomePage() {
                         <img
                             className="img-fluid rounded d-flex"
                             src="images/graph.png"
+                            alt="graph"
                         ></img>
                     </div>
                     <br></br>
@@ -219,14 +219,16 @@ function HomePage() {
                                 <img
                                     className="tool"
                                     src="images/gitlab.png"
+                                    alt="gitlab"
                                 ></img>
-                            </a>{" "}
+                            </a>
                             <br />
-                            External API:{" "}
+                            External API:
                             <a href="https://www.alphavantage.co/">
                                 <img
                                     className="tool"
                                     src="images/alpha-vantage.png"
+                                    alt="alpha-vantage"
                                 ></img>
                             </a>
                         </div>

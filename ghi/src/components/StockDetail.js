@@ -107,7 +107,6 @@ function StockDetail({ search }) {
         ],
     };
     const options = {
-        responsive: true,
         maintainAspectRatio: false,
         interaction: {
             mode: "nearest",
@@ -195,8 +194,6 @@ function StockDetail({ search }) {
                                 ${(shares_owned * price).toFixed(2)} | (
                                 {shares_owned})
                             </h5>
-
-                            <h5></h5>
                         </>
                     ) : (
                         <div></div>
