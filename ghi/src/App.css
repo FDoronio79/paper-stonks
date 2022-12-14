@@ -6,9 +6,22 @@
     padding: 0;
     font-family: "Lato", sans-serif;
 }
+.nav-title {
+    color: black;
+}
 
 .table {
     color: white;
+    max-width: 95%;
+}
+
+.dev {
+    padding: 1em;
+}
+
+.tool {
+    height: 70px;
+    margin: 20px;
 }
 
 .home,
@@ -24,19 +37,42 @@
     font-size: 1rem;
     background-color: #000;
     color: #fff;
+    padding-top: 70px;
+}
+
+#offcanvasBUY,
+#offcanvasSELL {
+    background-color: #000;
+}
+
+#close-sell-form {
+    color: white;
+}
+
+.searchbar {
+    width: 155px;
 }
 
 /* Navbar CSS */
 .navbar {
     background-color: #ffffff;
-    height: 80px;
+    height: 70px;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    position: fixed;
+    top: 0px;
+}
+
+#nav-title {
+    position: fixed;
+    right: 2em;
 }
 
 .menu-bars {
-    margin-left: 2rem;
+    margin-left: 1.5rem;
+    padding-bottom: 10px;
     font-size: 2rem;
     background: none;
     color: #000;

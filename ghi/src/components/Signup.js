@@ -97,11 +97,11 @@ class SignupForm extends React.Component {
                     <div className="d-flex flex-row  col-sm-10 col-xl-6 justify-content-center">
                         <div>
                             <div
-                                className="card bg-transparent
+                                className="bg-transparent
                                 "
                                 style={{ borderRadius: "1rem" }}
                             >
-                                <div className="card-body p-5 text-center">
+                                <div className="p-5 text-center">
                                     <div className="mb-md-5 mt-md-4 pb-5">
                                         <form
                                             className="box"
@@ -117,7 +117,7 @@ class SignupForm extends React.Component {
                                                 <input
                                                     type="text"
                                                     id="typeEmailX"
-                                                    className="form-control form-control-lg login"
+                                                    className="form-control form-control-lg"
                                                     onChange={
                                                         this.handleChangeEmail
                                                     }
@@ -139,7 +139,7 @@ class SignupForm extends React.Component {
                                                     type="text"
                                                     id="username"
                                                     name="username"
-                                                    className="form-control form-control-lg login"
+                                                    className="form-control form-control-lg"
                                                     onChange={
                                                         this
                                                             .handleChangeUsername
@@ -161,7 +161,7 @@ class SignupForm extends React.Component {
                                                     type="password"
                                                     name="password"
                                                     id="typePasswordX"
-                                                    className="form-control form-control-lg login"
+                                                    className="form-control form-control-lg"
                                                     onChange={
                                                         this
                                                             .handleChangePassword
@@ -186,7 +186,7 @@ class SignupForm extends React.Component {
                                                     type="text"
                                                     id="fullName"
                                                     name="fullName"
-                                                    className="form-control form-control-lg login"
+                                                    className="form-control form-control-lg"
                                                     onChange={
                                                         this
                                                             .handleChangeFullName
@@ -198,7 +198,7 @@ class SignupForm extends React.Component {
                                             </div>
 
                                             <button
-                                                className="btn bg-dark btn-outline-light btn-md px-4"
+                                                className="btn btn-light btn-md px-4"
                                                 type="submit"
                                             >
                                                 Signup

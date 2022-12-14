@@ -1,10 +1,11 @@
-import { NavLink, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as TfiIcons from "react-icons/tfi";
 import * as AiIcons from "react-icons/ai";
 import { MdLogin } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
+import { AiOutlineStock } from "react-icons/ai";
 
 import "./App.css";
 import { useContext } from "react";
@@ -53,33 +54,51 @@ function Nav({ setSymbol, symbol }) {
         return (
             <>
                 <div className="navbar">
-                    <Link
-                        to="#"
-                        className="menu-bars"
-                    >
-                        <FaIcons.FaBars onClick={showSidebar} />
-                    </Link>
-
-                    <span>
-                        <form
-                            className="form-control form-control-dark w-100 rounded-0 border-0"
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                navigate(`/stock/${symbol.toUpperCase()}`);
-                            }}
+                    <div className="d-flex justify-content-left align-items-center">
+                        <Link
+                            to="#"
+                            className="menu-bars"
                         >
-                            <input
-                                className="form-control form-control-dark w-100 rounded-0 border-0"
-                                type="text"
-                                placeholder="Search"
-                                aria-label="Search"
-                                onChange={(e) => {
-                                    setSymbol(e.target.value);
+                            <FaIcons.FaBars onClick={showSidebar} />
+                        </Link>
+                        <span>
+                            <form
+                                className=""
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    e.target.reset();
+                                    navigate(`/stock/${symbol.toUpperCase()}`);
                                 }}
-                                value={symbol}
-                            />
-                        </form>
-                    </span>
+                            >
+                                <input
+                                    className="form-control searchbar"
+                                    type="text"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                    onChange={(e) => {
+                                        setSymbol(e.target.value);
+                                    }}
+                                    value={symbol}
+                                />
+                            </form>
+                        </span>
+
+                        <span
+                            id="nav-title"
+                            className="float-right"
+                        >
+                            <Link
+                                className="nav-text nav-item h4"
+                                to="/"
+                                style={{
+                                    color: "black",
+                                    textDecoration: "none",
+                                }}
+                            >
+                                Paper Stonks
+                            </Link>
+                        </span>
+                    </div>
                 </div>
 
                 <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
@@ -130,32 +149,51 @@ function Nav({ setSymbol, symbol }) {
         return (
             <>
                 <div className="navbar">
-                    <Link
-                        to="#"
-                        className="menu-bars"
-                    >
-                        <FaIcons.FaBars onClick={showSidebar} />
-                    </Link>
-                    <span>
-                        <form
-                            className="form-control form-control-dark w-100 rounded-0 border-0"
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                navigate(`/stock/${symbol.toUpperCase()}`);
-                            }}
+                    <div className="d-flex justify-content-left align-items-center">
+                        <Link
+                            to="#"
+                            className="menu-bars"
                         >
-                            <input
-                                className="form-control form-control-dark w-100 rounded-0 border-0"
-                                type="text"
-                                placeholder="Search"
-                                aria-label="Search"
-                                onChange={(e) => {
-                                    setSymbol(e.target.value);
+                            <FaIcons.FaBars onClick={showSidebar} />
+                        </Link>
+                        <span>
+                            <form
+                                className=""
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    e.target.reset();
+                                    navigate(`/stock/${symbol.toUpperCase()}`);
                                 }}
-                                value={symbol}
-                            />
-                        </form>
-                    </span>
+                            >
+                                <input
+                                    className="form-control searchbar"
+                                    type="text"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                    onChange={(e) => {
+                                        setSymbol(e.target.value);
+                                    }}
+                                    value={symbol}
+                                />
+                            </form>
+                        </span>
+
+                        <span
+                            id="nav-title"
+                            className="float-right"
+                        >
+                            <Link
+                                className="nav-text nav-item h4"
+                                to="/"
+                                style={{
+                                    color: "black",
+                                    textDecoration: "none",
+                                }}
+                            >
+                                Paper Stonks
+                            </Link>
+                        </span>
+                    </div>
                 </div>
                 <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
                     <ul

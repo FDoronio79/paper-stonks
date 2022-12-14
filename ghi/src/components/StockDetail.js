@@ -128,7 +128,7 @@ function StockDetail({ search }) {
                 },
             },
             title: {
-                display: true,
+                display: false,
                 text: "Stock Performance",
                 color: "#ffffff",
             },
@@ -153,7 +153,7 @@ function StockDetail({ search }) {
             },
             y: {
                 title: {
-                    text: "price",
+                    text: "price ($)",
                     display: true,
                 },
                 ticks: {
@@ -184,47 +184,68 @@ function StockDetail({ search }) {
                     {change} ({percent}%)
                 </p>
             </div>
-            <div className="d-flex flex-row justify-content-center">
-                <button
-                    type="button"
-                    className="btn btn-dark"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasBUY"
-                    aria-controls="offcanvasBUY"
-                >
-                    Buy
-                </button>
-                <button
-                    type="button"
-                    className="btn btn-dark"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasSELL"
-                    aria-controls="offcanvasSELL"
-                >
-                    Sell
-                </button>
-            </div>
 
-            <div className="d-flex row justify-content-end">
-                {shares_owned > 0 ? (
-                    <>
-                        <h4>Your position</h4>
-                        <h5>{shares_owned} shares</h5>
-                        <h5>
-                            Market Value: ${(shares_owned * price).toFixed(2)}
-                        </h5>
+            <div className="d-flex justify-content-around">
+                <div class="bg-transparent">
+                    <h6 class="display-6">Your Position</h6>
+                    <hr></hr>
+                    {shares_owned > 0 ? (
+                        <>
+                            <h5 class="display-6">
+                                ${(shares_owned * price).toFixed(2)} | (
+                                {shares_owned})
+                            </h5>
 
-                        {/* <div className="col">
-                            <h3>Buying Power</h3>
-                            <h4>{buyingPow}</h4>
-                        </div> */}
-                    </>
-                ) : (
-                    <div></div>
-                )}
+                            <h5></h5>
+                        </>
+                    ) : (
+                        <div></div>
+                    )}
+                </div>
+                <div
+                    class="btn-group align-items-center"
+                    role="group"
+                >
+                    <button
+                        id="btnGroupDrop1"
+                        type="button"
+                        class="btn btn-light  btn-lg dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        Trade
+                    </button>
+                    <ul
+                        class="dropdown-menu"
+                        aria-labelledby="btnGroupDrop1"
+                    >
+                        <li>
+                            <button
+                                type="button"
+                                className="btn btn-dark btn-lg btn-outline-success dropdown-item"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBUY"
+                                aria-controls="offcanvasBUY"
+                            >
+                                Buy
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                className="btn btn-dark  btn-lg btn-outline-danger dropdown-item"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasSELL"
+                                aria-controls="offcanvasSELL"
+                            >
+                                Sell
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div
-                class="chart-container col-lg-8"
+                class="chart-container col-lg-8 mt-3"
                 style={{ height: "60vh" }}
             >
                 <Line
@@ -239,7 +260,7 @@ function StockDetail({ search }) {
                 id="offcanvasBUY"
                 aria-labelledby="offcanvasBUY"
             >
-                <div className="offcanvas-header bg-dark">
+                <div className="offcanvas-header">
                     <h5
                         className="offcanvas-title"
                         id="offcanvasBUY"
@@ -248,12 +269,12 @@ function StockDetail({ search }) {
                     </h5>
                     <button
                         type="button"
-                        className="btn-close text-reset"
+                        className="btn-close btn-close-white text-reset"
                         data-bs-dismiss="offcanvas"
                         aria-label="Close"
                     ></button>
                 </div>
-                <div className="offcanvas-body bg-dark">
+                <div className="offcanvas-body">
                     <BuyForm
                         price={price}
                         symbol={stockSymbol.toUpperCase()}
@@ -268,21 +289,22 @@ function StockDetail({ search }) {
                 id="offcanvasSELL"
                 aria-labelledby="offcanvasSELL"
             >
-                <div className="offcanvas-header bg-dark">
+                <div className="offcanvas-header">
                     <h5
                         className="offcanvas-title"
-                        id="offcanvasSELL"
+                        id="offcanvasSELLHeader"
                     >
                         SELL {stockSymbol.toUpperCase()}
                     </h5>
                     <button
+                        id="close-sell-form"
                         type="button"
-                        className="btn-close text-reset"
+                        className="btn-close btn-close-white text-reset"
                         data-bs-dismiss="offcanvas"
                         aria-label="Close"
                     ></button>
                 </div>
-                <div className="offcanvas-body bg-dark">
+                <div className="offcanvas-body">
                     <SellForm
                         price={price}
                         symbol={stockSymbol.toUpperCase()}

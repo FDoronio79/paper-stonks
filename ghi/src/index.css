@@ -1,4 +1,5 @@
-body {
+body,
+:root {
     font-family: -apple-system, BlinkMacSystemFont, "Lato", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

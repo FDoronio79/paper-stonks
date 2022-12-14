@@ -32,36 +32,49 @@ const Transactions = () => {
     }, [setTransactions]);
 
     if (!fastapi_token) {
-        return <Navigate replace to="/login" />;
+        return (
+            <Navigate
+                replace
+                to="/login"
+            />
+        );
     } else {
         return (
             <>
-                <div>
-                    <h3>Transactions</h3>
-                    <table className="table table-dark table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Symbol</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Buy/Sell</th>
-                                <th scope="col">Time of Purchase</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {transactions.map((transaction) => {
-                                return (
-                                    <tr key={transaction.id}>
-                                        <td>{transaction.symbol}</td>
-                                        <td>{transaction.price}</td>
-                                        <td>{transaction.quantity}</td>
-                                        <td>{transaction.type_of}</td>
-                                        <td>{transaction.time_of_purchase}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                <div className="transactions d-flex row justify-content-center">
+                    <div className="d-flex justify-content-center">
+                        <h1 className="display-4 p-5">Transaction History</h1>
+                    </div>
+                    <div className="table-responsive bg-black col-xl-4 ">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Symbol</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Buy/Sell</th>
+                                    <th scope="col">Time of Purchase</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {transactions.map((transaction) => {
+                                    return (
+                                        <tr key={transaction.id}>
+                                            <td>{transaction.symbol}</td>
+                                            <td>{transaction.price}</td>
+                                            <td>{transaction.quantity}</td>
+                                            <td>{transaction.type_of}</td>
+                                            <td>
+                                                {new Date(
+                                                    transaction.time_of_purchase
+                                                ).toLocaleString()}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </>
         );

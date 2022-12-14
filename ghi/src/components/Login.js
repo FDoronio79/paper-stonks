@@ -51,60 +51,49 @@ const Login = () => {
                     </div>
                     <div className="d-flex flex-row  col-sm-10 col-xl-6 justify-content-center">
                         <div>
-                            <div
-                                className="card bg-transparent
-                                "
-                                style={{ borderRadius: "1rem" }}
-                            >
-                                <div className="card-body p-5 text-center">
-                                    <div className="mb-md-5 mt-md-4 pb-5">
-                                        <form onSubmit={handleSubmit}>
-                                            <div className="form-group ">
-                                                <label
-                                                    className="form-label text-white"
-                                                    htmlFor="typeEmailX"
-                                                >
-                                                    Username
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="typeEmailX"
-                                                    className="form-control form-control-lg login"
-                                                    onChange={(e) =>
-                                                        setUserName(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    value={username}
-                                                    required
-                                                    placeholder="username"
-                                                />
-
-                                                <label
-                                                    className="form-label"
-                                                    htmlFor="typePasswordX"
-                                                >
-                                                    Password
-                                                </label>
-                                                <input
-                                                    type="password"
-                                                    id="typePasswordX"
-                                                    className="form-control form-control-lg login"
-                                                    value={password}
-                                                    onChange={(e) =>
-                                                        setPassword(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    required
-                                                    placeholder="password"
-                                                />
-                                            </div>
-
-                                            <ErrorMessage
-                                                message={errorMessage}
+                            <div className=" p-5 text-center">
+                                <div className="mb-md-5 mt-md-4 pb-5">
+                                    <form onSubmit={handleSubmit}>
+                                        <div className="form-group">
+                                            <label
+                                                className="form-label text-white"
+                                                htmlFor="typeEmailX"
+                                            >
+                                                Username
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="typeEmailX"
+                                                className="form-control form-control-lg"
+                                                onChange={(e) =>
+                                                    setUserName(e.target.value)
+                                                }
+                                                value={username}
+                                                required
+                                                placeholder="username"
                                             />
-                                            {/* <p className="small mb-5 pb-lg-2">
+
+                                            <label
+                                                className="form-label"
+                                                htmlFor="typePasswordX"
+                                            >
+                                                Password
+                                            </label>
+                                            <input
+                                                type="password"
+                                                id="typePasswordX"
+                                                className="form-control form-control-lg"
+                                                value={password}
+                                                onChange={(e) =>
+                                                    setPassword(e.target.value)
+                                                }
+                                                required
+                                                placeholder="password"
+                                            />
+                                        </div>
+
+                                        <ErrorMessage message={errorMessage} />
+                                        {/* <p className="small mb-5 pb-lg-2">
                                                 <a
                                                     className="text-white-50"
                                                     href="#!"
@@ -113,27 +102,24 @@ const Login = () => {
                                                 </a>
                                             </p> */}
 
-                                            <button
-                                                className="btn bg-dark btn-outline-light btn-md px-4"
-                                                type="submit"
-                                            >
-                                                Login
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <p className="mb-0">
-                                        Don't have an account?{" "}
-                                    </p>
-
-                                    <NavLink
-                                        aria-current="page"
-                                        to="/Signup"
-                                        className="nav-link fw-bold"
-                                    >
-                                        Sign Up
-                                    </NavLink>
+                                        <button
+                                            className="btn bg-dark btn-outline-light btn-md px-4"
+                                            type="submit"
+                                        >
+                                            Login
+                                        </button>
+                                    </form>
                                 </div>
+
+                                <p className="mb-0">Don't have an account? </p>
+
+                                <NavLink
+                                    aria-current="page"
+                                    to="/Signup"
+                                    className="nav-link fw-bold"
+                                >
+                                    Sign Up
+                                </NavLink>
                             </div>
                         </div>
                     </div>

@@ -142,17 +142,17 @@ const Dashboard = () => {
     } else {
         return (
             <>
-                <div className="dashboard d-flex row justify-content-around">
-                    <div className="d-flex justify-content-around">
-                        <h1 className="display-4 p-3">Dashboard</h1>
+                <div className="dashboard d-flex row justify-content-center">
+                    <div className="d-flex justify-content-center">
+                        <h1 className="display-4 p-5">Dashboard</h1>
                     </div>
 
-                    <div className="d-flex flex-row-reverse p-5">
+                    <div className="d-flex justify-content-center p-5">
                         <ul>
                             <h4 className="display-6">
                                 Total Value: ${portfolioValue}
                             </h4>
-
+                            <hr></hr>
                             <h4 className="display-6">
                                 Buying Power: {currentbuyingPower}
                             </h4>
@@ -163,8 +163,8 @@ const Dashboard = () => {
                         <div className="d-flex  justify-content-center ml-5 ">
                             <h3 className="display-5">Positions</h3>
                         </div>
-                        <div className="table-responsive col-xl-6 table-sm">
-                            <table className="table ">
+                        <div className="table-responsive shadow p-3 mb-5 bg-black col-xl-4 table-sm">
+                            <table className="table">
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">Symbol</th>
@@ -188,6 +188,9 @@ const Dashboard = () => {
                             </table>
                         </div>
                     </div>
+                    <div className="d-flex flex-srow justify-content-center">
+                        <h6 className="display-6">Add Funds</h6>
+                    </div>
                     <div className="d-flex row justify-content-center">
                         <form
                             className="box"
@@ -195,7 +198,6 @@ const Dashboard = () => {
                         >
                             <div className="form mb-3 d-flex justify-content-center">
                                 <div className="flex-row">
-                                    <h6 className="display-6">Add Funds</h6>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">

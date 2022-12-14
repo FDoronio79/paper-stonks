@@ -200,7 +200,7 @@ export default function BuyForm({ price, symbol, name }) {
 
     return (
         <div
-            className="container text-left border border-dark p-3 "
+            className="container text-leftp-3 "
             onSubmit={handleSubmit}
         >
             <form>
@@ -228,6 +228,7 @@ export default function BuyForm({ price, symbol, name }) {
                             onChange={(e) => setQuantity(e.target.value)}
                             id="quantity"
                             placeholder="quantity"
+                            className="form-control"
                         />
                     </div>
                 </div>
