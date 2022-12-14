@@ -5,8 +5,6 @@ import * as TfiIcons from "react-icons/tfi";
 import * as AiIcons from "react-icons/ai";
 import { MdLogin } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
-import { AiOutlineStock } from "react-icons/ai";
-
 import "./App.css";
 import { useContext } from "react";
 
