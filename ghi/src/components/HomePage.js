@@ -1,5 +1,15 @@
 import React from "react";
-// import ps_logo from "../ghi/src/ps_logo.png"
+import react_logo from "./images/react.png";
+import chartjs_logo from "./images/chartjs.png";
+import alpha_vantage_logo from "./images/alpha-vantage.png";
+import docker_logo from "./images/docker.png";
+import gitlab_logo from "./images/gitlab.png";
+import heroku_logo from "./images/heroku.png";
+import postgres_logo from "./images/postgres.png";
+import logo from "./images/logo-inverted-md.jpg";
+import fastapi_logo from "./images/fast-api.png";
+import graph from "./images/graph.png";
+
 function HomePage() {
     return (
         <>
@@ -10,7 +20,7 @@ function HomePage() {
                     </span>
                     <img
                         className=""
-                        src="images/logo-inverted-md.jpg"
+                        src={logo}
                         width="200"
                         alt="logo"
                     ></img>
@@ -25,7 +35,7 @@ function HomePage() {
                     <div className=" d-flex justify-content-center col-lg-5 mx-auto">
                         <img
                             className="img-fluid rounded d-flex"
-                            src="images/graph.png"
+                            src={graph}
                             alt="graph"
                         ></img>
                     </div>
@@ -39,15 +49,15 @@ function HomePage() {
                             <div className="col">
                                 <img
                                     className="tool"
-                                    src="images/fast-api.png"
-                                    alt="Fast API"
+                                    src={fastapi_logo}
+                                    alt="fastapi logo"
                                 />
                             </div>
                             <div className="col">
                                 <img
                                     className="tool"
-                                    src="images/react.png"
-                                    alt="Fast API"
+                                    src={react_logo}
+                                    alt="react logo"
                                 />
                             </div>
                         </div>
@@ -56,15 +66,15 @@ function HomePage() {
                             <div className="col">
                                 <img
                                     className="tool"
-                                    src="images/docker.png"
-                                    alt="Fast API"
+                                    src={docker_logo}
+                                    alt="docker logo"
                                 />
                             </div>
                             <div className="col">
                                 <img
                                     className="tool"
-                                    src="images/heroku1.png"
-                                    alt="Fast API"
+                                    src={heroku_logo}
+                                    alt="heroku logo"
                                 />
                             </div>
                         </div>
@@ -72,15 +82,15 @@ function HomePage() {
                             <div className="col">
                                 <img
                                     className="tool"
-                                    src="images/chartjs.png"
-                                    alt="Fast API"
+                                    src={chartjs_logo}
+                                    alt="chartjs logo"
                                 />
                             </div>
                             <div className="col">
                                 <img
                                     className="tool"
-                                    src="images/postgres.png"
-                                    alt="Fast API"
+                                    src={postgres_logo}
+                                    alt="postgres logo"
                                 />
                             </div>
                         </div>
@@ -111,7 +121,7 @@ function HomePage() {
                                 </div>
                             </div>
                         </div>
-
+                        {/* developer pictures carousel */}
                         {/* <div className="home d-flex row justify-content-center mx-3 my-3">
                             <div
                                 id="carouselExampleCaptions"
@@ -218,7 +228,7 @@ function HomePage() {
                             <a href="https://gitlab.com/apex-legends1/paper-stonks/">
                                 <img
                                     className="tool"
-                                    src="images/gitlab.png"
+                                    src={gitlab_logo}
                                     alt="gitlab"
                                 ></img>
                             </a>
@@ -227,7 +237,7 @@ function HomePage() {
                             <a href="https://www.alphavantage.co/">
                                 <img
                                     className="tool"
-                                    src="images/alpha-vantage.png"
+                                    src={alpha_vantage_logo}
                                     alt="alpha-vantage"
                                 ></img>
                             </a>
