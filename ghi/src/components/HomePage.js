@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import react_logo from "./images/react.png";
 import chartjs_logo from "./images/chartjs.png";
 import alpha_vantage_logo from "./images/alpha-vantage.png";
@@ -11,9 +10,6 @@ import logo from "./images/logo-inverted-md.jpg";
 import fastapi_logo from "./images/fast-api.png";
 import graph from "./images/graph.png";
 
-=======
-// import ps_logo from "../ghi/src/ps_logo.png"
->>>>>>> 276edcaf039078ae53f8ccd45e5ed36728f22442
 function HomePage() {
     return (
         <>
@@ -39,11 +35,7 @@ function HomePage() {
                     <div className=" d-flex justify-content-center col-lg-5 mx-auto">
                         <img
                             className="img-fluid rounded d-flex"
-<<<<<<< HEAD
                             src={graph}
-=======
-                            src="images/graph.png"
->>>>>>> 276edcaf039078ae53f8ccd45e5ed36728f22442
                             alt="graph"
                         ></img>
                     </div>
@@ -236,11 +228,7 @@ function HomePage() {
                             <a href="https://gitlab.com/apex-legends1/paper-stonks/">
                                 <img
                                     className="tool"
-<<<<<<< HEAD
                                     src={gitlab_logo}
-=======
-                                    src="images/gitlab.png"
->>>>>>> 276edcaf039078ae53f8ccd45e5ed36728f22442
                                     alt="gitlab"
                                 ></img>
                             </a>
@@ -249,11 +237,7 @@ function HomePage() {
                             <a href="https://www.alphavantage.co/">
                                 <img
                                     className="tool"
-<<<<<<< HEAD
                                     src={alpha_vantage_logo}
-=======
-                                    src="images/alpha-vantage.png"
->>>>>>> 276edcaf039078ae53f8ccd45e5ed36728f22442
                                     alt="alpha-vantage"
                                 ></img>
                             </a>
