@@ -1,7 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import { Doughnut } from "react-chartjs-2";
 
 const Dashboard = () => {
     const [fastapi_token] = useContext(UserContext);
@@ -10,7 +9,6 @@ const Dashboard = () => {
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useState("");
     const [portfolioValue, setPortfolioValue] = useState([]);
-    // const [graph_data, setGraphData] = useState("");
 
     localStorage.setItem("Username", username);
     localStorage.setItem("buyingPower", currentbuyingPower);
@@ -64,43 +62,6 @@ const Dashboard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username]);
 
-    //DOUGHNUTCHART
-
-    // const data = {
-    //     labels: positions["name"],
-    //     datasets: [
-    //         {
-    //             label: positions["symbol"],
-    //             data: positions["value"],
-    //             backgroundColor: [
-    //                 "rgb(255, 99, 132)",
-    //                 "rgb(54, 162, 235)",
-    //                 "rgb(255, 205, 86)",
-    //             ],
-    //             hoverOffset: 4,
-    //         },
-    //     ],
-    // };
-    // console.log(positions.map((position) => [position.value]));
-    const data = {
-        labels: positions.map((position) => [position.symbol]),
-        datasets: [
-            {
-                label: "Price",
-                data: positions.map((position) => [position.value]),
-                backgroundColor: [
-                    "rgb(255, 99, 132)",
-                    "rgb(54, 162, 235)",
-                    "rgb(255, 205, 86)",
-                    "rgb(93, 63, 211)",
-                    "rgb(127, 0, 255)",
-                ],
-                hoverOffset: 4,
-            },
-        ],
-    };
-
-    const options = {};
     /* This function gets the stock prices from our third party API and creates a 
     key, value pair in the positions dictionary with the dollar value of your stock position
     */
@@ -221,13 +182,6 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-
-                    <div
-                        className="chart-container col-xl-4 mt-3 justify-content-center"
-                        style={{ height: "60vh" }}
-                    >
-                        <Doughnut data={data} options={options} />
                     </div>
                     <div className="d-flex flex-srow justify-content-center">
                         <h6 className="display-6">Add Funds</h6>
