@@ -14,6 +14,9 @@
     color: white;
 }
 
+.position-row {
+    padding-top: 5px;
+}
 .dev {
     padding: 1em;
 }

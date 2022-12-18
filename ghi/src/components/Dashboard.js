@@ -300,14 +300,19 @@ const Dashboard = () => {
                                 <tbody>
                                     {positions.map((position) => {
                                         return (
-                                            <tr key={position.id}>
-                                                <td>
-                                                    <p></p>
+                                            <tr
+                                                className="position-row"
+                                                key={position.id}
+                                            >
+                                                <td valign="middle">
                                                     {position.symbol}
                                                 </td>
-                                                <td>
-                                                    <p>{position.stockPrice}</p>
+                                                <td valign="middle">
+                                                    <p className="mb-0">
+                                                        {position.stockPrice}
+                                                    </p>
                                                     <p
+                                                        className="mb-0"
                                                         style={{
                                                             color:
                                                                 position.stockChange <
@@ -323,13 +328,16 @@ const Dashboard = () => {
                                                         {position.stockChange}
                                                     </p>
                                                 </td>
-                                                <td>
-                                                    <p></p>
+                                                <td valign="middle">
                                                     {position.quantity}
                                                 </td>
-                                                <td>
-                                                    <p>${position.value}</p>
+                                                <td valign="middle">
+                                                    <p className="mb-0">
+                                                        ${position.value}
+                                                    </p>
                                                     <p
+                                                        className="mb-0"
+                                                        valign="middle"
                                                         style={{
                                                             color:
                                                                 position.stockChange <
