@@ -105,12 +105,31 @@ const Dashboard = () => {
             ).then((responses) => {
                 stockPrices = positions.map((position) => {
                     if (idx < positions.length) {
-                        let stockPrice =
-                            responses[idx]["Global Quote"]["05. price"] *
-                            position["quantity"];
+                        position["value"] = parseFloat(
+                            parseFloat(
+                                responses[idx]["Global Quote"]["05. price"] *
+                                    position["quantity"]
+                            ).toFixed(2)
+                        );
+                        position["stockPrice"] = parseFloat(
+                            responses[idx]["Global Quote"]["05. price"]
+                        );
+
+                        position["stockChange"] = parseFloat(
+                            parseFloat(
+                                responses[idx]["Global Quote"]["09. change"]
+                            ).toFixed(2)
+                        );
+                        position["stockChangePercent"] = parseFloat(
+                            parseFloat(
+                                responses[idx]["Global Quote"][
+                                    "10. change percent"
+                                ].replace("%", "")
+                            ).toFixed(2)
+                        );
                         idx++;
-                        count += stockPrice;
-                        return { ...position, value: stockPrice.toFixed(2) };
+                        count += position["value"];
+                        return { ...position };
                     }
                     return [];
                 });
@@ -164,11 +183,11 @@ const Dashboard = () => {
         return (
             <>
                 <div className="dashboard d-flex row justify-content-around text-center">
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center p-0">
                         <h1 className="display-3 p-5">Dashboard</h1>
                     </div>
 
-                    <div className="d-flex text-center">
+                    <div className="d-flex text-center justify content around p-0">
                         <div className="d-flex justify-content-center col-6">
                             <h3 className="display-6">
                                 Total Value: ${portfolioValue}
@@ -178,15 +197,6 @@ const Dashboard = () => {
                             <h3 className="display-6">
                                 Buying Power: {currentbuyingPower}
                             </h3>
-
-                            <button
-                                type="button"
-                                className="btn btn-dark btn-lg"
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                            >
-                                Add Funds
-                            </button>
                         </div>
 
                         <div className="d-flex justify-content-center align-items-center col-xs-6">
@@ -264,15 +274,25 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="d-flex row justify-content-center mt-4 col-lg-2 col-md-3 col-sm-4 col-xs-2 p-0">
+                        <button
+                            type="button"
+                            className="btn-dark btn-lg"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                        >
+                            Add Funds
+                        </button>
+                    </div>
 
-                    <div className="d-flex row justify-content-center text-center mt-5">
-                        <div className="table-responsive shadow p-3 mb-2 bg-black col-xl-4 table-sm">
+                    <div className="d-flex row justify-content-center text-center mt-4 p-0">
+                        <div className="table-responsive shadow mb-2 bg-black col-xl-6 table-sm p-0">
                             <h3 className="display-5">Positions</h3>
-                            <table className="table">
+                            <table className="table mx-auto">
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">Symbol</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Value</th>
                                     </tr>
@@ -281,10 +301,54 @@ const Dashboard = () => {
                                     {positions.map((position) => {
                                         return (
                                             <tr key={position.id}>
-                                                <td>{position.symbol}</td>
-                                                <td>{position.name}</td>
-                                                <td>{position.quantity}</td>
-                                                <td>$ {position.value}</td>
+                                                <td>
+                                                    <p></p>
+                                                    {position.symbol}
+                                                </td>
+                                                <td>
+                                                    <p>{position.stockPrice}</p>
+                                                    <p
+                                                        style={{
+                                                            color:
+                                                                position.stockChange <
+                                                                0
+                                                                    ? "red"
+                                                                    : "#34eb49",
+                                                        }}
+                                                    >
+                                                        {position.stockChange >
+                                                        0
+                                                            ? "+"
+                                                            : ""}
+                                                        {position.stockChange}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p></p>
+                                                    {position.quantity}
+                                                </td>
+                                                <td>
+                                                    <p>${position.value}</p>
+                                                    <p
+                                                        style={{
+                                                            color:
+                                                                position.stockChange <
+                                                                0
+                                                                    ? "red"
+                                                                    : "#34eb49",
+                                                        }}
+                                                    >
+                                                        {position.stockChange >
+                                                        0
+                                                            ? "+"
+                                                            : ""}
+                                                        {(
+                                                            (position.stockChangePercent /
+                                                                100) *
+                                                            position.value
+                                                        ).toFixed(2)}
+                                                    </p>
+                                                </td>
                                             </tr>
                                         );
                                     })}
@@ -292,7 +356,7 @@ const Dashboard = () => {
                             </table>
                         </div>
                         <div
-                            className="chart-container flex-row col-xl-4 justify-content-center"
+                            className="chart-container flex-row col-xl-3 mt-5 justify-content-center"
                             style={{ height: "60vh" }}
                         >
                             <Doughnut
@@ -301,8 +365,6 @@ const Dashboard = () => {
                             />
                         </div>
                     </div>
-
-                    <div className="d-flex flex-row justify-content-center"></div>
                 </div>
             </>
         );
