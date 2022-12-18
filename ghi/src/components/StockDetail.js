@@ -186,10 +186,10 @@ function StockDetail({ search }) {
 
             <div className="d-flex justify-content-around">
                 <div class="bg-transparent">
-                    <h6 class="display-6">Your Position</h6>
                     <hr></hr>
                     {shares_owned > 0 ? (
                         <>
+                            <h6 class="display-6">Your Position</h6>
                             <h5 class="display-6">
                                 ${(shares_owned * price).toFixed(2)} | (
                                 {shares_owned})

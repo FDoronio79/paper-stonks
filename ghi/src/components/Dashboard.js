@@ -64,24 +64,6 @@ const Dashboard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username]);
 
-    //DOUGHNUTCHART
-
-    // const data = {
-    //     labels: positions["name"],
-    //     datasets: [
-    //         {
-    //             label: positions["symbol"],
-    //             data: positions["value"],
-    //             backgroundColor: [
-    //                 "rgb(255, 99, 132)",
-    //                 "rgb(54, 162, 235)",
-    //                 "rgb(255, 205, 86)",
-    //             ],
-    //             hoverOffset: 4,
-    //         },
-    //     ],
-    // };
-    // console.log(positions.map((position) => [position.value]));
     const data = {
         labels: positions.map((position) => [position.symbol]),
         datasets: [
@@ -172,32 +154,120 @@ const Dashboard = () => {
     };
 
     if (!fastapi_token) {
-        return <Navigate replace to="/login" />;
+        return (
+            <Navigate
+                replace
+                to="/login"
+            />
+        );
     } else {
         return (
             <>
-                <div className="dashboard d-flex row justify-content-center">
+                <div className="dashboard d-flex row justify-content-around text-center">
                     <div className="d-flex justify-content-center">
-                        <h1 className="display-4 p-5">Dashboard</h1>
+                        <h1 className="display-3 p-5">Dashboard</h1>
                     </div>
 
-                    <div className="d-flex justify-content-center p-5">
-                        <ul>
-                            <h4 className="display-6">
+                    <div className="d-flex text-center">
+                        <div className="d-flex justify-content-center col-6">
+                            <h3 className="display-6">
                                 Total Value: ${portfolioValue}
-                            </h4>
-                            <hr></hr>
-                            <h4 className="display-6">
+                            </h3>
+                        </div>
+                        <div className="d-grid justify-content-center col-6">
+                            <h3 className="display-6">
                                 Buying Power: {currentbuyingPower}
-                            </h4>
-                        </ul>
+                            </h3>
+
+                            <button
+                                type="button"
+                                className="btn btn-dark btn-lg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                            >
+                                Add Funds
+                            </button>
+                        </div>
+
+                        <div className="d-flex justify-content-center align-items-center col-xs-6">
+                            <div
+                                className="modal fade"
+                                id="exampleModal"
+                                tabIndex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div className="modal-dialog">
+                                    <div className="modal-content text-black">
+                                        <div className="modal-header">
+                                            <h1
+                                                className="modal-title fs-5"
+                                                id="exampleModalLabel"
+                                            >
+                                                Add Funds
+                                            </h1>
+                                            <button
+                                                type="button"
+                                                className="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form
+                                                className=""
+                                                onSubmit={handleSubmit}
+                                            >
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            $
+                                                        </span>
+                                                    </div>
+
+                                                    <input
+                                                        id="add-money"
+                                                        type="text"
+                                                        placeholder="0.00"
+                                                        value={buyingPower}
+                                                        onChange={(e) =>
+                                                            setBuyingPower(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="form-control"
+                                                        required
+                                                        aria-label="Amount (to the nearest dollar)"
+                                                    />
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary"
+                                                data-bs-dismiss="modal"
+                                                onClick={handleSubmit}
+                                            >
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="d-flex row justify-content-center">
-                        <div className="d-flex  justify-content-center ml-5 ">
+                    <div className="d-flex row justify-content-center text-center mt-5">
+                        <div className="table-responsive shadow p-3 mb-2 bg-black col-xl-4 table-sm">
                             <h3 className="display-5">Positions</h3>
-                        </div>
-                        <div className="table-responsive shadow p-3 mb-5 bg-black col-xl-4 table-sm">
                             <table className="table">
                                 <thead className="thead-light">
                                     <tr>
@@ -221,52 +291,18 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                         </div>
+                        <div
+                            className="chart-container flex-row col-xl-4 justify-content-center"
+                            style={{ height: "60vh" }}
+                        >
+                            <Doughnut
+                                data={data}
+                                options={options}
+                            />
+                        </div>
                     </div>
 
-                    <div
-                        className="chart-container col-xl-4 mt-3 justify-content-center"
-                        style={{ height: "60vh" }}
-                    >
-                        <Doughnut data={data} options={options} />
-                    </div>
-                    <div className="d-flex flex-srow justify-content-center">
-                        <h6 className="display-6">Add Funds</h6>
-                    </div>
-                    <div className="d-flex row justify-content-center">
-                        <form className="box" onSubmit={handleSubmit}>
-                            <div className="form mb-3 d-flex justify-content-center">
-                                <div className="flex-row">
-                                    <div class="input-group mb-2">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                $
-                                            </span>
-                                        </div>
-
-                                        <input
-                                            type="text"
-                                            placeholder="0.00"
-                                            value={buyingPower}
-                                            onChange={(e) =>
-                                                setBuyingPower(e.target.value)
-                                            }
-                                            className="form-control"
-                                            required
-                                            aria-label="Amount (to the nearest dollar)"
-                                        />
-                                    </div>
-                                    <div className="d-flex justify-content-center">
-                                        <button
-                                            className="btn btn-primary"
-                                            type="submit"
-                                        >
-                                            Add Money
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <div className="d-flex flex-row justify-content-center"></div>
                 </div>
             </>
         );
