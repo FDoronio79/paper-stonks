@@ -23,6 +23,7 @@ const Transactions = () => {
             );
             if (response.ok) {
                 const data = await response.json();
+                data.reverse();
                 setTransactions(data);
             } else {
             }
