@@ -8,7 +8,6 @@ export default function SellForm({ price, symbol, name }) {
     const [show, setShow] = useState(false);
     const [showBad, setShowBad] = useState(false);
     const buyingPow = localStorage.getItem("buyingPower");
-    const navigate = useNavigate();
     const usernameAcc = localStorage.getItem("Username");
     const symbolStock = symbol;
     const [quantity1, setQuantity] = useState(1);

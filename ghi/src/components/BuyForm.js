@@ -17,7 +17,6 @@ export default function BuyForm({ price, symbol, name }) {
     let currDateTime = Date.now();
     const typeOfItem = "stock";
     const nameStock = name;
-    const navigate = useNavigate();
     const estimatedPrice = (quantity1 * price).toFixed(2);
     const withoutDollarSign = buyingPow.replace("$", "");
     const removedCommas = withoutDollarSign.replaceAll(",", "");
