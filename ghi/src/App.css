@@ -12,9 +12,11 @@
 
 .table {
     color: white;
-    max-width: 95%;
 }
 
+.position-row {
+    padding-top: 5px;
+}
 .dev {
     padding: 1em;
 }
@@ -22,6 +24,17 @@
 .tool {
     height: 70px;
     margin: 20px;
+}
+
+.offcanvas {
+    padding: 0;
+    border-left: 0 !important;
+}
+
+td,
+th {
+    vertical-align: middle;
+    text-align: center;
 }
 
 .home,
@@ -38,6 +51,10 @@
     background-color: #000;
     color: #fff;
     padding-top: 70px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 #offcanvasBUY,

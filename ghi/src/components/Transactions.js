@@ -23,6 +23,7 @@ const Transactions = () => {
             );
             if (response.ok) {
                 const data = await response.json();
+                data.reverse();
                 setTransactions(data);
             } else {
             }
@@ -45,7 +46,7 @@ const Transactions = () => {
                     <div className="d-flex justify-content-center">
                         <h1 className="display-4 p-5">Transaction History</h1>
                     </div>
-                    <div className="table-responsive bg-black col-xl-4 ">
+                    <div className="table-responsive bg-black col-xl-4 p-0">
                         <table className="table">
                             <thead>
                                 <tr>
@@ -53,7 +54,7 @@ const Transactions = () => {
                                     <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Buy/Sell</th>
-                                    <th scope="col">Time of Purchase</th>
+                                    <th scope="col">Time</th>
                                 </tr>
                             </thead>
                             <tbody>

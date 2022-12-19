@@ -181,7 +181,7 @@ function Nav({ setSymbol, symbol }) {
                             className="float-right"
                         >
                             <Link
-                                className="nav-text nav-item h4"
+                                className="nav-text nav-item h4 m-0"
                                 to="/"
                                 style={{
                                     color: "black",
