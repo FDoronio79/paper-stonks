@@ -304,10 +304,8 @@ const Dashboard = () => {
                                                 className="position-row"
                                                 key={position.id}
                                             >
-                                                <td valign="middle">
-                                                    {position.symbol}
-                                                </td>
-                                                <td valign="middle">
+                                                <td>{position.symbol}</td>
+                                                <td>
                                                     <p className="mb-0">
                                                         {position.stockPrice}
                                                     </p>
@@ -328,16 +326,13 @@ const Dashboard = () => {
                                                         {position.stockChange}
                                                     </p>
                                                 </td>
-                                                <td valign="middle">
-                                                    {position.quantity}
-                                                </td>
-                                                <td valign="middle">
+                                                <td>{position.quantity}</td>
+                                                <td>
                                                     <p className="mb-0">
                                                         ${position.value}
                                                     </p>
                                                     <p
                                                         className="mb-0"
-                                                        valign="middle"
                                                         style={{
                                                             color:
                                                                 position.stockChange <

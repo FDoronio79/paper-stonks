@@ -4,8 +4,10 @@ import SellForm from "./SellForm";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { Line } from "react-chartjs-2";
+import zoomPlugin from "chartjs-plugin-zoom";
 // eslint-disable-next-line
 import Chart from "chart.js/auto";
+Chart.register(zoomPlugin);
 function StockDetail({ search }) {
     const { stockSymbol } = useParams();
     const [price, setPrice] = useState("");
@@ -116,6 +118,21 @@ function StockDetail({ search }) {
         color: "#ffffff",
         responsive: true,
         plugins: {
+            zoom: {
+                pan: {
+                    enabled: true,
+                    mode: "x",
+                },
+                zoom: {
+                    pinch: {
+                        enabled: true, // Enable pinch zooming
+                    },
+                    wheel: {
+                        enabled: true, // Enable wheel zooming
+                    },
+                    mode: "x",
+                },
+            },
             legend: {
                 display: false,
                 position: "right",
@@ -142,7 +159,7 @@ function StockDetail({ search }) {
                 ticks: {
                     color: "#ffffff",
                     maxTicksLimit: 5,
-                    display: false,
+                    display: true,
                 },
                 grid: {
                     height: "calc(100vh - 2em)",
@@ -172,10 +189,10 @@ function StockDetail({ search }) {
                 <h1 className="display-4 p-3">{name}</h1>
             </div>
             <div className="d-flex flex-row justify-content-around">
-                <p class="display-6">${price}</p>
+                <p className="display-6">${price}</p>
 
                 <p
-                    class="display-6"
+                    className="display-6"
                     style={{
                         color: percent.startsWith("-") ? "red" : "#34eb49",
                     }}
@@ -183,14 +200,13 @@ function StockDetail({ search }) {
                     {change} ({percent}%)
                 </p>
             </div>
-
+            <hr className="col-lg-8 col-sm-10 col-xs-10"></hr>
             <div className="d-flex justify-content-around">
-                <div class="bg-transparent">
-                    <hr></hr>
+                <div className="bg-transparent">
                     {shares_owned > 0 ? (
                         <>
-                            <h6 class="display-6">Your Position</h6>
-                            <h5 class="display-6">
+                            <h6 className="display-6">Your Position</h6>
+                            <h5 className="display-6">
                                 ${(shares_owned * price).toFixed(2)} | (
                                 {shares_owned})
                             </h5>
@@ -200,20 +216,20 @@ function StockDetail({ search }) {
                     )}
                 </div>
                 <div
-                    class="btn-group align-items-center"
+                    className="btn-group align-items-center"
                     role="group"
                 >
                     <button
                         id="btnGroupDrop1"
                         type="button"
-                        class="btn btn-light  btn-lg dropdown-toggle"
+                        className="btn btn-light  btn-lg dropdown-toggle"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                     >
                         Trade
                     </button>
                     <ul
-                        class="dropdown-menu"
+                        className="dropdown-menu"
                         aria-labelledby="btnGroupDrop1"
                     >
                         <li>
@@ -242,7 +258,7 @@ function StockDetail({ search }) {
                 </div>
             </div>
             <div
-                class="chart-container col-lg-8 mt-3"
+                className="chart-container col-lg-8 p-1 mt-3"
                 style={{ height: "60vh" }}
             >
                 <Line

@@ -26,6 +26,17 @@
     margin: 20px;
 }
 
+.offcanvas {
+    padding: 0;
+    border-left: 0 !important;
+}
+
+td,
+th {
+    vertical-align: middle;
+    text-align: center;
+}
+
 .home,
 .dashboard,
 .transactions,
