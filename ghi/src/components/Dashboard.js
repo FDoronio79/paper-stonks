@@ -315,7 +315,7 @@ const Dashboard = ({ setSymbol, symbol }) => {
 
                     <div className="d-flex row justify-content-center text-center mt-4 p-0">
                         <div className="table-responsive shadow mb-2 bg-black col-xl-6 table-sm p-0">
-                            <h3 className="display-5"></h3>
+                            <h3 className="display-5">Positions</h3>
                             <table className="table mx-auto table-hover">
                                 <thead className="thead-light">
                                     <tr>
