@@ -14,6 +14,11 @@
     color: white;
 }
 
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    background-color: rgba(121, 121, 121, 0.253);
+    color: #ffffff;
+}
 .position-row {
     padding-top: 5px;
 }
@@ -42,7 +47,8 @@ th {
 .transactions,
 .logout,
 .stock,
-.login {
+.login,
+.confirmation {
     display: flex;
     /* height: 100vh; */
     align-items: center;

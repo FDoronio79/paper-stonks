@@ -1,15 +1,16 @@
 import { useContext, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { Doughnut } from "react-chartjs-2";
 
-const Dashboard = () => {
+const Dashboard = ({ setSymbol, symbol }) => {
+    const navigate = useNavigate();
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useState("");
-    const [portfolioValue, setPortfolioValue] = useState([]);
+    const [portfolioValue, setPortfolioValue] = useState("");
     // const [graph_data, setGraphData] = useState("");
 
     localStorage.setItem("Username", username);
@@ -68,21 +69,41 @@ const Dashboard = () => {
         labels: positions.map((position) => [position.symbol]),
         datasets: [
             {
-                label: "Price",
+                label: " Price",
                 data: positions.map((position) => [position.value]),
                 backgroundColor: [
-                    "rgb(255, 99, 132)",
-                    "rgb(54, 162, 235)",
-                    "rgb(255, 205, 86)",
-                    "rgb(93, 63, 211)",
-                    "rgb(127, 0, 255)",
+                    "#205072",
+                    "#329D9C",
+                    "#56C596",
+                    "#7BE495",
+                    "#CFF4D2",
+                    "#7BD5F5",
+                    "#787FF6",
+                    "#4ADEDE",
+                    "#1CA7EC",
+                    "#1F2F98",
                 ],
-                hoverOffset: 4,
+                hoverOffset: 40,
             },
         ],
     };
 
-    const options = {};
+    const options = {
+        layout: {
+            padding: {
+                bottom: 20, //set that fits the best
+            },
+        },
+        borderJoinStyle: "bevel",
+        borderWidth: 0,
+        plugins: {
+            legend: {
+                labels: {
+                    color: "#ffffff",
+                },
+            },
+        },
+    };
     /* This function gets the stock prices from our third party API and creates a 
     key, value pair in the positions dictionary with the dollar value of your stock position
     */
@@ -131,10 +152,16 @@ const Dashboard = () => {
                         count += position["value"];
                         return { ...position };
                     }
+
                     return [];
                 });
-                setPortfolioValue(count.toFixed(2));
+                setPortfolioValue(
+                    (
+                        Math.round((count + Number.EPSILON) * 100) / 100
+                    ).toLocaleString("en-US")
+                );
             });
+
             setPositions(stockPrices);
             return stockPrices;
         };
@@ -142,7 +169,7 @@ const Dashboard = () => {
         if (positions.length > 0 && !positions[0]?.value) {
             getStockPrice();
         }
-    }, [positions]);
+    }, [positions, currentbuyingPower]);
 
     // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
@@ -190,7 +217,8 @@ const Dashboard = () => {
                     <div className="d-flex text-center justify content around p-0">
                         <div className="d-flex justify-content-center col-6">
                             <h3 className="display-6">
-                                Total Value: ${portfolioValue}
+                                Total Value: $
+                                {portfolioValue.toLocaleString("en-US")}
                             </h3>
                         </div>
                         <div className="d-grid justify-content-center col-6">
@@ -287,8 +315,8 @@ const Dashboard = () => {
 
                     <div className="d-flex row justify-content-center text-center mt-4 p-0">
                         <div className="table-responsive shadow mb-2 bg-black col-xl-6 table-sm p-0">
-                            <h3 className="display-5">Positions</h3>
-                            <table className="table mx-auto">
+                            <h3 className="display-5"></h3>
+                            <table className="table mx-auto table-hover">
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">Symbol</th>
@@ -301,8 +329,16 @@ const Dashboard = () => {
                                     {positions.map((position) => {
                                         return (
                                             <tr
+                                                onClick={() => {
+                                                    setSymbol(position.symbol);
+
+                                                    navigate(
+                                                        `/stock/${position.symbol.toUpperCase()}`
+                                                    );
+                                                }}
                                                 className="position-row"
                                                 key={position.id}
+                                                value={position.symbol}
                                             >
                                                 <td>{position.symbol}</td>
                                                 <td>
@@ -315,8 +351,8 @@ const Dashboard = () => {
                                                             color:
                                                                 position.stockChange <
                                                                 0
-                                                                    ? "red"
-                                                                    : "#34eb49",
+                                                                    ? "#DA0000"
+                                                                    : "#2FEB8F",
                                                         }}
                                                     >
                                                         {position.stockChange >
@@ -337,8 +373,8 @@ const Dashboard = () => {
                                                             color:
                                                                 position.stockChange <
                                                                 0
-                                                                    ? "red"
-                                                                    : "#34eb49",
+                                                                    ? "#DA0000"
+                                                                    : "#2FEB8F",
                                                         }}
                                                     >
                                                         {position.stockChange >

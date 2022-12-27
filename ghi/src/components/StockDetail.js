@@ -95,11 +95,11 @@ function StockDetail({ search }) {
                 // fillColor: "#d048b6",
                 fill: true,
                 lineTension: 0.5,
-                backgroundColor: "rgba(208,72,182,0.2)",
-                borderColor: "#d048b6",
+                backgroundColor: change > 0 ? "#0B3621" : "#590000",
+                borderColor: change > 0 ? "#2FEB8F" : "#DA0000",
                 borderWidth: 2,
                 // pointHoverBackgroundColor: "#d048b6",
-                pointBackgroundColor: "#d048b6",
+                pointBackgroundColor: change > 0 ? "#2FEB8F" : "#DA0000",
                 pointBorderWidth: 0,
                 pointHoverRadius: 6,
                 pointHoverBorderWidth: 2,
@@ -194,7 +194,7 @@ function StockDetail({ search }) {
                 <p
                     className="display-6"
                     style={{
-                        color: percent.startsWith("-") ? "red" : "#34eb49",
+                        color: percent.startsWith("-") ? "#DA0000" : "#2FEB8F",
                     }}
                 >
                     {change} ({percent}%)

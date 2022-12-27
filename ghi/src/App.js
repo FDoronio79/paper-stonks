@@ -34,7 +34,12 @@ function App() {
                         />
                         <Route
                             path="/dashboard"
-                            element={<Dashboard />}
+                            element={
+                                <Dashboard
+                                    setSymbol={setSymbol}
+                                    symbol={symbol}
+                                />
+                            }
                         />
                         <Route
                             path="/transactions"

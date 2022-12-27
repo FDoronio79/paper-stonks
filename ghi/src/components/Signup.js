@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-
+import SignupConfirmationPage from "./SignupConfirmationPage";
 class SignupForm extends React.Component {
     constructor(props) {
         super(props);
@@ -71,7 +70,7 @@ class SignupForm extends React.Component {
                 // eslint-disable-next-line
                 const newAccountVO = await responsevo.json();
                 this.setState({
-                    username: "",
+                    // username: "",
                     hasSignedUp: true,
                 });
             }
@@ -80,138 +79,140 @@ class SignupForm extends React.Component {
 
     render() {
         if (this.state.hasSignedUp) {
+            return <SignupConfirmationPage username={this.state.username} />;
+        } else {
             return (
-                <Navigate
-                    to="/dashboard"
-                    replace={true}
-                />
-            );
-        }
-
-        return (
-            <>
-                <div className="login d-flex row justify-content-center">
-                    <div className="d-flex justify-content-around">
-                        <h1 className="display-4 p-3">Signup</h1>
-                    </div>
-                    <div className="d-flex flex-row  col-sm-10 col-xl-6 justify-content-center">
-                        <div>
-                            <div
-                                className="bg-transparent
-                                "
-                                style={{ borderRadius: "1rem" }}
-                            >
-                                <div className="p-5 text-center">
-                                    <div className="mb-md-5 mt-md-4 pb-5">
-                                        <form
-                                            className="box"
-                                            onSubmit={this.handleSubmit}
-                                        >
-                                            <div className="form-outline mb-4">
-                                                <label
-                                                    className="form-label"
-                                                    htmlFor="typeEmailX"
-                                                >
-                                                    Email
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="typeEmailX"
-                                                    className="form-control form-control-lg"
-                                                    onChange={
-                                                        this.handleChangeEmail
-                                                    }
-                                                    value={this.state.email}
-                                                    placeholder="Email"
-                                                    required
-                                                    name="email"
-                                                />
-                                            </div>
-
-                                            <div className="form-outline mb-4">
-                                                <label
-                                                    className="form-label"
-                                                    htmlFor="username"
-                                                >
-                                                    Username
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="username"
-                                                    name="username"
-                                                    className="form-control form-control-lg"
-                                                    onChange={
-                                                        this
-                                                            .handleChangeUsername
-                                                    }
-                                                    value={this.state.username}
-                                                    placeholder="Username"
-                                                    required
-                                                />
-                                            </div>
-
-                                            <div className="form-outline mb-4">
-                                                <label
-                                                    className="form-label"
-                                                    htmlFor="typePasswordX"
-                                                >
-                                                    Password
-                                                </label>
-                                                <input
-                                                    type="password"
-                                                    name="password"
-                                                    id="typePasswordX"
-                                                    className="form-control form-control-lg"
-                                                    onChange={
-                                                        this
-                                                            .handleChangePassword
-                                                    }
-                                                    value={this.state.password}
-                                                    placeholder="Password"
-                                                    required
-                                                />
-                                            </div>
-                                            {/* <ErrorMessage
-                                                message={errorMessage}
-                                            /> */}
-
-                                            <div className="form-outline mb-4">
-                                                <label
-                                                    className="form-label"
-                                                    htmlFor="fullName"
-                                                >
-                                                    Full Name
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="fullName"
-                                                    name="fullName"
-                                                    className="form-control form-control-lg"
-                                                    onChange={
-                                                        this
-                                                            .handleChangeFullName
-                                                    }
-                                                    value={this.state.full_name}
-                                                    placeholder="Full Name"
-                                                    required
-                                                />
-                                            </div>
-
-                                            <button
-                                                className="btn btn-light btn-md px-4"
-                                                type="submit"
+                <>
+                    <div className="login d-flex row justify-content-center">
+                        <div className="d-flex justify-content-around">
+                            <h1 className="display-4 p-3">Signup</h1>
+                        </div>
+                        <div className="d-flex flex-row  col-sm-10 col-xl-6 justify-content-center">
+                            <div>
+                                <div
+                                    className="bg-transparent
+                                    "
+                                    style={{ borderRadius: "1rem" }}
+                                >
+                                    <div className="p-5 text-center">
+                                        <div className="mb-md-5 mt-md-4 pb-5">
+                                            <form
+                                                className="box"
+                                                onSubmit={this.handleSubmit}
                                             >
-                                                Signup
-                                            </button>
-                                        </form>
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="typeEmailX"
+                                                    >
+                                                        Email
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="typeEmailX"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangeEmail
+                                                        }
+                                                        value={this.state.email}
+                                                        placeholder="Email"
+                                                        required
+                                                        name="email"
+                                                    />
+                                                </div>
+
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="username"
+                                                    >
+                                                        Username
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="username"
+                                                        name="username"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangeUsername
+                                                        }
+                                                        value={
+                                                            this.state.username
+                                                        }
+                                                        placeholder="Username"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="typePasswordX"
+                                                    >
+                                                        Password
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        name="password"
+                                                        id="typePasswordX"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangePassword
+                                                        }
+                                                        value={
+                                                            this.state.password
+                                                        }
+                                                        placeholder="Password"
+                                                        required
+                                                    />
+                                                </div>
+                                                {/* <ErrorMessage
+                                                    message={errorMessage}
+                                                /> */}
+
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="fullName"
+                                                    >
+                                                        Full Name
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="fullName"
+                                                        name="fullName"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangeFullName
+                                                        }
+                                                        value={
+                                                            this.state.full_name
+                                                        }
+                                                        placeholder="Full Name"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <button
+                                                    className="btn btn-light btn-md px-4"
+                                                    type="submit"
+                                                >
+                                                    Signup
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </>
-        );
+                </>
+            );
+        }
     }
 }
 

@@ -47,7 +47,7 @@ const Transactions = () => {
                         <h1 className="display-4 p-5">Transaction History</h1>
                     </div>
                     <div className="table-responsive bg-black col-xl-4 p-0">
-                        <table className="table">
+                        <table className="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">Symbol</th>
@@ -66,9 +66,29 @@ const Transactions = () => {
                                             <td>{transaction.quantity}</td>
                                             <td>{transaction.type_of}</td>
                                             <td>
-                                                {new Date(
-                                                    transaction.time_of_purchase
-                                                ).toLocaleString()}
+                                                <p className="mb-0">
+                                                    {
+                                                        new Date(
+                                                            transaction.time_of_purchase
+                                                        )
+                                                            .toLocaleString()
+                                                            .split(",")[0]
+                                                    }
+                                                </p>
+                                                <p className="mb-0">
+                                                    {new Date(
+                                                        transaction.time_of_purchase
+                                                    )
+                                                        .toLocaleString()
+                                                        .split(",")[1]
+                                                        .slice(0, 6) +
+                                                        new Date(
+                                                            transaction.time_of_purchase
+                                                        )
+                                                            .toLocaleString()
+                                                            .split(",")[1]
+                                                            .slice(9)}
+                                                </p>
                                             </td>
                                         </tr>
                                     );
