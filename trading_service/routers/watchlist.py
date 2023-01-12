@@ -34,11 +34,11 @@ def get_all(
     return repo.get_all(username=username)
 
 
-@router.delete("/watchlist/{position_symbol}", response_model=bool)
-def delete_position(
+@router.delete("/watchlist/{watchlist_symbol}", response_model=bool)
+def delete_watchlist_symbol(
     username: str,
-    position_symbol: str,
+    watchlist_symbol: str,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WatchlistRepository = Depends(),
 ) -> bool:
-    return repo.delete(username=username, position_symbol=position_symbol)
+    return repo.delete(username=username, watchlist_symbol=watchlist_symbol)

@@ -29,7 +29,7 @@ class WatchlistRepository:
                     result = db.execute(
                         """
                         INSERT INTO watchlist
-                            (username, symbols)
+                            (username, symbol)
                         VALUES
                             (%s, %s)
                         RETURNING id;
@@ -56,7 +56,7 @@ class WatchlistRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                            SELECT id, username, symbol,
+                            SELECT id, username, symbol
                             FROM watchlist
                             WHERE username = %s
                             ORDER BY id;
