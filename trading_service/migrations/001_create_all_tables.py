@@ -47,6 +47,20 @@ steps = [
         DROP TABLE positions;
         """,
     ],
+    [
+        # "Up" SQL statement; Create table
+        """
+        CREATE TABLE watchlist (
+            id SERIAL PRIMARY KEY NOT NULL,
+            username VARCHAR(100) REFERENCES accounts(username) NOT NULL,
+            symbols VARCHAR(100) ARRAY NOT NULL
+        );
+        """,
+        # "Down" SQL statement; Drop table
+        """
+        DROP TABLE watchlist;
+        """,
+    ],
 ]
 
 # python -m migrations up (will build the table)
