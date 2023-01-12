@@ -1,188 +1,249 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import * as FaIcons from "react-icons/fa";
+import * as TfiIcons from "react-icons/tfi";
+import * as AiIcons from "react-icons/ai";
+import { MdLogin } from "react-icons/md";
+import { VscAccount } from "react-icons/vsc";
+import "./App.css";
 import { useContext } from "react";
-// import { SearchContext } from "./SearchContext";
+
 import { UserContext } from "./context/UserContext";
-// import { Navigate } from "react-router-dom";
 
 function Nav({ setSymbol, symbol }) {
+    const [sidebar, setSidebar] = useState(false);
+    const showSidebar = () => setSidebar(!sidebar);
     const [fastapi_token, setToken] = useContext(UserContext);
-    // const search = useContext(SearchContext);
     const navigate = useNavigate();
-
+    // const [username, setUserName] = useState("");
     const logout = async () => {
         await fetch(`${process.env.REACT_APP_ACCOUNTS_HOST}/token`, {
             method: "DELETE",
-            headers: {"Authorization": `Bearer ${fastapi_token}`,},
+            headers: { Authorization: `Bearer ${fastapi_token}` },
             credentials: "include",
         });
         setToken(null);
     };
 
-    if (!fastapi_token) {
+    // useEffect(() => {
+    //     async function getUserName() {
+    //         const requestOptions = {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: `Bearer ${fastapi_token}`,
+    //             },
+    //             credentials: "include",
+    //         };
+    //         const response = await fetch(
+    //             `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts`,
+    //             requestOptions
+    //         );
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             setUserName(data["username"]);
+    //         }
+    //     }
+    //     getUserName();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [setUserName]);
+
+    if (!fastapi_token || fastapi_token === "null") {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
-                <div className="container-fluid">
-                    <NavLink
-                        className="navbar-brand"
-                        to="/"
-                    >
-                        Paper Stonks
-                    </NavLink>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div
-                        className="collapse navbar-collapse"
-                        id="navbarSupportedContent"
-                    >
-                        <div
-                            className="collapse navbar-collapse"
-                            id="navbarSupportedContent"
+            <>
+                <div className="navbar">
+                    <div className="d-flex justify-content-left align-items-center">
+                        <Link
+                            to="#"
+                            className="menu-bars"
                         >
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
-                                        to="/"
-                                    >
-                                        Home
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
-                                        to="/Login"
-                                    >
-                                        Login
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
-                                        to="/Signup"
-                                    >
-                                        Signup
-                                    </NavLink>
-                                </li>
-                                <form className="d-flex ">
-                                    <input
-                                        className="form-control me-2"
-                                        type="search"
-                                        placeholder="Search"
-                                        aria-label="Search"
-                                        onSubmit={(e) => {
-                                            setSymbol(e.target.value);
-                                            navigate("/stock");
-                                        }}
-                                        value={symbol}
-                                    />
-                                </form>
-                            </ul>
-                        </div>
+                            <FaIcons.FaBars onClick={showSidebar} />
+                        </Link>
+                        <span>
+                            <form
+                                className=""
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    e.target.reset();
+                                    navigate(`/stock/${symbol.toUpperCase()}`);
+                                }}
+                            >
+                                <input
+                                    className="form-control searchbar"
+                                    type="text"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                    onChange={(e) => {
+                                        setSymbol(e.target.value);
+                                    }}
+                                    value={symbol}
+                                />
+                            </form>
+                        </span>
+
+                        <span
+                            id="nav-title"
+                            className="float-right"
+                        >
+                            <Link
+                                className="nav-text nav-item h4"
+                                to="/"
+                                style={{
+                                    color: "black",
+                                    textDecoration: "none",
+                                }}
+                            >
+                                Paper Stonks
+                            </Link>
+                        </span>
                     </div>
                 </div>
-            </nav>
+
+                <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+                    <ul
+                        className="nav-menu-items navbar-nav"
+                        onClick={showSidebar}
+                    >
+                        <li className="navbar-toggle">
+                            <Link
+                                to="#"
+                                className="menu-bars"
+                            >
+                                <AiIcons.AiOutlineClose />
+                            </Link>
+                        </li>
+                        <Link
+                            to="/"
+                            className="nav-text nav-item"
+                        >
+                            <AiIcons.AiOutlineHome />
+                            <span>Home</span>
+                        </Link>
+
+                        <li className="nav-item">
+                            <Link
+                                className="nav-text "
+                                to="/Login"
+                            >
+                                <MdLogin />
+                                <span>Login</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                className="nav-text"
+                                aria-current="page"
+                                to="/Signup"
+                            >
+                                <VscAccount />
+                                <span>Signup</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+            </>
         );
     } else {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-success">
-                <div className="container-fluid">
-                    <NavLink
-                        className="navbar-brand"
-                        to="/"
-                    >
-                        Paper Stonks
-                    </NavLink>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div
-                        className="collapse navbar-collapse"
-                        id="navbarSupportedContent"
-                    >
-                        <div
-                            className="collapse navbar-collapse"
-                            id="navbarSupportedContent"
+            <>
+                <div className="navbar">
+                    <div className="d-flex justify-content-left align-items-center">
+                        <Link
+                            to="#"
+                            className="menu-bars"
                         >
-                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
-                                        to="/"
-                                    >
-                                        Home
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
-                                        to="/dashboard"
-                                    >
-                                        Dashboard
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink
-                                        className="nav-link active"
-                                        aria-current="page"
-                                        to="/transactions"
-                                    >
-                                        Transactions
-                                    </NavLink>
-                                </li>
-                                <form
-                                    className="d-flex"
-                                    onSubmit={(e) => {
-                                        e.preventDefault();
-                                        navigate(`/stock/${symbol.toUpperCase()}`);
+                            <FaIcons.FaBars onClick={showSidebar} />
+                        </Link>
+                        <span>
+                            <form
+                                className=""
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    e.target.reset();
+                                    navigate(`/stock/${symbol.toUpperCase()}`);
+                                }}
+                            >
+                                <input
+                                    className="form-control searchbar"
+                                    type="text"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                    onChange={(e) => {
+                                        setSymbol(e.target.value);
                                     }}
-                                >
-                                    <input
-                                        className="form-control me-2"
-                                        type="search"
-                                        placeholder="Search"
-                                        aria-label="Search"
-                                        onChange={(e) => {
-                                            setSymbol(e.target.value);
-                                        }}
-                                        value={symbol}
-                                    />
-                                </form>
-                                <li>
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={logout}
-                                    >
-                                        {" "}
-                                        Logout{" "}
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
+                                    value={symbol}
+                                />
+                            </form>
+                        </span>
+
+                        <span
+                            id="nav-title"
+                            className="float-right"
+                        >
+                            <Link
+                                className="nav-text nav-item h4 m-0"
+                                to="/"
+                                style={{
+                                    color: "black",
+                                    textDecoration: "none",
+                                }}
+                            >
+                                Paper Stonks
+                            </Link>
+                        </span>
                     </div>
                 </div>
-            </nav>
+                <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+                    <ul
+                        className="nav-menu-items navbar-nav"
+                        onClick={showSidebar}
+                    >
+                        <li className="navbar-toggle">
+                            <Link
+                                to="#"
+                                className="menu-bars"
+                            >
+                                <AiIcons.AiOutlineClose />
+                            </Link>
+                        </li>
+                        <Link
+                            to="/"
+                            className="nav-text"
+                        >
+                            <AiIcons.AiOutlineHome />
+                            <span>Home</span>
+                        </Link>
+                        <li className="nav-item">
+                            <Link
+                                className="nav-text"
+                                to="/dashboard"
+                            >
+                                <AiIcons.AiOutlineDashboard />
+                                <span>Dashboard</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                className="nav-text"
+                                to="/transactions"
+                            >
+                                <TfiIcons.TfiReceipt />
+                                <span>Transactions</span>
+                            </Link>
+                        </li>
+                        <hr></hr>
+                        <li>
+                            <button
+                                className="btn bg-transparent nav-text"
+                                onClick={logout}
+                            >
+                                <MdLogin />
+                                <span>Log Out</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </>
         );
     }
 }

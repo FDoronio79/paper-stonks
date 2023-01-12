@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-
+import SignupConfirmationPage from "./SignupConfirmationPage";
 class SignupForm extends React.Component {
     constructor(props) {
         super(props);
@@ -51,6 +50,7 @@ class SignupForm extends React.Component {
         };
         const response = await fetch(registrationUrl, fetchConfig);
         if (response.ok) {
+            // eslint-disable-next-line
             const newAccount = await response.json();
             this.setState({
                 email: "",
@@ -67,9 +67,10 @@ class SignupForm extends React.Component {
             };
             const responsevo = await fetch(registrationVOUrl, fetchConfigvo);
             if (responsevo.ok) {
+                // eslint-disable-next-line
                 const newAccountVO = await responsevo.json();
                 this.setState({
-                    username: "",
+                    // username: "",
                     hasSignedUp: true,
                 });
             }
@@ -78,85 +79,140 @@ class SignupForm extends React.Component {
 
     render() {
         if (this.state.hasSignedUp) {
+            return <SignupConfirmationPage username={this.state.username} />;
+        } else {
             return (
-                <Navigate
-                    to="/dashboard"
-                    replace={true}
-                />
+                <>
+                    <div className="login d-flex row justify-content-center">
+                        <div className="d-flex justify-content-around">
+                            <h1 className="display-4 p-3">Signup</h1>
+                        </div>
+                        <div className="d-flex flex-row  col-sm-10 col-xl-6 justify-content-center">
+                            <div>
+                                <div
+                                    className="bg-transparent
+                                    "
+                                    style={{ borderRadius: "1rem" }}
+                                >
+                                    <div className="p-5 text-center">
+                                        <div className="mb-md-5 mt-md-4 pb-5">
+                                            <form
+                                                className="box"
+                                                onSubmit={this.handleSubmit}
+                                            >
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="typeEmailX"
+                                                    >
+                                                        Email
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="typeEmailX"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangeEmail
+                                                        }
+                                                        value={this.state.email}
+                                                        placeholder="Email"
+                                                        required
+                                                        name="email"
+                                                    />
+                                                </div>
+
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="username"
+                                                    >
+                                                        Username
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="username"
+                                                        name="username"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangeUsername
+                                                        }
+                                                        value={
+                                                            this.state.username
+                                                        }
+                                                        placeholder="Username"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="typePasswordX"
+                                                    >
+                                                        Password
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        name="password"
+                                                        id="typePasswordX"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangePassword
+                                                        }
+                                                        value={
+                                                            this.state.password
+                                                        }
+                                                        placeholder="Password"
+                                                        required
+                                                    />
+                                                </div>
+                                                {/* <ErrorMessage
+                                                    message={errorMessage}
+                                                /> */}
+
+                                                <div className="form-outline mb-4">
+                                                    <label
+                                                        className="form-label"
+                                                        htmlFor="fullName"
+                                                    >
+                                                        Full Name
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="fullName"
+                                                        name="fullName"
+                                                        className="form-control form-control-lg"
+                                                        onChange={
+                                                            this
+                                                                .handleChangeFullName
+                                                        }
+                                                        value={
+                                                            this.state.full_name
+                                                        }
+                                                        placeholder="Full Name"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <button
+                                                    className="btn btn-light btn-md px-4"
+                                                    type="submit"
+                                                >
+                                                    Signup
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
             );
         }
-        return (
-            <div className="my-5 containerw">
-                <div className="offset-3 col-6">
-                    <div className="shadow p-4 mt-4">
-                        <h2 className="text-center">Signup</h2>
-                        <form
-                            onSubmit={this.handleSubmit}
-                            id="create-appointment-form"
-                        >
-                            <label htmlFor="Email">Email: </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangeEmail}
-                                    value={this.state.email}
-                                    placeholder="Email"
-                                    required
-                                    type="text"
-                                    name="email"
-                                    id="email"
-                                    className="form-control"
-                                />
-                            </div>
-                            <label
-                                className="text-left"
-                                htmlFor="username"
-                            >
-                                Username:{" "}
-                            </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangeUsername}
-                                    value={this.state.username}
-                                    placeholder="Username"
-                                    required
-                                    type="text"
-                                    name="username"
-                                    id="username"
-                                    className="form-control"
-                                />
-                            </div>
-                            <label htmlFor="password">Password: </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangePassword}
-                                    value={this.state.password}
-                                    placeholder="Password"
-                                    required
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    className="form-control"
-                                />
-                            </div>
-                            <label htmlFor="fullName">Full Name: </label>
-                            <div className="form-floating mb-3">
-                                <input
-                                    onChange={this.handleChangeFullName}
-                                    value={this.state.full_name}
-                                    placeholder="fullName"
-                                    required
-                                    type="text"
-                                    name="fullName"
-                                    id="fullName"
-                                    className="form-control"
-                                />
-                            </div>
-                            <button className="btn btn-primary">Create</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        );
     }
 }
 

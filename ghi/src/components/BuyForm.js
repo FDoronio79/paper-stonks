@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom"; 
 import { UserContext } from "../context/UserContext";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 export default function BuyForm({ price, symbol, name }) {
     const [fastapi_token] = useContext(UserContext);
-
+    const [show, setShow] = useState(false);
+    const [showBad, setShowBad] = useState(false);
     const buyingPow = localStorage.getItem("buyingPower");
 
     const usernameAcc = localStorage.getItem("Username");
@@ -14,7 +16,6 @@ export default function BuyForm({ price, symbol, name }) {
     let currDateTime = Date.now();
     const typeOfItem = "stock";
     const nameStock = name;
-    const navigate = useNavigate();
     const estimatedPrice = (quantity1 * price).toFixed(2);
     const withoutDollarSign = buyingPow.replace("$", "");
     const removedCommas = withoutDollarSign.replaceAll(",", "");
@@ -54,7 +55,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -79,7 +80,7 @@ export default function BuyForm({ price, symbol, name }) {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${fastapi_token}`
+                Authorization: `Bearer ${fastapi_token}`,
             },
             credentials: "include",
         };
@@ -87,6 +88,7 @@ export default function BuyForm({ price, symbol, name }) {
             `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}?username=${usernameAcc}`,
             requestOptionsGet
         );
+        // eslint-disable-next-line
         const data = await responseGet.json();
 
         if (!data["message"]) {
@@ -95,7 +97,7 @@ export default function BuyForm({ price, symbol, name }) {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 body: JSON.stringify(updatePositionDict),
                 credentials: "include",
@@ -104,15 +106,17 @@ export default function BuyForm({ price, symbol, name }) {
                 `${process.env.REACT_APP_TRADING_HOST}/positions/${symbolStock}`,
                 requestOptionsUpdateP
             );
+            // eslint-disable-next-line
             const dataUpdateP = await responseUpdateP.json();
+
             if (responseUpdateP.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 currDateTime = Date.now();
                 const requestOptions = {
                     method: "POST",
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
@@ -122,13 +126,14 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     requestOptions
                 );
+                // eslint-disable-next-line
                 const data = await response.json();
 
                 const requestOptionsBp = {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                 };
@@ -136,16 +141,17 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line
                 const dataBp = await responseBp.json();
-                alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
+                setShow(true);
             }
         } else {
             // if user doesn't have that specific stock then it will create a new position
             const requestOptions = {
                 method: "POST",
-                headers: { 
+                headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
                 body: JSON.stringify(positionDict),
@@ -155,15 +161,16 @@ export default function BuyForm({ price, symbol, name }) {
                 `${process.env.REACT_APP_TRADING_HOST}/positions`,
                 requestOptions
             );
+            // eslint-disable-next-line
             const data = await response.json();
 
             if (response.ok) {
                 // when response to the PUT request is ok then it will create a transacion and update your buying power.
                 const requestOptions = {
                     method: "POST",
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                     body: JSON.stringify(transactionDict),
@@ -173,13 +180,14 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_TRADING_HOST}/transactions`,
                     requestOptions
                 );
+                // eslint-disable-next-line
                 const data = await response.json();
 
                 const requestOptionsBp = {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${fastapi_token}`
+                        Authorization: `Bearer ${fastapi_token}`,
                     },
                     credentials: "include",
                 };
@@ -187,10 +195,11 @@ export default function BuyForm({ price, symbol, name }) {
                     `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts?bp_change=${bpchange}`,
                     requestOptionsBp
                 );
+                // eslint-disable-next-line
                 const dataBp = await responseBp.json();
-                alert(`Purchased ${quantity1} shares of ${symbolStock}!`);
+                setShow(true);
             } else {
-                alert("Could not process request. Please try again later");
+                setShowBad(true);
             }
         }
         // }
@@ -198,16 +207,22 @@ export default function BuyForm({ price, symbol, name }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        submitTransaction();
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
-        navigate("/dashboard");
+        if (quantity1 <= 0) {
+            setShowBad(true);
+        } else {
+            submitTransaction();
+            setShow(true);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+            // navigate("/dashboard");
+        }
     };
 
     return (
         <div
-            className="container text-left border border-dark p-3 "
+            className="container text-left p-3 "
             onSubmit={handleSubmit}
         >
             <form>
@@ -235,6 +250,7 @@ export default function BuyForm({ price, symbol, name }) {
                             onChange={(e) => setQuantity(e.target.value)}
                             id="quantity"
                             placeholder="quantity"
+                            className="form-control"
                         />
                     </div>
                 </div>
@@ -276,11 +292,62 @@ export default function BuyForm({ price, symbol, name }) {
 
                 <button
                     type="submit"
-                    className="sumbit col-12 p-3 mb-2 bg-dark text-white"
+                    className="submit btn-success col-12 p-3 mb-2 text-white"
                 >
                     BUY
                 </button>
             </form>
+
+            <ToastContainer
+                className="p-3"
+                position={"top-center"}
+            >
+                <Toast
+                    onClose={() => setShow(false)}
+                    show={show}
+                    delay={3000}
+                    className="p-0"
+                    autohide
+                >
+                    <Toast.Header>
+                        <img
+                            src="holder.js/20x20?text=%20"
+                            className="rounded me-2"
+                            alt=""
+                        />
+                        <strong className="me-auto">SUCCESS</strong>
+                        <small>11 mins ago</small>
+                    </Toast.Header>
+                    <Toast.Body className="bg-dark text-white">
+                        PURCHASED {quantity1} shares of {symbolStock}
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
+            <ToastContainer
+                className="p-3"
+                position={"top-center"}
+            >
+                <Toast
+                    onClose={() => setShowBad(false)}
+                    show={showBad}
+                    delay={3000}
+                    className="p-0"
+                    autohide
+                >
+                    <Toast.Header>
+                        <img
+                            src="holder.js/20x20?text=%20"
+                            className="rounded me-2"
+                            alt=""
+                        />
+                        <strong className="me-auto">ERROR</strong>
+                    </Toast.Header>
+                    <Toast.Body className="bg-dark text-white">
+                        We were unable to process your request at this time.
+                        Please try again later.
+                    </Toast.Body>
+                </Toast>
+            </ToastContainer>
         </div>
     );
 }

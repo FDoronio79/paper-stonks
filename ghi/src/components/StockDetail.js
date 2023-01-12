@@ -1,19 +1,24 @@
-import { useEffect, useState , useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import BuyForm from "./BuyForm";
 import SellForm from "./SellForm";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-
+import { Line } from "react-chartjs-2";
+import zoomPlugin from "chartjs-plugin-zoom";
+// eslint-disable-next-line
+import Chart from "chart.js/auto";
+Chart.register(zoomPlugin);
 function StockDetail({ search }) {
     const { stockSymbol } = useParams();
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
-    const buyingPow = localStorage.getItem("buyingPower");
+    // const buyingPow = localStorage.getItem("buyingPower");
     const [name, setNameStock] = useState("");
     const [shares_owned, setSharesOwned] = useState("");
     const usernameAcc = localStorage.getItem("Username");
     const [fastapi_token] = useContext(UserContext);
+    const [graph_data, setGraphData] = useState("");
 
     useEffect(() => {
         async function getStockData() {
@@ -29,7 +34,8 @@ function StockDetail({ search }) {
                 const data = await response.json();
                 setPrice(parseFloat(data["Global Quote"]["05. price"]));
                 setChange(parseFloat(data["Global Quote"]["09. change"]));
-                let tempPercent = data["Global Quote"]["10. change percent"].substring(-1);
+                let tempPercent =
+                    data["Global Quote"]["10. change percent"].substring(-1);
                 let roundedPercent = parseFloat(tempPercent).toFixed(2);
                 setPercent(roundedPercent);
             }
@@ -39,69 +45,227 @@ function StockDetail({ search }) {
 
             const checkOptions = {
                 method: "GET",
-                headers: { 
+                headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
-            const positionCheckResponse = await fetch(checkPositionsUrl, checkOptions);
+            const positionCheckResponse = await fetch(
+                checkPositionsUrl,
+                checkOptions
+            );
 
             if (positionCheckResponse.ok) {
                 const checkData = await positionCheckResponse.json();
                 setSharesOwned(checkData["quantity"]);
             }
+
+            const getGraphUrl = `${process.env.REACT_APP_TRADING_HOST}/stock`;
+            const getGraphReqOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    symbol: stockSymbol,
+                    interval: "DAILY",
+                }),
+            };
+
+            const graphResponse = await fetch(getGraphUrl, getGraphReqOptions);
+            const data = await graphResponse.json();
+            if (!response.ok) {
+                console.log("couldn't get graph data");
+            } else {
+                data["labels"].reverse();
+                data["points"].reverse();
+                setGraphData(data);
+            }
         }
 
         getStockData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stockSymbol, setNameStock, setSharesOwned, usernameAcc]);
+    }, [stockSymbol, setNameStock, setSharesOwned, setGraphData, usernameAcc]);
 
+    const data = {
+        labels: graph_data["labels"],
+        datasets: [
+            {
+                // fillColor: "#d048b6",
+                fill: true,
+                lineTension: 0.5,
+                backgroundColor: change > 0 ? "#0B3621" : "#590000",
+                borderColor: change > 0 ? "#2FEB8F" : "#DA0000",
+                borderWidth: 2,
+                // pointHoverBackgroundColor: "#d048b6",
+                pointBackgroundColor: change > 0 ? "#2FEB8F" : "#DA0000",
+                pointBorderWidth: 0,
+                pointHoverRadius: 6,
+                pointHoverBorderWidth: 2,
+                pointRadius: 0,
+                data: graph_data["points"],
+            },
+        ],
+    };
+    const options = {
+        maintainAspectRatio: false,
+        interaction: {
+            mode: "nearest",
+            axis: "x",
+            intersect: false,
+        },
+        color: "#ffffff",
+        responsive: true,
+        plugins: {
+            zoom: {
+                pan: {
+                    enabled: true,
+                    mode: "x",
+                },
+                zoom: {
+                    pinch: {
+                        enabled: true, // Enable pinch zooming
+                    },
+                    wheel: {
+                        enabled: true, // Enable wheel zooming
+                    },
+                    mode: "x",
+                },
+            },
+            legend: {
+                display: false,
+                position: "right",
+                labels: {
+                    color: "#d048b6",
+                },
+                title: {
+                    color: "#ffffff",
+                },
+            },
+            title: {
+                display: false,
+                text: "Stock Performance",
+                color: "#ffffff",
+            },
+        },
+        scales: {
+            x: {
+                title: {
+                    text: "date",
+                    display: true,
+                },
+
+                ticks: {
+                    color: "#ffffff",
+                    maxTicksLimit: 5,
+                    display: true,
+                },
+                grid: {
+                    height: "calc(100vh - 2em)",
+                    width: "calc(100vh - 2em)",
+                    color: "#8a8a8a",
+                },
+            },
+            y: {
+                title: {
+                    text: "price ($)",
+                    display: true,
+                },
+                ticks: {
+                    color: "#ffffff",
+                },
+                grid: {
+                    color: "#8a8a8a",
+                    display: false,
+                },
+            },
+        },
+    };
     return (
-        <>
-            <div>
-                <h3>Buying Power</h3>
-                <h4>{buyingPow}</h4>
+        <div className="stock d-flex row justify-content-around ">
+            <div className="d-flex flex-row justify-content-around">
+                <h1 className="display-4 p-3">{stockSymbol.toUpperCase()}</h1>
+                <h1 className="display-4 p-3">{name}</h1>
             </div>
-            <div className="row my-4">
-                <div className="col">
-                    <div className="container">
-                        <h1>{stockSymbol.toUpperCase()}</h1>
-                        <h1>{name}</h1>
-                        <p>Price: ${price}</p>
-                        <p>
-                            PRICE CHANGE: {change} by {percent}%
-                        </p>
-                    </div>
-                </div>
-                {shares_owned > 0 ? (
-                    <div className="col">
-                        <h4>Your position</h4>
-                        <h5>{shares_owned}</h5>
-                    </div>
-                ) : (
-                    <div className="col"></div>
-                )}
-            </div>
+            <div className="d-flex flex-row justify-content-around">
+                <p className="display-6">${price}</p>
 
-            <button
-                type="button"
-                className="btn btn-dark"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasBUY"
-                aria-controls="offcanvasBUY"
+                <p
+                    className="display-6"
+                    style={{
+                        color: percent.startsWith("-") ? "#DA0000" : "#2FEB8F",
+                    }}
+                >
+                    {change} ({percent}%)
+                </p>
+            </div>
+            <hr className="col-lg-8 col-sm-10 col-xs-10"></hr>
+            <div className="d-flex justify-content-around">
+                <div className="bg-transparent">
+                    {shares_owned > 0 ? (
+                        <>
+                            <h6 className="display-6">Your Position</h6>
+                            <h5 className="display-6">
+                                ${(shares_owned * price).toFixed(2)} | (
+                                {shares_owned})
+                            </h5>
+                        </>
+                    ) : (
+                        <div></div>
+                    )}
+                </div>
+                <div
+                    className="btn-group align-items-center"
+                    role="group"
+                >
+                    <button
+                        id="btnGroupDrop1"
+                        type="button"
+                        className="btn btn-light  btn-lg dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        Trade
+                    </button>
+                    <ul
+                        className="dropdown-menu"
+                        aria-labelledby="btnGroupDrop1"
+                    >
+                        <li>
+                            <button
+                                type="button"
+                                className="btn btn-dark btn-lg btn-outline-success dropdown-item"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBUY"
+                                aria-controls="offcanvasBUY"
+                            >
+                                Buy
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                type="button"
+                                className="btn btn-dark  btn-lg btn-outline-danger dropdown-item"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasSELL"
+                                aria-controls="offcanvasSELL"
+                            >
+                                Sell
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                className="chart-container col-lg-8 p-1 mt-3"
+                style={{ height: "60vh" }}
             >
-                Buy
-            </button>
-            <button
-                type="button"
-                className="btn btn-dark"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasSELL"
-                aria-controls="offcanvasSELL"
-            >
-                Sell
-            </button>
+                <Line
+                    data={data}
+                    options={options}
+                />
+            </div>
 
             <div
                 className="offcanvas offcanvas-end offcanvas-size-lg"
@@ -118,7 +282,7 @@ function StockDetail({ search }) {
                     </h5>
                     <button
                         type="button"
-                        className="btn-close text-reset"
+                        className="btn-close btn-close-white text-reset"
                         data-bs-dismiss="offcanvas"
                         aria-label="Close"
                     ></button>
@@ -141,13 +305,14 @@ function StockDetail({ search }) {
                 <div className="offcanvas-header">
                     <h5
                         className="offcanvas-title"
-                        id="offcanvasSELL"
+                        id="offcanvasSELLHeader"
                     >
                         SELL {stockSymbol.toUpperCase()}
                     </h5>
                     <button
+                        id="close-sell-form"
                         type="button"
-                        className="btn-close text-reset"
+                        className="btn-close btn-close-white text-reset"
                         data-bs-dismiss="offcanvas"
                         aria-label="Close"
                     ></button>
@@ -160,7 +325,7 @@ function StockDetail({ search }) {
                     />
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

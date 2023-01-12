@@ -1,85 +1,252 @@
 import React from "react";
-// import ps_logo from "../ghi/src/ps_logo.png"
-
+import react_logo from "./images/react.png";
+import chartjs_logo from "./images/chartjs.png";
+import alpha_vantage_logo from "./images/alpha-vantage.png";
+import docker_logo from "./images/docker.png";
+import gitlab_logo from "./images/gitlab.png";
+import heroku_logo from "./images/heroku.png";
+import postgres_logo from "./images/postgres.png";
+import logo from "./images/logo-inverted-md.jpg";
+import fastapi_logo from "./images/fast-api.png";
+import graph from "./images/graph.png";
 
 function HomePage() {
     return (
         <>
-            <div>
-                <h5> Welcome to Paper STONKS</h5>
+            <div className="home d-flex row justify-content-center mx-2">
+                <div className="p-5 text-center jumbotron">
+                    <span>
+                        <h1 className="mb-3 display-1">Paper Stonks</h1>
+                    </span>
+                    <img
+                        className=""
+                        src={logo}
+                        width="200"
+                        alt="logo"
+                    ></img>
+                    <span>
+                        <h4 className="mb-3 display-6">
+                            Trade Stocks Sweat-Free
+                        </h4>
+                    </span>
+                </div>
 
-                <div className="col-lg-6 mx-auto ">
-                    <p className="d-inline-flex p-2 row lead mb-4">
+                <div className="container justify-content-center">
+                    <div className=" d-flex justify-content-center col-lg-5 mx-auto">
+                        <img
+                            className="img-fluid rounded d-flex"
+                            src={graph}
+                            alt="graph"
+                        ></img>
+                    </div>
+                    <br></br>
 
-                    </p>
-                    <h4>Developers: </h4>
-                    <div className="col-lg-6 mx-auto ">
-                        <li>Filamer Doronio</li>
-                        <li>Jessica Lora</li>
-                        <li>Leo Shon</li>
-                        <li>Matthew Young</li>
-                        <li>Tiffany Ameral</li>
+                    <div className="col-lg-6 mx-auto mt-5">
+                        <div className=" d-flex justify-content-center col-lg-6 mx-auto">
+                            <h4 className="display-6">Tech Stack</h4>
+                        </div>
+                        <div className="row justify-content-center text-center">
+                            <div className="col">
+                                <img
+                                    className="tool"
+                                    src={fastapi_logo}
+                                    alt="fastapi logo"
+                                />
+                            </div>
+                            <div className="col">
+                                <img
+                                    className="tool"
+                                    src={react_logo}
+                                    alt="react logo"
+                                />
+                            </div>
+                        </div>
+                        <br></br>
+                        <div className="row justify-content-center text-center">
+                            <div className="col">
+                                <img
+                                    className="tool"
+                                    src={docker_logo}
+                                    alt="docker logo"
+                                />
+                            </div>
+                            <div className="col">
+                                <img
+                                    className="tool"
+                                    src={heroku_logo}
+                                    alt="heroku logo"
+                                />
+                            </div>
+                        </div>
+                        <div className="row justify-content-center text-center">
+                            <div className="col">
+                                <img
+                                    className="tool"
+                                    src={chartjs_logo}
+                                    alt="chartjs logo"
+                                />
+                            </div>
+                            <div className="col">
+                                <img
+                                    className="tool"
+                                    src={postgres_logo}
+                                    alt="postgres logo"
+                                />
+                            </div>
+                        </div>
+
+                        <div></div>
+                        <br />
+                        <br />
+                        <div className="d-flex justify-content-center text-center ">
+                            <div className="justify-content-center flex-row ">
+                                <h1 className="display-3">Developers </h1>
+                                <hr></hr>
+                                <div className="col">
+                                    <h4 className="display-6 dev">
+                                        Filamer Doronio
+                                    </h4>
+
+                                    <h4 className="display-6 dev">
+                                        Matthew Young
+                                    </h4>
+                                    <h4 className="display-6 dev ">
+                                        Tiffany Ameral
+                                    </h4>
+                                    <h4 className="display-6 dev ">
+                                        Jessica Lora
+                                    </h4>
+
+                                    <h4 className="display-6 dev ">Leo Shon</h4>
+                                </div>
+                            </div>
+                        </div>
+                        {/* developer pictures carousel */}
+                        {/* <div className="home d-flex row justify-content-center mx-3 my-3">
+                            <div
+                                id="carouselExampleCaptions"
+                                className="carousel slide bg-transparent col-lg-6"
+                                data-bs-ride="false"
+                            >
+                                <div className="carousel-indicators">
+                                    <button
+                                        type="button"
+                                        data-bs-target="#carouselExampleCaptions"
+                                        data-bs-slide-to="0"
+                                        className="active"
+                                        aria-current="true"
+                                        aria-label="Slide 1"
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        data-bs-target="#carouselExampleCaptions"
+                                        data-bs-slide-to="1"
+                                        aria-label="Slide 2"
+                                    ></button>
+                                    <button
+                                        type="button"
+                                        data-bs-target="#carouselExampleCaptions"
+                                        data-bs-slide-to="2"
+                                        aria-label="Slide 3"
+                                    ></button>
+                                </div>
+                                <div className="carousel-inner">
+                                    <div className="carousel-item active">
+                                        <img
+                                            src="images/matthew-young.jpg"
+                                            className="d-block w-100 rounded"
+                                            alt="matt young"
+                                        />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <h5>First slide label</h5>
+                                            <p>
+                                                Some representative placeholder
+                                                content for the first slide.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="carousel-item">
+                                        <img
+                                            src="images/stock1.jpg"
+                                            className="d-block w-100 rounded"
+                                            alt="..."
+                                        />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <h5>Second slide label</h5>
+                                            <p>
+                                                Some representative placeholder
+                                                content for the second slide.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="carousel-item">
+                                        <img
+                                            src="images/stock2.jpg"
+                                            className="d-block w-100 rounded"
+                                            alt="..."
+                                        />
+                                        <div className="carousel-caption d-none d-md-block">
+                                            <h5>Third slide label</h5>
+                                            <p>
+                                                Some representative placeholder
+                                                content for the third slide.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button
+                                    className="carousel-control-prev"
+                                    type="button"
+                                    data-bs-target="#carouselExampleCaptions"
+                                    data-bs-slide="prev"
+                                >
+                                    <span
+                                        className="carousel-control-prev-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <span className="visually-hidden">
+                                        Previous
+                                    </span>
+                                </button>
+                                <button
+                                    className="carousel-control-next"
+                                    type="button"
+                                    data-bs-target="#carouselExampleCaptions"
+                                    data-bs-slide="next"
+                                >
+                                    <span
+                                        className="carousel-control-next-icon"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <span className="visually-hidden">
+                                        Next
+                                    </span>
+                                </button>
+                            </div>
+                        </div> */}
+                        <div className="d-flex row justify-content-center text-center mx-3 my-3">
+                            <a href="https://gitlab.com/apex-legends1/paper-stonks/">
+                                <img
+                                    className="tool"
+                                    src={gitlab_logo}
+                                    alt="gitlab"
+                                ></img>
+                            </a>
+                            <br />
+                            External API:
+                            <a href="https://www.alphavantage.co/">
+                                <img
+                                    className="tool"
+                                    src={alpha_vantage_logo}
+                                    alt="alpha-vantage"
+                                ></img>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <p>
-                        Paper stonks is a new paper trading app still in development!<br />
-                        We are a paper trading app targeting finance
-                        enthusiasts who want to practice their
-                        stock investment strategies. <br />
-
-                    </p>
-                    <p>
-                        <h4>Features and Functionality</h4>
-                        <h5>Functionality</h5>
-                        <div>
-                            <p>
-                                <h6> Visitors experience when not-logged in: </h6>
-                                Visitors of the site can view the site's homepage <br />
-                                The homepage features an about section with company
-                                information and a guide on how to navigate the site <br />
-                                Using the search bar, visitors can
-                                search for stocks of interest and go to it's page<br />
-                                Visitors can create an account </p>
-
-                            <h6> Visitors experience when logged in: </h6>
-                            Additional features once logged in include:
-                            A user can add "money" or "buying power" to
-                            their account <br />
-                            On a specific stock page, the user will
-                            have access to the "Buy" and "Sell" options<br />
-                            A user can "buy" a stock, gaining a position in that stock<br />
-                            On a specific stock page, if a user has
-                            a position in that stock, it will be displayed <br />
-                            A user can also sell their stock <br />
-                            Portfolio page will display a list of a user's
-                            positions and total investment amount <br />
-                        </div>
-                        <p>
-                            <br />
-                            <h5>Upcoming Features</h5>
-                            Inclusion of crypto currency integration<br />
-                            Inclusion of a stock ticker<br />
-                            Inclusion of visualization/graphs <br />
-                            Inclusion of a market watch<br />
-                            <br />
-                        </p>
-                        <p>
-                        <h5>Links</h5>
-                            <a href="https://gitlab.com/apex-legends1/paper-stonks/">Paper Stonks Gitlab</a> <br />
-                            Extrenal API: <a href="https://www.alphavantage.co/">Alphavantage API</a> 
-                        </p>
-                        <div>
-                        </div>
-                    </p>
-                </div>
-                {/* <img src={ps_logo} alt="Logo" />; */}
             </div>
         </>
     );
 }
-
-
-
 
 export default HomePage;

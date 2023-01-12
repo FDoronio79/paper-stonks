@@ -1,14 +1,17 @@
 import { useContext, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { Doughnut } from "react-chartjs-2";
 
-const Dashboard = () => {
+const Dashboard = ({ setSymbol, symbol }) => {
+    const navigate = useNavigate();
     const [fastapi_token] = useContext(UserContext);
     const [buyingPower, setBuyingPower] = useState("");
     const [currentbuyingPower, setCurrentBuyingPower] = useState("");
     const [positions, setPositions] = useState([]);
     const [username, setUserName] = useState("");
-    const [portfolioValue, setPortfolioValue] = useState([]);
+    const [portfolioValue, setPortfolioValue] = useState("");
+    // const [graph_data, setGraphData] = useState("");
 
     localStorage.setItem("Username", username);
     localStorage.setItem("buyingPower", currentbuyingPower);
@@ -19,7 +22,7 @@ const Dashboard = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -37,13 +40,14 @@ const Dashboard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCurrentBuyingPower, setUserName]);
 
+    // this function gets the positions from the backend on page load
     useEffect(() => {
         async function getPositions() {
             const requestOptions = {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${fastapi_token}`
+                    Authorization: `Bearer ${fastapi_token}`,
                 },
                 credentials: "include",
             };
@@ -61,6 +65,48 @@ const Dashboard = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [username]);
 
+    const data = {
+        labels: positions.map((position) => [position.symbol]),
+        datasets: [
+            {
+                label: " Price",
+                data: positions.map((position) => [position.value]),
+                backgroundColor: [
+                    "#205072",
+                    "#329D9C",
+                    "#56C596",
+                    "#7BE495",
+                    "#CFF4D2",
+                    "#7BD5F5",
+                    "#787FF6",
+                    "#4ADEDE",
+                    "#1CA7EC",
+                    "#1F2F98",
+                ],
+                hoverOffset: 40,
+            },
+        ],
+    };
+
+    const options = {
+        layout: {
+            padding: {
+                bottom: 20, //set that fits the best
+            },
+        },
+        borderJoinStyle: "bevel",
+        borderWidth: 0,
+        plugins: {
+            legend: {
+                labels: {
+                    color: "#ffffff",
+                },
+            },
+        },
+    };
+    /* This function gets the stock prices from our third party API and creates a 
+    key, value pair in the positions dictionary with the dollar value of your stock position
+    */
     useEffect(() => {
         let getStockPrice = async () => {
             let stockPrices;
@@ -80,16 +126,42 @@ const Dashboard = () => {
             ).then((responses) => {
                 stockPrices = positions.map((position) => {
                     if (idx < positions.length) {
-                        let stockPrice =
-                            responses[idx]["Global Quote"]["05. price"] * position["quantity"];
+                        position["value"] = parseFloat(
+                            parseFloat(
+                                responses[idx]["Global Quote"]["05. price"] *
+                                    position["quantity"]
+                            ).toFixed(2)
+                        );
+                        position["stockPrice"] = parseFloat(
+                            responses[idx]["Global Quote"]["05. price"]
+                        );
+
+                        position["stockChange"] = parseFloat(
+                            parseFloat(
+                                responses[idx]["Global Quote"]["09. change"]
+                            ).toFixed(2)
+                        );
+                        position["stockChangePercent"] = parseFloat(
+                            parseFloat(
+                                responses[idx]["Global Quote"][
+                                    "10. change percent"
+                                ].replace("%", "")
+                            ).toFixed(2)
+                        );
                         idx++;
-                        count += stockPrice;
-                        return { ...position, value: stockPrice.toFixed(2) };
+                        count += position["value"];
+                        return { ...position };
                     }
+
                     return [];
                 });
-                setPortfolioValue(count.toFixed(2));
+                setPortfolioValue(
+                    (
+                        Math.round((count + Number.EPSILON) * 100) / 100
+                    ).toLocaleString("en-US")
+                );
             });
+
             setPositions(stockPrices);
             return stockPrices;
         };
@@ -97,7 +169,7 @@ const Dashboard = () => {
         if (positions.length > 0 && !positions[0]?.value) {
             getStockPrice();
         }
-    }, [positions]);
+    }, [positions, currentbuyingPower]);
 
     // this function will let the user add money to their account or cash out however much they wish
     const updateBuyingPower = async () => {
@@ -105,7 +177,7 @@ const Dashboard = () => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${fastapi_token}`
+                Authorization: `Bearer ${fastapi_token}`,
             },
             credentials: "include",
         };
@@ -137,74 +209,200 @@ const Dashboard = () => {
     } else {
         return (
             <>
-                <div>
-                    <h3>Positions</h3>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Symbol</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {positions.map((position) => {
-                                return (
-                                    <tr key={position.id}>
-                                        <td>{position.symbol}</td>
-                                        <td>{position.name}</td>
-                                        <td>{position.quantity}</td>
-                                        <td>$ {position.value}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <label className="label">Current Positions Value:${portfolioValue}</label>
-                </div>
-                <div></div>
-                <div>
-                    <label className="label">Current Buying Power:{currentbuyingPower}</label>
-                </div>
-                <div>
-                    <form
-                        className="box"
-                        onSubmit={handleSubmit}
-                    >
-                        <div className="form-floating mb-3">
-                            <div className="field">
-                                <label className="label">Update Buying Power</label>
-                                <div className="control">
-                                    <input
-                                        type="text"
-                                        placeholder="add or subtract buying power"
-                                        value={buyingPower}
-                                        onChange={(e) => setBuyingPower(e.target.value)}
-                                        className="input"
-                                        required
-                                    />
+                <div className="dashboard d-flex row justify-content-around text-center">
+                    <div className="d-flex justify-content-center p-0">
+                        <h1 className="display-3 p-5">Dashboard</h1>
+                    </div>
+
+                    <div className="d-flex text-center justify content around p-0">
+                        <div className="d-flex justify-content-center col-6">
+                            <h3 className="display-6">
+                                Total Value: $
+                                {portfolioValue.toLocaleString("en-US")}
+                            </h3>
+                        </div>
+                        <div className="d-grid justify-content-center col-6">
+                            <h3 className="display-6">
+                                Buying Power: {currentbuyingPower}
+                            </h3>
+                        </div>
+
+                        <div className="d-flex justify-content-center align-items-center col-xs-6">
+                            <div
+                                className="modal fade"
+                                id="exampleModal"
+                                tabIndex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div className="modal-dialog">
+                                    <div className="modal-content text-black">
+                                        <div className="modal-header">
+                                            <h1
+                                                className="modal-title fs-5"
+                                                id="exampleModalLabel"
+                                            >
+                                                Add Funds
+                                            </h1>
+                                            <button
+                                                type="button"
+                                                className="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                            ></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form
+                                                className=""
+                                                onSubmit={handleSubmit}
+                                            >
+                                                <div className="input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            $
+                                                        </span>
+                                                    </div>
+
+                                                    <input
+                                                        id="add-money"
+                                                        type="text"
+                                                        placeholder="0.00"
+                                                        value={buyingPower}
+                                                        onChange={(e) =>
+                                                            setBuyingPower(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="form-control"
+                                                        required
+                                                        aria-label="Amount (to the nearest dollar)"
+                                                    />
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                data-bs-dismiss="modal"
+                                            >
+                                                Cancel
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary"
+                                                data-bs-dismiss="modal"
+                                                onClick={handleSubmit}
+                                            >
+                                                Add
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <button
-                                className="btn btn-primary"
-                                type="submit"
-                            >
-                                Update Buying Power
-                            </button>
+                    </div>
+                    <div className="d-flex row justify-content-center mt-4 col-lg-2 col-md-3 col-sm-4 col-xs-2 p-0">
+                        <button
+                            type="button"
+                            className="btn-dark btn-lg"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                        >
+                            Add Funds
+                        </button>
+                    </div>
+
+                    <div className="d-flex row justify-content-center text-center mt-4 p-0">
+                        <div className="table-responsive shadow mb-2 bg-black col-xl-6 table-sm p-0">
+                            <h3 className="display-5">Positions</h3>
+                            <table className="table mx-auto table-hover">
+                                <thead className="thead-light">
+                                    <tr>
+                                        <th scope="col">Symbol</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {positions.map((position) => {
+                                        return (
+                                            <tr
+                                                onClick={() => {
+                                                    setSymbol(position.symbol);
+
+                                                    navigate(
+                                                        `/stock/${position.symbol.toUpperCase()}`
+                                                    );
+                                                }}
+                                                className="position-row"
+                                                key={position.id}
+                                                value={position.symbol}
+                                            >
+                                                <td>{position.symbol}</td>
+                                                <td>
+                                                    <p className="mb-0">
+                                                        {position.stockPrice}
+                                                    </p>
+                                                    <p
+                                                        className="mb-0"
+                                                        style={{
+                                                            color:
+                                                                position.stockChange <
+                                                                0
+                                                                    ? "#DA0000"
+                                                                    : "#2FEB8F",
+                                                        }}
+                                                    >
+                                                        {position.stockChange >
+                                                        0
+                                                            ? "+"
+                                                            : ""}
+                                                        {position.stockChange}
+                                                    </p>
+                                                </td>
+                                                <td>{position.quantity}</td>
+                                                <td>
+                                                    <p className="mb-0">
+                                                        ${position.value}
+                                                    </p>
+                                                    <p
+                                                        className="mb-0"
+                                                        style={{
+                                                            color:
+                                                                position.stockChange <
+                                                                0
+                                                                    ? "#DA0000"
+                                                                    : "#2FEB8F",
+                                                        }}
+                                                    >
+                                                        {position.stockChange >
+                                                        0
+                                                            ? "+"
+                                                            : ""}
+                                                        {(
+                                                            (position.stockChangePercent /
+                                                                100) *
+                                                            position.value
+                                                        ).toFixed(2)}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
                         </div>
-                    </form>
-                </div>
-                <div>
-                    <p>Welcome to your Dashboard</p>
-                    <div
-                        className="container-fluid container-max-widths:(sm)"
-                        style={{}}
-                    >
+                        <div
+                            className="chart-container flex-row col-xl-3 mt-5 justify-content-center"
+                            style={{ height: "60vh" }}
+                        >
+                            <Doughnut
+                                data={data}
+                                options={options}
+                            />
+                        </div>
                     </div>
                 </div>
             </>

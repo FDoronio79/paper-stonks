@@ -1,8 +1,7 @@
-from unicodedata import numeric
 from pydantic import BaseModel
 from datetime import datetime
 from queries.pool import pool
-from typing import List, Union, Optional
+from typing import List, Union
 
 
 class Error(BaseModel):
@@ -29,7 +28,6 @@ class TransactionOut(BaseModel):
 
 
 class TransactionRepository:
-    
     def get_all(self, username) -> Union[Error, List[TransactionOut]]:
         try:
             # connect the database
@@ -39,11 +37,13 @@ class TransactionRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, username, symbol, type_of, time_of_purchase, quantity, price
+                        SELECT id, username, symbol, type_of,
+                        time_of_purchase, quantity, price
                         FROM transactions
                         WHERE username = %s
                         ORDER BY time_of_purchase;
-                        """, [username]
+                        """,
+                        [username],
                     )
                     result = []  # can rewrite at list comprehension
                     for record in db:
@@ -74,7 +74,8 @@ class TransactionRepository:
                     result = db.execute(
                         """
                         INSERT INTO transactions
-                            (username, symbol, type_of, time_of_purchase, quantity, price)
+                            (username, symbol, type_of,
+                            time_of_purchase, quantity, price)
                         VALUES
                             (%s, %s, %s, %s, %s, %s)
                         RETURNING id;
@@ -85,8 +86,8 @@ class TransactionRepository:
                             transaction.type_of,
                             transaction.time_of_purchase,
                             transaction.quantity,
-                            transaction.price
-                        ]
+                            transaction.price,
+                        ],
                     )
                     id = result.fetchone()[0]
                     # Return new data

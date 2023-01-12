@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import ErrorMessage from "./ErrorMessege";
 import { UserContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [username, setUserName] = useState("");
@@ -13,9 +13,9 @@ const Login = () => {
     const submitLogin = async () => {
         const requestOptions = {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": `Bearer ${fastapi_token}`
+                Authorization: `Bearer ${fastapi_token}`,
             },
             credentials: "include",
             body: JSON.stringify(
@@ -36,66 +36,95 @@ const Login = () => {
             navigate("/dashboard");
         }
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         submitLogin();
     };
 
-    if (!fastapi_token) {
+    if (!fastapi_token || fastapi_token === "null") {
         return (
-            <div className="my-5 containerw">
-                <div className="offset-3 col-6">
-                    <div className="shadow p-4 mt-4">
-                        <h2 className="text-center">Login</h2>
-                        <form
-                            className="box"
-                            onSubmit={handleSubmit}
-                        >
-                            <div className="form-floating mb-3">
-                                <div className="field">
-                                    <label className="label">Username</label>
-                                    <div className="control">
-                                        <input
-                                            type="text"
-                                            placeholder="Enter username"
-                                            value={username}
-                                            onChange={(e) => setUserName(e.target.value)}
-                                            className="input"
-                                            required
-                                        />
-                                    </div>
+            <>
+                <div className="login d-flex row justify-content-center">
+                    <div className="d-flex justify-content-around">
+                        <h1 className="display-4 p-3">Login</h1>
+                    </div>
+                    <div className="d-flex flex-row  col-sm-10 col-xl-6 justify-content-center">
+                        <div>
+                            <div className=" p-5 text-center">
+                                <div className="mb-md-5 mt-md-4 pb-5">
+                                    <form onSubmit={handleSubmit}>
+                                        <div className="form-group">
+                                            <label
+                                                className="form-label text-white"
+                                                htmlFor="typeEmailX"
+                                            >
+                                                Username
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="typeEmailX"
+                                                className="form-control form-control-lg"
+                                                onChange={(e) =>
+                                                    setUserName(e.target.value)
+                                                }
+                                                value={username}
+                                                required
+                                                placeholder="username"
+                                            />
+
+                                            <label
+                                                className="form-label"
+                                                htmlFor="typePasswordX"
+                                            >
+                                                Password
+                                            </label>
+                                            <input
+                                                type="password"
+                                                id="typePasswordX"
+                                                className="form-control form-control-lg"
+                                                value={password}
+                                                onChange={(e) =>
+                                                    setPassword(e.target.value)
+                                                }
+                                                required
+                                                placeholder="password"
+                                            />
+                                        </div>
+
+                                        <ErrorMessage message={errorMessage} />
+                                        {/* <p className="small mb-5 pb-lg-2">
+                                                <a
+                                                    className="text-white-50"
+                                                    href="#!"
+                                                >
+                                                    Forgot password?
+                                                </a>
+                                            </p> */}
+
+                                        <button
+                                            className="btn bg-dark btn-outline-light btn-md px-4"
+                                            type="submit"
+                                        >
+                                            Login
+                                        </button>
+                                    </form>
                                 </div>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <div className="field">
-                                    <label className="label">Password</label>
-                                    <div className="control">
-                                        <input
-                                            type="password"
-                                            placeholder="Enter password"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            className="input"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <ErrorMessage message={errorMessage} />
-                            <br />
-                            <div>
-                                <button
-                                    className="btn btn-primary"
-                                    type="submit"
+
+                                <p className="mb-0">Don't have an account? </p>
+
+                                <NavLink
+                                    aria-current="page"
+                                    to="/Signup"
+                                    className="nav-link fw-bold"
                                 >
-                                    Login
-                                </button>
+                                    Sign Up
+                                </NavLink>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
 };
