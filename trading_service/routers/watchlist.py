@@ -25,18 +25,20 @@ def create_watchlist(
     return watchlist_response
 
 
-@router.get(
-    "/watchlist/{username}", response_model=Union[WatchlistOut, Error]
-)
-def get_one_watchlist(
+@router.get("/watchlist", response_model=Union[Error, List[WatchlistOut]])
+def get_all(
     username: str,
-    response: Response,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WatchlistRepository = Depends(),
-) -> WatchlistOut:
-    watchlist_response = repo.get_one(
-        username=username
-    )
-    if isinstance(watchlist_response, Error):
-        response.status_code = 200
-    return watchlist_response
+):
+    return repo.get_all(username=username)
+
+
+@router.delete("/watchlist/{position_symbol}", response_model=bool)
+def delete_position(
+    username: str,
+    position_symbol: str,
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: WatchlistRepository = Depends(),
+) -> bool:
+    return repo.delete(username=username, position_symbol=position_symbol)

@@ -9,13 +9,13 @@ class Error(BaseModel):
 
 class WatchlistIn(BaseModel):
     username: str
-    symbols: set[str] = set()
+    symbol: str
 
 
 class WatchlistOut(BaseModel):
     id: int
     username: str
-    symbols: set[str] = set()
+    symbol: str
 
 
 class WatchlistRepository:
@@ -36,7 +36,7 @@ class WatchlistRepository:
                         """,
                         [
                             watchlist.username,
-                            watchlist.symbols,
+                            watchlist.symbol,
                         ],
                     )
                     id = result.fetchone()[0]
@@ -47,30 +47,38 @@ class WatchlistRepository:
             print(e)
             return {"message": "Could not create watchlist"}
 
-    def get_one(self, username: str) -> Union[WatchlistOut, Error]:
+    def get_all(self, username: str) -> Union[Error, List[WatchlistOut]]:
         try:
-            with pool.connection() as conn:
+            # connect the database
+            with pool.connection() as conn:  # will create connection
+                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
+                    # Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, username, symbols
-                        FROM watchlist
-                        WHERE username = %s
-                        """,
+                            SELECT id, username, symbol,
+                            FROM watchlist
+                            WHERE username = %s
+                            ORDER BY id;
+                            """,
                         [username],
                     )
-                    record = result.fetchone()
-                    watchlist = WatchlistOut(
-                        id=record[0],
-                        username=record[1],
-                        symbols=record[2],
-                    )
-                return watchlist
+                    result = []  # can rewrite at list comprehension
+                    for record in db:
+                        print(record)
+                        watchlist = WatchlistOut(
+                            id=record[0],
+                            username=record[1],
+                            symbol=record[2],
+                        )
+                        result.append(watchlist)
+                    return result
+
         except Exception as e:
             print(e)
-            return Error(message="Could not find a position")
+            return {"message": "Could not get all watchlist symbols"}
 
-    def delete(self, username: str, symbols: set[str] = set()) -> bool:
+    def delete(self, watchlist_symbol: str, username: str) -> bool:
         try:
             # connect the database
             with pool.connection() as conn:  # will create connection
@@ -80,9 +88,9 @@ class WatchlistRepository:
                     db.execute(
                         """
                         DELETE FROM watchlist
-                        WHERE username = %s AND symbols = %s  
+                        WHERE symbol = %s AND username = %s
                         """,
-                        [username, symbols],
+                        [watchlist_symbol, username],
                     )
                     return True
         except Exception as e:

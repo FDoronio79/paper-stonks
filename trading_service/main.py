@@ -1,6 +1,6 @@
 import os
 from fastapi import FastAPI
-from routers import transactions, positions, accountsvo, alpha_vantage
+from routers import transactions, positions, accountsvo, alpha_vantage, watchlist
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -9,6 +9,7 @@ app.include_router(transactions.router)
 app.include_router(positions.router)
 app.include_router(accountsvo.router)
 app.include_router(alpha_vantage.router)
+app.include_router(watchlist.router)
 
 
 origins = ["http://localhost:3000", os.environ.get("CORS_HOST", None)]
