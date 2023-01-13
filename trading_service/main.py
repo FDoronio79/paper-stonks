@@ -1,8 +1,8 @@
 import os
 from fastapi import FastAPI
-from routers import transactions, positions, accountsvo, alpha_vantage, watchlist
+from routers import transactions, positions, accountsvo, alpha_vantage
 from fastapi.middleware.cors import CORSMiddleware
-
+from routers import watchlist
 
 app = FastAPI()
 app.include_router(transactions.router)

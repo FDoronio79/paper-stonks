@@ -173,4 +173,3 @@ def test_delete_position():
     assert response.json() is True
 
     app.dependency_overrides = {}
-
