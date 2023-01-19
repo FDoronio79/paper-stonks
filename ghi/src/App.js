@@ -11,7 +11,7 @@ import { useState, createContext } from "react";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
 import HomePage from "./components/HomePage";
-
+import WatchlistPage from "./components/Watchlist";
 export const ThemeContext = createContext(null);
 
 function App() {
@@ -64,6 +64,15 @@ function App() {
                         <Route
                             path="/position/sell"
                             element={<SellForm />}
+                        />
+                        <Route
+                            path="/watchlist"
+                            element={
+                                <WatchlistPage
+                                    setSymbol={setSymbol}
+                                    symbol={symbol}
+                                />
+                            }
                         />
                     </Routes>
                     <Outlet />

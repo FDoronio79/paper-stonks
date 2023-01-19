@@ -8,18 +8,16 @@ class Error(BaseModel):
 
 
 class WatchlistIn(BaseModel):
-    username: str
     symbol: str
 
 
 class WatchlistOut(BaseModel):
     id: int
-    username: str
     symbol: str
 
 
 class WatchlistRepository:
-    def create(self, watchlist: WatchlistIn) -> WatchlistOut:
+    def create(self, username: str, watchlist: WatchlistIn) -> WatchlistOut:
         try:
             # connect the database
             with pool.connection() as conn:  # will create connection
@@ -35,7 +33,7 @@ class WatchlistRepository:
                         RETURNING id;
                         """,
                         [
-                            watchlist.username,
+                            username,
                             watchlist.symbol,
                         ],
                     )

@@ -69,7 +69,7 @@ const Dashboard = ({ setSymbol, symbol }) => {
         labels: positions.map((position) => [position.symbol]),
         datasets: [
             {
-                label: " Price",
+                label: " value",
                 data: positions.map((position) => [position.value]),
                 backgroundColor: [
                     "#205072",

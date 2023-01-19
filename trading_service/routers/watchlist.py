@@ -18,8 +18,9 @@ def create_watchlist(
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WatchlistRepository = Depends(),
 ):
-
-    watchlist_response = repo.create(watchlist)
+    print(account_data["username"])
+    watchlist_response = repo.create(
+        username=account_data["username"], watchlist=watchlist)
     if isinstance(watchlist_response, Error):
         response.status_code = 400
     return watchlist_response
@@ -27,18 +28,16 @@ def create_watchlist(
 
 @router.get("/watchlist", response_model=Union[Error, List[WatchlistOut]])
 def get_all(
-    username: str,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WatchlistRepository = Depends(),
 ):
-    return repo.get_all(username=username)
+    return repo.get_all(username=account_data["username"])
 
 
 @router.delete("/watchlist/{watchlist_symbol}", response_model=bool)
 def delete_watchlist_symbol(
-    username: str,
     watchlist_symbol: str,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: WatchlistRepository = Depends(),
 ) -> bool:
-    return repo.delete(username=username, watchlist_symbol=watchlist_symbol)
+    return repo.delete(username=account_data["username"], watchlist_symbol=watchlist_symbol)

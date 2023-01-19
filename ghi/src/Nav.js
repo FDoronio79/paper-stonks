@@ -4,6 +4,7 @@ import * as FaIcons from "react-icons/fa";
 import * as TfiIcons from "react-icons/tfi";
 import * as AiIcons from "react-icons/ai";
 import { MdLogin } from "react-icons/md";
+import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 import "./App.css";
 import { useContext } from "react";
@@ -229,6 +230,15 @@ function Nav({ setSymbol, symbol }) {
                             >
                                 <TfiIcons.TfiReceipt />
                                 <span>Transactions</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                className="nav-text"
+                                to="/watchlist"
+                            >
+                                <MdOutlineFavoriteBorder />
+                                <span>Watchlist</span>
                             </Link>
                         </li>
                         <hr></hr>
