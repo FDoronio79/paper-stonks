@@ -209,113 +209,112 @@ const Dashboard = ({ setSymbol, symbol }) => {
     } else {
         return (
             <>
-                <div className="dashboard d-flex row justify-content-around text-center">
+                <div className="dashboard d-flex row text-center">
                     <div className="d-flex justify-content-center p-0">
-                        <h1 className="display-3 p-5">Dashboard</h1>
+                        <h1 className="display-4 p-5">Dashboard</h1>
                     </div>
 
-                    <div className="d-flex text-center justify content around p-0">
-                        <div className="d-flex justify-content-center col-6">
-                            <h3 className="display-6">
-                                Total Value: $
-                                {portfolioValue.toLocaleString("en-US")}
-                            </h3>
-                        </div>
-                        <div className="d-grid justify-content-center col-6">
-                            <h3 className="display-6">
+                    <div className="d-flex m-3 justify-content-center p-0">
+                        <div className="col d-flex ovrflw justify-content-center align-items-center ">
+                            <h3 className="h3 mb-0 p-2">
                                 Buying Power: {currentbuyingPower}
                             </h3>
+
+                            <button
+                                type="button"
+                                className="btn-dark btn-lg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                            >
+                                Add Funds
+                            </button>
                         </div>
 
-                        <div className="d-flex justify-content-center align-items-center col-xs-6">
-                            <div
-                                className="modal fade"
-                                id="exampleModal"
-                                tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                            >
-                                <div className="modal-dialog">
-                                    <div className="modal-content text-black">
-                                        <div className="modal-header">
-                                            <h1
-                                                className="modal-title fs-5"
-                                                id="exampleModalLabel"
-                                            >
-                                                Add Funds
-                                            </h1>
-                                            <button
-                                                type="button"
-                                                className="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
-                                            ></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <form
-                                                className=""
-                                                onSubmit={handleSubmit}
-                                            >
-                                                <div className="input-group">
-                                                    <div className="input-group-prepend">
-                                                        <span className="input-group-text">
-                                                            $
-                                                        </span>
-                                                    </div>
-
-                                                    <input
-                                                        id="add-money"
-                                                        type="text"
-                                                        placeholder="0.00"
-                                                        value={buyingPower}
-                                                        onChange={(e) =>
-                                                            setBuyingPower(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        className="form-control"
-                                                        required
-                                                        aria-label="Amount (to the nearest dollar)"
-                                                    />
+                        <div
+                            className="modal fade"
+                            id="exampleModal"
+                            tabIndex="-1"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                        >
+                            <div className="modal-dialog">
+                                <div className="modal-content text-black">
+                                    <div className="modal-header">
+                                        <h1
+                                            className="modal-title fs-5"
+                                            id="exampleModalLabel"
+                                        >
+                                            Add Funds
+                                        </h1>
+                                        <button
+                                            type="button"
+                                            className="btn-close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"
+                                        ></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <form
+                                            className=""
+                                            onSubmit={handleSubmit}
+                                        >
+                                            <div className="input-group">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text">
+                                                        $
+                                                    </span>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button
-                                                type="button"
-                                                className="btn btn-secondary"
-                                                data-bs-dismiss="modal"
-                                            >
-                                                Cancel
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary"
-                                                data-bs-dismiss="modal"
-                                                onClick={handleSubmit}
-                                            >
-                                                Add
-                                            </button>
-                                        </div>
+
+                                                <input
+                                                    id="add-money"
+                                                    type="text"
+                                                    placeholder="0.00"
+                                                    value={buyingPower}
+                                                    onChange={(e) =>
+                                                        setBuyingPower(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    className="form-control"
+                                                    required
+                                                    aria-label="Amount (to the nearest dollar)"
+                                                />
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button
+                                            type="button"
+                                            className="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                            onClick={handleSubmit}
+                                        >
+                                            Add
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="d-flex row justify-content-center mt-4 col-lg-2 col-md-3 col-sm-4 col-xs-2 p-0">
-                        <button
-                            type="button"
-                            className="btn-dark btn-lg"
-                            data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"
-                        >
-                            Add Funds
-                        </button>
+
+                        <div className="d-flex justify-content-center align-items-center col-xs-6"></div>
                     </div>
 
                     <div className="d-flex row justify-content-center text-center mt-4 p-0">
-                        <div className="table-responsive shadow mb-2 bg-black col-xl-6 table-sm p-0">
-                            <h3 className="display-5">Positions</h3>
+                        <div className="table-responsive mb-2 col-xl-5 table-sm p-0">
+                            <span className="d-flex justify-content-around mt-4 mb-2">
+                                <h3 className="h3">Positions</h3>
+                                <h3 className="h3">
+                                    Total Value: $
+                                    {portfolioValue.toLocaleString("en-US")}
+                                </h3>
+                            </span>
                             <table className="table mx-auto table-hover">
                                 <thead className="thead-light">
                                     <tr>
@@ -395,7 +394,7 @@ const Dashboard = ({ setSymbol, symbol }) => {
                             </table>
                         </div>
                         <div
-                            className="chart-container flex-row col-xl-3 mt-5 justify-content-center"
+                            className="chart-container flex-row  align-content-start col-xl-4 mt-2 justify-content-center"
                             style={{ height: "60vh" }}
                         >
                             <Doughnut

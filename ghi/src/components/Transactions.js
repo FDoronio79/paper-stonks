@@ -46,7 +46,7 @@ const Transactions = () => {
                     <div className="d-flex justify-content-center">
                         <h1 className="display-4 p-5">Transaction History</h1>
                     </div>
-                    <div className="table-responsive bg-black col-xl-4 p-0">
+                    <div className="table-responsive  col-xl-4 p-0">
                         <table className="table table-hover">
                             <thead>
                                 <tr>

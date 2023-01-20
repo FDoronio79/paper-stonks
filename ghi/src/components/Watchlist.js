@@ -1,6 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { TfiTrash } from "react-icons/tfi";
+import { IconContext } from "react-icons";
 const WatchlistPage = ({ setSymbol, symbol }) => {
     const navigate = useNavigate();
     const [fastapi_token] = useContext(UserContext);
@@ -97,7 +99,7 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
                 </div>
 
                 <div className="d-flex row justify-content-center text-center mt-4 p-0">
-                    <div className="table-responsive shadow mb-2 bg-black col-xl-6 table-sm p-0">
+                    <div className="table-responsive mb-2 col-xl-6 table-sm p-0">
                         <table className="table mx-auto table-hover">
                             <thead className="thead-light">
                                 <tr>
@@ -140,6 +142,19 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
                                                         : ""}
                                                     {stock.stockChange}
                                                 </p>
+                                            </td>
+                                            <td>
+                                                <IconContext.Provider
+                                                    value={{
+                                                        style: {
+                                                            color: "white",
+                                                            height: "28px",
+                                                            width: "28px",
+                                                        },
+                                                    }}
+                                                >
+                                                    <TfiTrash />
+                                                </IconContext.Provider>
                                             </td>
                                         </tr>
                                     );
