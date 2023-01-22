@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { Line } from "react-chartjs-2";
 import zoomPlugin from "chartjs-plugin-zoom";
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
+import { IconContext } from "react-icons";
 // eslint-disable-next-line
 import Chart from "chart.js/auto";
 Chart.register(zoomPlugin);
@@ -19,6 +21,50 @@ function StockDetail({ search }) {
     const usernameAcc = localStorage.getItem("Username");
     const [fastapi_token] = useContext(UserContext);
     const [graph_data, setGraphData] = useState("");
+    const [inWatchlist, setInWatchlist] = useState("false");
+
+    const favorite = async function () {
+        if (inWatchlist) {
+            const URL = `${process.env.REACT_APP_TRADING_HOST}/watchlist/${stockSymbol}`;
+            const checkWatchlistOptions = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${fastapi_token}`,
+                },
+                credentials: "include",
+            };
+
+            const watchlistCheckResponse = await fetch(
+                URL,
+                checkWatchlistOptions
+            );
+            if (watchlistCheckResponse.ok) {
+                const data = await watchlistCheckResponse.json();
+                setInWatchlist(!data);
+            }
+        } else {
+            const URL = `${process.env.REACT_APP_TRADING_HOST}/watchlist/`;
+            const checkWatchlistOptions = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${fastapi_token}`,
+                },
+                body: JSON.stringify({ symbol: stockSymbol }),
+                credentials: "include",
+            };
+
+            const watchlistCheckResponse = await fetch(
+                URL,
+                checkWatchlistOptions
+            );
+            if (watchlistCheckResponse.ok) {
+                const data = await watchlistCheckResponse.json();
+                setInWatchlist(data);
+            }
+        }
+    };
 
     useEffect(() => {
         async function getStockData() {
@@ -83,10 +129,38 @@ function StockDetail({ search }) {
                 setGraphData(data);
             }
         }
+        async function checkWatchlist() {
+            const watchlistUrl = `${process.env.REACT_APP_TRADING_HOST}/watchlist/${stockSymbol}`;
+            const checkWatchlistOptions = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${fastapi_token}`,
+                },
+                credentials: "include",
+            };
+
+            const watchlistCheckResponse = await fetch(
+                watchlistUrl,
+                checkWatchlistOptions
+            );
+            if (watchlistCheckResponse.ok) {
+                const data = await watchlistCheckResponse.json();
+                setInWatchlist(data);
+            }
+        }
 
         getStockData();
+        checkWatchlist();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stockSymbol, setNameStock, setSharesOwned, setGraphData, usernameAcc]);
+    }, [
+        stockSymbol,
+        setNameStock,
+        setSharesOwned,
+        setGraphData,
+        setInWatchlist,
+        usernameAcc,
+    ]);
 
     const data = {
         labels: graph_data["labels"],
@@ -183,12 +257,43 @@ function StockDetail({ search }) {
         },
     };
     return (
-        <div className="stock d-flex row justify-content-around ">
-            <div className="d-flex flex-row justify-content-around">
-                <h1 className="display-4 p-3">{stockSymbol.toUpperCase()}</h1>
-                <h1 className="display-4 p-3">{name}</h1>
+        <div className="stock d-flex row justify-content-center ">
+            <div className="d-flex col-lg-8 flex-row justify-content-between">
+                <h1 className="display-4 mt-3">{stockSymbol.toUpperCase()}</h1>
+                <h1
+                    className="display-4 mt-3"
+                    onClick={favorite}
+                >
+                    {inWatchlist ? (
+                        <IconContext.Provider
+                            value={{
+                                style: {
+                                    color: "white",
+                                    height: "50px",
+                                    width: "50px",
+                                    marginBottom: "8px",
+                                },
+                            }}
+                        >
+                            <MdOutlineFavorite />
+                        </IconContext.Provider>
+                    ) : (
+                        <IconContext.Provider
+                            value={{
+                                style: {
+                                    color: "white",
+                                    height: "50px",
+                                    width: "50px",
+                                    marginBottom: "8px",
+                                },
+                            }}
+                        >
+                            <MdOutlineFavoriteBorder />
+                        </IconContext.Provider>
+                    )}
+                </h1>
             </div>
-            <div className="d-flex flex-row justify-content-around">
+            <div className="d-flex col-lg-8 flex-row justify-content-between">
                 <p className="display-6">${price}</p>
 
                 <p
@@ -201,7 +306,7 @@ function StockDetail({ search }) {
                 </p>
             </div>
             <hr className="col-lg-8 col-sm-10 col-xs-10"></hr>
-            <div className="d-flex justify-content-around">
+            <div className="d-flex flex-row col-lg-8 justify-content-between">
                 <div className="bg-transparent">
                     {shares_owned > 0 ? (
                         <>

@@ -6,7 +6,7 @@ import docker_logo from "./images/docker.png";
 import gitlab_logo from "./images/gitlab.png";
 import heroku_logo from "./images/heroku.png";
 import postgres_logo from "./images/postgres.png";
-import logo from "./images/logo-inverted-md.jpg";
+import logo from "./images/logo-no-background.png";
 import fastapi_logo from "./images/fast-api.png";
 import graph from "./images/graph.png";
 
