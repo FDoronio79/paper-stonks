@@ -268,7 +268,7 @@ function StockDetail({ search }) {
                         <IconContext.Provider
                             value={{
                                 style: {
-                                    color: "white",
+                                    color: "#DA0000",
                                     height: "50px",
                                     width: "50px",
                                     marginBottom: "8px",
