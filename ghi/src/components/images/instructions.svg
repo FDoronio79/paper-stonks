@@ -1,0 +1,16 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 914.9999999999999 54" width="914.9999999999999" height="54" filter="invert(93%) hue-rotate(180deg)">
+  <!-- svg-source:excalidraw -->
+  
+  <defs>
+    <style class="style-fonts">
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://excalidraw.com/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://excalidraw.com/Cascadia.woff2");
+      }
+    </style>
+  </defs>
+  <g transform="translate(10 10) rotate(0 68 16)"><text x="0" y="25" font-family="Helvetica, Segoe UI Emoji" font-size="28px" fill="#000000" text-anchor="start" style="white-space: pre;" direction="ltr">Add Funds</text></g><g transform="translate(268 10) rotate(0 127 16)"><text x="0" y="25" font-family="Helvetica, Segoe UI Emoji" font-size="28px" fill="#000000" text-anchor="start" style="white-space: pre;" direction="ltr">Follow/Trade Stocks</text></g><g transform="translate(665 12) rotate(0 119.99999999999994 16)"><text x="0" y="25" font-family="Helvetica, Segoe UI Emoji" font-size="28px" fill="#000000" text-anchor="start" style="white-space: pre;" direction="ltr">Track your Account</text></g><g stroke-linecap="round"><g transform="translate(172 26) rotate(0 34.5 0)"><path d="M0 0 C11.5 0, 57.5 0, 69 0 M0 0 C11.5 0, 57.5 0, 69 0" stroke="#000000" stroke-width="2" fill="none"></path></g><g transform="translate(172 26) rotate(0 34.5 0)"><path d="M40.81 10.26 C47.16 7.95, 53.5 5.64, 69 0 M40.81 10.26 C48 7.64, 55.2 5.02, 69 0" stroke="#000000" stroke-width="2" fill="none"></path></g><g transform="translate(172 26) rotate(0 34.5 0)"><path d="M40.81 -10.26 C47.16 -7.95, 53.5 -5.64, 69 0 M40.81 -10.26 C48 -7.64, 55.2 -5.02, 69 0" stroke="#000000" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(566 27) rotate(0 34.5 0)"><path d="M0 0 C11.5 0, 57.5 0, 69 0 M0 0 C11.5 0, 57.5 0, 69 0" stroke="#000000" stroke-width="2" fill="none"></path></g><g transform="translate(566 27) rotate(0 34.5 0)"><path d="M40.81 10.26 C49.11 7.24, 57.42 4.22, 69 0 M40.81 10.26 C49.33 7.16, 57.86 4.05, 69 0" stroke="#000000" stroke-width="2" fill="none"></path></g><g transform="translate(566 27) rotate(0 34.5 0)"><path d="M40.81 -10.26 C49.11 -7.24, 57.42 -4.22, 69 0 M40.81 -10.26 C49.33 -7.16, 57.86 -4.05, 69 0" stroke="#000000" stroke-width="2" fill="none"></path></g></g><mask></mask></svg>

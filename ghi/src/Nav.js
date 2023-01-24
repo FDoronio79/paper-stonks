@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as TfiIcons from "react-icons/tfi";
 import * as AiIcons from "react-icons/ai";
-import { MdLogin } from "react-icons/md";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { MdLogin, MdList, MdOutlineFavoriteBorder } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 import "./App.css";
 import { useContext } from "react";
@@ -120,6 +119,15 @@ function Nav({ setSymbol, symbol }) {
                             <AiIcons.AiOutlineHome />
                             <span>Home</span>
                         </Link>
+                        <li className="nav-item">
+                            <Link
+                                className="nav-text "
+                                to="/About"
+                            >
+                                <MdList />
+                                <span>About</span>
+                            </Link>
+                        </li>
 
                         <li className="nav-item">
                             <Link
@@ -214,6 +222,15 @@ function Nav({ setSymbol, symbol }) {
                             <AiIcons.AiOutlineHome />
                             <span>Home</span>
                         </Link>
+                        <li className="nav-item">
+                            <Link
+                                className="nav-text "
+                                to="/About"
+                            >
+                                <MdList />
+                                <span>About</span>
+                            </Link>
+                        </li>
                         <li className="nav-item">
                             <Link
                                 className="nav-text"

@@ -12,6 +12,8 @@ import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
 import HomePage from "./components/HomePage";
 import WatchlistPage from "./components/Watchlist";
+import AboutPage from "./components/AboutPage";
+
 export const ThemeContext = createContext(null);
 
 function App() {
@@ -31,6 +33,10 @@ function App() {
                         <Route
                             path="/"
                             element={<HomePage />}
+                        />
+                        <Route
+                            path="/about"
+                            element={<AboutPage />}
                         />
                         <Route
                             path="/dashboard"
