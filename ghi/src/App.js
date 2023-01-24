@@ -11,6 +11,7 @@ import { useState, createContext } from "react";
 import BuyForm from "./components/BuyForm";
 import SellForm from "./components/SellForm";
 import HomePage from "./components/HomePage";
+import AboutPage from "./components/AboutPage";
 
 export const ThemeContext = createContext(null);
 
@@ -23,15 +24,10 @@ function App() {
         <div className="App">
             <BrowserRouter basename={basename}>
                 <SearchContext.Provider value={symbol}>
-                    <Nav
-                        setSymbol={setSymbol}
-                        symbol={symbol}
-                    />
+                    <Nav setSymbol={setSymbol} symbol={symbol} />
                     <Routes>
-                        <Route
-                            path="/"
-                            element={<HomePage />}
-                        />
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/about" element={<AboutPage />} />
                         <Route
                             path="/dashboard"
                             element={
@@ -45,26 +41,14 @@ function App() {
                             path="/transactions"
                             element={<Transactions />}
                         />
-                        <Route
-                            path="/login"
-                            element={<LoginForm />}
-                        />
-                        <Route
-                            path="/signup"
-                            element={<SignupForm />}
-                        />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/signup" element={<SignupForm />} />
                         <Route
                             path="/stock/:stockSymbol"
                             element={<StockDetail search={symbol} />}
                         />
-                        <Route
-                            path="/position/buy"
-                            element={<BuyForm />}
-                        />
-                        <Route
-                            path="/position/sell"
-                            element={<SellForm />}
-                        />
+                        <Route path="/position/buy" element={<BuyForm />} />
+                        <Route path="/position/sell" element={<SellForm />} />
                     </Routes>
                     <Outlet />
                 </SearchContext.Provider>

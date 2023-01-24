@@ -1,16 +1,27 @@
 import React from "react";
-import react_logo from "./images/react.png";
-import chartjs_logo from "./images/chartjs.png";
-import alpha_vantage_logo from "./images/alpha-vantage.png";
-import docker_logo from "./images/docker.png";
-import gitlab_logo from "./images/gitlab.png";
-import heroku_logo from "./images/heroku.png";
-import postgres_logo from "./images/postgres.png";
 import logo from "./images/logo-inverted-md.jpg";
-import fastapi_logo from "./images/fast-api.png";
 import graph from "./images/graph.png";
+import unlimitedcash from "./images/unlimitedcash.png";
+import strategies from "./images/strategies.png";
+import watchlist from "./images/watchlist.png";
+import realtimedata from "./images/realtimedata.png";
+import instructions from "./images/instructions.svg";
+import buyandsell from "./images/buyandsell.png";
+import buysell from "./images/buysell.gif";
+import searchticker from "./images/searchticker.gif";
+import addfunds from "./images/addfunds.gif";
+import transactions from "./images/transactions.gif";
+import watchlistgif from "./images/watchlistgif.gif";
+import { NavLink } from "react-router-dom";
+import Carousel from "react-bootstrap/Carousel";
 
 function HomePage() {
+    let homeMessage = `Simulated trading can help all levels of traders
+    to practice their trading skills and strategies.
+    You can access Paper Stonk's Trading simulator
+    on desktop, web, and mobile devices, so you can
+    try out a new idea as soon as it comes to mind.
+    Sign up today to get started!`;
     return (
         <>
             <div className="home d-flex row justify-content-center mx-2">
@@ -18,231 +29,236 @@ function HomePage() {
                     <span>
                         <h1 className="mb-3 display-1">Paper Stonks</h1>
                     </span>
-                    <img
-                        className=""
-                        src={logo}
-                        width="200"
-                        alt="logo"
-                    ></img>
+                    <img className="" src={logo} width="200" alt="logo"></img>
                     <span>
                         <h4 className="mb-3 display-6">
                             Trade Stocks Sweat-Free
                         </h4>
+
+                        <small>
+                            <p>
+                                <div className="new-line">{homeMessage}</div>
+                            </p>
+                        </small>
+                        <button
+                            className="btn bg-dark btn-outline-light btn-md px-4"
+                            type="submit"
+                        >
+                            <NavLink
+                                aria-current="page"
+                                to="/Signup"
+                                className="nav-link fw-bold"
+                            >
+                                Sign Up
+                            </NavLink>
+                        </button>
                     </span>
                 </div>
-
+                <div className=" d-flex justify-content-center col-lg-5 mx-auto">
+                    <img
+                        className="img-fluid rounded d-flex"
+                        src={graph}
+                        alt="graph"
+                    ></img>
+                </div>
                 <div className="container justify-content-center">
-                    <div className=" d-flex justify-content-center col-lg-5 mx-auto">
-                        <img
-                            className="img-fluid rounded d-flex"
-                            src={graph}
-                            alt="graph"
-                        ></img>
+                    <div className="p-5 text-center jumbotron">
+                        <span>
+                            <h4 className="mb-3 display-6">
+                                What does Paper Stonks offer?
+                            </h4>
+                        </span>
                     </div>
-                    <br></br>
 
-                    <div className="col-lg-6 mx-auto mt-5">
-                        <div className=" d-flex justify-content-center col-lg-6 mx-auto">
-                            <h4 className="display-6">Tech Stack</h4>
-                        </div>
-                        <div className="row justify-content-center text-center">
-                            <div className="col">
+                    <div className="row row-cols-1 row-cols-md-5 g-4 d-flex">
+                        <div className="col">
+                            <div className="card" style={{ width: `18rem` }}>
                                 <img
-                                    className="tool"
-                                    src={fastapi_logo}
-                                    alt="fastapi logo"
+                                    className="card-img-top"
+                                    src={unlimitedcash}
+                                    alt="unlimited cash"
                                 />
-                            </div>
-                            <div className="col">
-                                <img
-                                    className="tool"
-                                    src={react_logo}
-                                    alt="react logo"
-                                />
-                            </div>
-                        </div>
-                        <br></br>
-                        <div className="row justify-content-center text-center">
-                            <div className="col">
-                                <img
-                                    className="tool"
-                                    src={docker_logo}
-                                    alt="docker logo"
-                                />
-                            </div>
-                            <div className="col">
-                                <img
-                                    className="tool"
-                                    src={heroku_logo}
-                                    alt="heroku logo"
-                                />
-                            </div>
-                        </div>
-                        <div className="row justify-content-center text-center">
-                            <div className="col">
-                                <img
-                                    className="tool"
-                                    src={chartjs_logo}
-                                    alt="chartjs logo"
-                                />
-                            </div>
-                            <div className="col">
-                                <img
-                                    className="tool"
-                                    src={postgres_logo}
-                                    alt="postgres logo"
-                                />
-                            </div>
-                        </div>
-
-                        <div></div>
-                        <br />
-                        <br />
-                        <div className="d-flex justify-content-center text-center ">
-                            <div className="justify-content-center flex-row ">
-                                <h1 className="display-3">Developers </h1>
-                                <hr></hr>
-                                <div className="col">
-                                    <h4 className="display-6 dev">
-                                        Filamer Doronio
-                                    </h4>
-
-                                    <h4 className="display-6 dev">
-                                        Matthew Young
-                                    </h4>
-                                    <h4 className="display-6 dev ">
-                                        Tiffany Ameral
-                                    </h4>
-                                    <h4 className="display-6 dev ">
-                                        Jessica Lora
-                                    </h4>
-
-                                    <h4 className="display-6 dev ">Leo Shon</h4>
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        Unlimited Virtual Cash
+                                    </h5>
+                                    <p className="card-text">
+                                        Trade as many paper trading dollars as
+                                        you want.
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        {/* developer pictures carousel */}
-                        {/* <div className="home d-flex row justify-content-center mx-3 my-3">
-                            <div
-                                id="carouselExampleCaptions"
-                                className="carousel slide bg-transparent col-lg-6"
-                                data-bs-ride="false"
-                            >
-                                <div className="carousel-indicators">
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExampleCaptions"
-                                        data-bs-slide-to="0"
-                                        className="active"
-                                        aria-current="true"
-                                        aria-label="Slide 1"
-                                    ></button>
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExampleCaptions"
-                                        data-bs-slide-to="1"
-                                        aria-label="Slide 2"
-                                    ></button>
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExampleCaptions"
-                                        data-bs-slide-to="2"
-                                        aria-label="Slide 3"
-                                    ></button>
+                        <div className="col">
+                            <div className="card" style={{ width: `18rem` }}>
+                                <img
+                                    className="card-img-top"
+                                    src={strategies}
+                                    alt="strategies"
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        Test New strategies
+                                    </h5>
+                                    <p className="card-text">
+                                        Track your investments and strategies on
+                                        your dashboard.
+                                    </p>
                                 </div>
-                                <div className="carousel-inner">
-                                    <div className="carousel-item active">
-                                        <img
-                                            src="images/matthew-young.jpg"
-                                            className="d-block w-100 rounded"
-                                            alt="matt young"
-                                        />
-                                        <div className="carousel-caption d-none d-md-block">
-                                            <h5>First slide label</h5>
-                                            <p>
-                                                Some representative placeholder
-                                                content for the first slide.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="carousel-item">
-                                        <img
-                                            src="images/stock1.jpg"
-                                            className="d-block w-100 rounded"
-                                            alt="..."
-                                        />
-                                        <div className="carousel-caption d-none d-md-block">
-                                            <h5>Second slide label</h5>
-                                            <p>
-                                                Some representative placeholder
-                                                content for the second slide.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="carousel-item">
-                                        <img
-                                            src="images/stock2.jpg"
-                                            className="d-block w-100 rounded"
-                                            alt="..."
-                                        />
-                                        <div className="carousel-caption d-none d-md-block">
-                                            <h5>Third slide label</h5>
-                                            <p>
-                                                Some representative placeholder
-                                                content for the third slide.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button
-                                    className="carousel-control-prev"
-                                    type="button"
-                                    data-bs-target="#carouselExampleCaptions"
-                                    data-bs-slide="prev"
-                                >
-                                    <span
-                                        className="carousel-control-prev-icon"
-                                        aria-hidden="true"
-                                    ></span>
-                                    <span className="visually-hidden">
-                                        Previous
-                                    </span>
-                                </button>
-                                <button
-                                    className="carousel-control-next"
-                                    type="button"
-                                    data-bs-target="#carouselExampleCaptions"
-                                    data-bs-slide="next"
-                                >
-                                    <span
-                                        className="carousel-control-next-icon"
-                                        aria-hidden="true"
-                                    ></span>
-                                    <span className="visually-hidden">
-                                        Next
-                                    </span>
-                                </button>
                             </div>
-                        </div> */}
-                        <div className="d-flex row justify-content-center text-center mx-3 my-3">
-                            <a href="https://gitlab.com/apex-legends1/paper-stonks/">
+                        </div>
+                        <div className="col">
+                            <div className="card" style={{ width: `18rem` }}>
                                 <img
-                                    className="tool"
-                                    src={gitlab_logo}
-                                    alt="gitlab"
-                                ></img>
-                            </a>
-                            <br />
-                            External API:
-                            <a href="https://www.alphavantage.co/">
+                                    className="card-img-top"
+                                    src={watchlist}
+                                    alt="watchlist"
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        Set up a watchlist
+                                    </h5>
+                                    <p className="card-text">
+                                        Track selected stocks to easily
+                                        determine when to buy or sell.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="card" style={{ width: `18rem` }}>
                                 <img
-                                    className="tool"
-                                    src={alpha_vantage_logo}
-                                    alt="alpha-vantage"
-                                ></img>
-                            </a>
+                                    className="card-img-top"
+                                    src={buyandsell}
+                                    alt="buyandsell"
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        Buy & Sell Stocks
+                                    </h5>
+                                    <p className="card-text">
+                                        Using Virtual cash, buy and sell stocks
+                                        with a straight forward interface
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="card" style={{ width: `18rem` }}>
+                                <img
+                                    className="card-img-top"
+                                    src={realtimedata}
+                                    alt="realtimedata"
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title">
+                                        Real-time Data
+                                    </h5>
+                                    <p className="card-text">
+                                        Search for specific stocks, get real
+                                        time quotes, and explore integrated
+                                        charts with indicators
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div className="p-5 text-center jumbotron">
+                        <span>
+                            <h4 className="mb-3 display-6">
+                                How to operate Paper Stonks
+                            </h4>
+                        </span>
+                        <div className=" d-flex justify-content-center col-lg-5 mx-auto">
+                            <img
+                                className="img-fluid rounded d-flex"
+                                src={instructions}
+                                alt="instructions"
+                            ></img>
+                        </div>
+                        {/* <small>
+                            <p>
+                                <div className="new-line">1. add funds</div>
+                            </p>
+                        </small>
+                        <small>
+                            <p>
+                                <div className="new-line">
+                                    2. follow/trade stocks
+                                </div>
+                            </p>
+                        </small>
+                        <small>
+                            <p>
+                                <div className="new-line">
+                                    3. track your value
+                                </div>
+                            </p>
+                        </small> */}
+                    </div>
+                    <Carousel className="carousel">
+                        <Carousel.Item>
+                            <img
+                                className="carouselimg"
+                                src={addfunds}
+                                alt="First slide"
+                            />
+                            <Carousel.Caption>
+                                <h3></h3>
+                                <p></p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        <Carousel.Item>
+                            <img
+                                className="carouselimg"
+                                src={searchticker}
+                                alt="Second slide"
+                            />
+
+                            <Carousel.Caption>
+                                <h3></h3>
+                                <p></p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="carouselimg"
+                                src={buysell}
+                                alt="Third slide"
+                            />
+
+                            <Carousel.Caption>
+                                <h3></h3>
+                                <p></p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="carouselimg"
+                                src={transactions}
+                                alt="Fourth slide"
+                            />
+
+                            <Carousel.Caption>
+                                <h3></h3>
+                                <p></p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="carouselimg"
+                                src={watchlistgif}
+                                alt="Fifth slide"
+                            />
+
+                            <Carousel.Caption>
+                                <h3></h3>
+                                <p></p>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    </Carousel>
                 </div>
             </div>
         </>

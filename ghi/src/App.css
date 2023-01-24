@@ -13,6 +13,26 @@
 .table {
     color: white;
 }
+.card {
+    color: white;
+    height: 22rem;
+    background-color: black;
+}
+
+.card-img-top {
+    height: 10rem;
+    width: 10rem;
+    filter: invert(100%);
+    margin: auto;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.new-line {
+    white-space: pre-line;
+}
 
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
@@ -86,6 +106,7 @@ th {
     align-items: center;
     position: fixed;
     top: 0px;
+    z-index: 1;
 }
 
 #nav-title {
@@ -99,6 +120,7 @@ th {
     font-size: 2rem;
     background: none;
     color: #000;
+    z-index: 1;
 }
 
 .nav-menu {
@@ -111,6 +133,19 @@ th {
     top: 0;
     left: -100%;
     transition: 850ms;
+    z-index: 1;
+}
+
+.carousel {
+    width: 50vw;
+    height: 66vh;
+    margin: auto;
+}
+
+.carouselimg {
+    width: 50vw;
+    height: 66vh;
+    margin: auto;
 }
 
 .nav-menu.active {
