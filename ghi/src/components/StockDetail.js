@@ -15,7 +15,6 @@ function StockDetail({ search }) {
     const [price, setPrice] = useState("");
     const [change, setChange] = useState("");
     const [percent, setPercent] = useState("");
-    // const buyingPow = localStorage.getItem("buyingPower");
     const [name, setNameStock] = useState("");
     const [shares_owned, setSharesOwned] = useState("");
     const usernameAcc = localStorage.getItem("Username");
@@ -430,6 +429,10 @@ function StockDetail({ search }) {
                     />
                 </div>
             </div>
+            {/* <div className="d-flex col-lg-8">
+                <h5>News</h5>
+
+            </div> */}
         </div>
     );
 }

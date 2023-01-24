@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { TfiTrash } from "react-icons/tfi";
@@ -7,13 +7,17 @@ import { IconContext } from "react-icons";
 const WatchlistPage = ({ setSymbol, symbol }) => {
     const navigate = useNavigate();
     const [fastapi_token] = useContext(UserContext);
-    const [watchlist, setWatchlist] = useState([]);
+    const [watchlist, setWatchlist] = useState();
+    const [prices, setPrices] = useState([]);
     const [editing, setEditing] = useState(false);
-    const [deleted, setDeleted] = useState(0);
 
-    function edit() {
-        setEditing(!editing);
-    }
+    let startEditing = () => {
+        setEditing(true);
+    };
+
+    let submitEditing = () => {
+        setEditing(false);
+    };
 
     async function deleteFromWatchlist(stock) {
         const requestOptions = {
@@ -30,8 +34,6 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
         );
         if (response.ok) {
             const data = await response.json();
-            setDeleted(deleted + 1);
-        } else {
         }
     }
 
@@ -51,14 +53,10 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
         if (response.ok) {
             const data = await response.json();
             setWatchlist(data);
-        } else {
         }
     }
 
-    async function getStockPrice() {
-        let stockPrices;
-        let idx = 0;
-
+    let getStockPrice = async () => {
         await Promise.all(
             watchlist.map(async (stock) => {
                 const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stock.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
@@ -71,46 +69,38 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
                 }
             })
         ).then((responses) => {
-            stockPrices = watchlist.map((stock) => {
-                if (idx < watchlist.length) {
-                    stock["stockPrice"] = parseFloat(
-                        responses[idx]["Global Quote"]["05. price"]
-                    );
+            let stockPrices = responses.map((stock) => {
+                let theStock = {};
+                theStock["stockPrice"] = parseFloat(
+                    stock["Global Quote"]["05. price"]
+                );
 
-                    stock["stockChange"] = parseFloat(
-                        parseFloat(
-                            responses[idx]["Global Quote"]["09. change"]
-                        ).toFixed(2)
-                    );
-                    stock["stockChangePercent"] = parseFloat(
-                        parseFloat(
-                            responses[idx]["Global Quote"][
-                                "10. change percent"
-                            ].replace("%", "")
-                        ).toFixed(2)
-                    );
-                    idx++;
-
-                    return { ...stock };
-                }
-
-                return [];
+                theStock["stockChange"] = parseFloat(
+                    parseFloat(stock["Global Quote"]["09. change"]).toFixed(2)
+                );
+                theStock["stockChangePercent"] = parseFloat(
+                    parseFloat(
+                        stock["Global Quote"]["10. change percent"].replace(
+                            "%",
+                            ""
+                        )
+                    ).toFixed(2)
+                );
+                theStock.symbol = stock["Global Quote"]["01. symbol"];
+                return { ...theStock };
             });
+            setPrices(stockPrices);
         });
-
-        setWatchlist(stockPrices);
-        return stockPrices;
-    }
+    };
 
     useEffect(() => {
-        getWatchlist();
-    }, [deleted]);
-
-    useEffect(() => {
-        if (watchlist.length > 0 && !watchlist[0]?.value) {
+        if (!watchlist) {
+            getWatchlist();
+        }
+        if (watchlist) {
             getStockPrice();
         }
-    }, [getStockPrice, watchlist]);
+    }, [watchlist]);
 
     if (!fastapi_token) {
         return (
@@ -136,7 +126,7 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
                                     {editing ? (
                                         <th>
                                             <button
-                                                onClick={edit}
+                                                onClick={() => submitEditing()}
                                                 className="btn-dark btn"
                                             >
                                                 Done
@@ -145,7 +135,7 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
                                     ) : (
                                         <th>
                                             <button
-                                                onClick={edit}
+                                                onClick={() => startEditing()}
                                                 className="btn-dark btn"
                                             >
                                                 Edit
@@ -155,11 +145,11 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {watchlist.map((stock) => {
+                                {prices.map((stock) => {
                                     return (
                                         <tr
                                             className="position-row"
-                                            key={stock.id}
+                                            key={stock.symbol}
                                             value={stock.symbol}
                                         >
                                             <td
@@ -202,7 +192,6 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
                                                             stock.symbol
                                                         );
                                                         getWatchlist();
-                                                        getStockPrice();
                                                     }}
                                                     value={stock.symbol}
                                                 >

@@ -72,8 +72,8 @@ function Nav({ setSymbol, symbol }) {
                                 <input
                                     className="form-control searchbar"
                                     type="text"
-                                    placeholder="Search"
-                                    aria-label="Search"
+                                    placeholder="Stock search"
+                                    aria-label="Stock search"
                                     onChange={(e) => {
                                         setSymbol(e.target.value);
                                     }}
@@ -167,8 +167,8 @@ function Nav({ setSymbol, symbol }) {
                                 <input
                                     className="form-control searchbar"
                                     type="text"
-                                    placeholder="Search"
-                                    aria-label="Search"
+                                    placeholder="Stock search"
+                                    aria-label="Stock search"
                                     onChange={(e) => {
                                         setSymbol(e.target.value);
                                     }}
