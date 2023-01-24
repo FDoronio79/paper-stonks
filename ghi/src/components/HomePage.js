@@ -204,10 +204,7 @@ function HomePage() {
                                 src={addfunds}
                                 alt="First slide"
                             />
-                            <Carousel.Caption>
-                                <h3></h3>
-                                <p></p>
-                            </Carousel.Caption>
+                            <Carousel.Caption></Carousel.Caption>
                         </Carousel.Item>
 
                         <Carousel.Item>
@@ -217,10 +214,7 @@ function HomePage() {
                                 alt="Second slide"
                             />
 
-                            <Carousel.Caption>
-                                <h3></h3>
-                                <p></p>
-                            </Carousel.Caption>
+                            <Carousel.Caption></Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
@@ -229,10 +223,7 @@ function HomePage() {
                                 alt="Third slide"
                             />
 
-                            <Carousel.Caption>
-                                <h3></h3>
-                                <p></p>
-                            </Carousel.Caption>
+                            <Carousel.Caption></Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
@@ -241,10 +232,7 @@ function HomePage() {
                                 alt="Fourth slide"
                             />
 
-                            <Carousel.Caption>
-                                <h3></h3>
-                                <p></p>
-                            </Carousel.Caption>
+                            <Carousel.Caption></Carousel.Caption>
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
@@ -253,10 +241,7 @@ function HomePage() {
                                 alt="Fifth slide"
                             />
 
-                            <Carousel.Caption>
-                                <h3></h3>
-                                <p></p>
-                            </Carousel.Caption>
+                            <Carousel.Caption></Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
                 </div>
