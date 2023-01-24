@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { TfiTrash } from "react-icons/tfi";
@@ -33,11 +33,10 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
             requestOptions
         );
         if (response.ok) {
-            const data = await response.json();
         }
     }
 
-    async function getWatchlist() {
+    let getWatchlist = useCallback(async () => {
         const requestOptions = {
             method: "GET",
             headers: {
@@ -54,9 +53,9 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
             const data = await response.json();
             setWatchlist(data);
         }
-    }
+    }, [fastapi_token]);
 
-    let getStockPrice = async () => {
+    let getStockPrice = useCallback(async () => {
         await Promise.all(
             watchlist.map(async (stock) => {
                 const priceUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stock.symbol}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE}`;
@@ -91,7 +90,7 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
             });
             setPrices(stockPrices);
         });
-    };
+    }, [watchlist]);
 
     useEffect(() => {
         if (!watchlist) {
@@ -100,7 +99,8 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
         if (watchlist) {
             getStockPrice();
         }
-    }, [watchlist]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchlist, getStockPrice, getWatchlist]);
 
     if (!fastapi_token) {
         return (
