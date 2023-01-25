@@ -43,7 +43,7 @@ function StockDetail({ search }) {
                 setInWatchlist(!data);
             }
         } else {
-            const URL = `${process.env.REACT_APP_TRADING_HOST}/watchlist/`;
+            const URL = `${process.env.REACT_APP_TRADING_HOST}/watchlist`;
             const checkWatchlistOptions = {
                 method: "POST",
                 headers: {

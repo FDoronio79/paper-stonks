@@ -46,7 +46,7 @@ const WatchlistPage = ({ setSymbol, symbol }) => {
             credentials: "include",
         };
         const response = await fetch(
-            `${process.env.REACT_APP_TRADING_HOST}/watchlist/`,
+            `${process.env.REACT_APP_TRADING_HOST}/watchlist`,
             requestOptions
         );
         if (response.ok) {
